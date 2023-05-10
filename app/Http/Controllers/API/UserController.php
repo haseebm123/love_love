@@ -115,7 +115,7 @@ class UserController extends Controller
 
 
             User::where('id',auth()->id())->update([
-                'long' => isset($request->long)? $request->long : auth()->user()->long,
+                'lon' => isset($request->lon)? $request->lon : auth()->user()->lon,
                 'lat' => isset($request->lat)? $request->lat : auth()->user()->lat,
             ]);
             $user = User::find(auth()->id());
@@ -165,9 +165,7 @@ class UserController extends Controller
 
     }
 
-    public function filter1(){
 
-    }
     public function filter(Request $request){
 
         $lat = auth()->user()->lat;
@@ -177,7 +175,8 @@ class UserController extends Controller
         $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
 
         if ( isset($request->distance)) {
-            $data =  $data->having('distance', '<=', $request->distance);
+            // $data =  $data->having('distance', '>=', $request->distance);
+            $data =  $data->havingBetween('distance', [0, $request->distance]);
         }
         if ($request->has('gender') && isset($request->gender)) {
 
