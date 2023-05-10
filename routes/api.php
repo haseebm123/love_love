@@ -31,7 +31,8 @@ route::post('profile',[UserController::class,'profileUpdate'])->name('profile.up
 
 
 Route::middleware(['auth:api'])->group(function () {
-        Route::controller(UserController::class)->group(function () {
+    route::get('filter',[UserController::class,'filter'])->name('filter');
+    Route::controller(UserController::class)->group(function () {
             Route::post('profile','updateProfile')->name('update-profile');
             Route::post('change-password','changePassword')->name('change-password');
             Route::get('discover','discover')->name('discover');

@@ -108,21 +108,21 @@ class UserController extends Controller
             'password' => ['required'],
 
         ]);
-
 		if (Auth()->attempt($credentials))
         {
             $user_login_token= Auth()->user()->createToken('love-love')->accessToken;
             $profile_path = asset('documents/profile/'.auth()->user()->profile);
 
-            User::where('id',auth()->id())->update([
-                'long' => $request->long??auth()->user()->long,
-                'lat' => $request->lat??auth()->user()->lat,
-            ]);
 
+            User::where('id',auth()->id())->update([
+                'long' => isset($request->long)? $request->long : auth()->user()->long,
+                'lat' => isset($request->lat)? $request->lat : auth()->user()->lat,
+            ]);
+            $user = User::find(auth()->id());
             return response()->json([
                 'profile_path' =>$profile_path,
 	            'success' => true,
-	            'data' 	  => auth()->user(),
+	            'data' 	  => $user,
 	            'token'	  => $user_login_token
 	        ]);
 		}
@@ -165,6 +165,34 @@ class UserController extends Controller
 
     }
 
+    public function filter1(){
+
+    }
+    public function filter(Request $request){
+
+        $lat = auth()->user()->lat;
+        $lon = auth()->user()->lon;
+        $data  = User::query();
+        $data  = $data->select('*');
+        $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
+
+        if ( isset($request->distance)) {
+            $data =  $data->having('distance', '<=', $request->distance);
+        }
+        if ($request->has('gender') && isset($request->gender)) {
+
+            $data->where('gender', 'like', '%' . $request->gender . '%');
+        }
+        if (isset($request->age)) {
+            $data->where('age', $request->age);
+        }
+        $data = $data->where('status',1)
+        ->where('role_id','user')
+        ->with('images') ;
+        $data = $data->get();
+
+        return response()->json(['data'=>$data,'success' => true]);
+    }
     public function discover(){
         $data = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
 
