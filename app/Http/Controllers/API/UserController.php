@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Notification;
-use App\Models\NotificationRead;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Laravel\Passport\Passport;
@@ -27,8 +26,6 @@ class UserController extends Controller
 
     public function register(Request $request)
    	{
-
-
        $checkEmail = User::where('email',$request->email)->first();
             $credentials = $request->validate([
                 'email' => ['required', 'email'],
@@ -44,13 +41,6 @@ class UserController extends Controller
                     'message' => 'Password is required'
                 ]);
 
-            }else if($request->password != $request->confirm_password)
-            {
-
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Confirm password does not match'
-                ]);
             }
 
             if($checkEmail){
@@ -59,17 +49,6 @@ class UserController extends Controller
                     'message' => 'Email already exits'
                 ]);
             }
-
-        //   $data = [
-        //         'role_id'        =>'Manager',
-        //         'first_name'     =>$request->first_name,
-        //         'last_name'      => $request->last_name,
-        //         'phone_number'   =>$request->phone_number,
-        //         'address'        =>$request->address,
-        //         'email'          =>$request->email,
-        //         'password'       =>Hash::make($request->password),
-        //         'status'         =>0,
-        //     ];
             $data = $request->except(['confirm_password'],$request->all());
             if($request->hasFile('profile'))
             {
@@ -90,10 +69,10 @@ class UserController extends Controller
                     $user_login_token= auth()->user()->createToken('love-love')->accessToken;
                     $profile_path = asset('documents/profile/'.auth()->user()->profile);
                     return response()->json([
-                        'profile_path' =>$profile_path,
                         'success' => true,
-                        'data' 	  => auth()->user(),
-                        'token'	  => $user_login_token
+                        'message' => 'Account Created'
+
+
                     ]);
                 }
           }else{
@@ -109,8 +88,6 @@ class UserController extends Controller
 
 	public function authenticate(Request $request)
 	{
-        // return $request->all();
-
         if(!$request->email)
         {
             return response()->json([
@@ -134,17 +111,14 @@ class UserController extends Controller
 
 		if (Auth()->attempt($credentials))
         {
-            //generate the token for the user
-            //  if(auth()->user()->status == 0)
-            //  {
-            //     Auth::logout();
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'Please wait for admin approval'
-            //     ]);
-            //  }
-             $user_login_token= Auth()->user()->createToken('love-love')->accessToken;
-             $profile_path = asset('documents/profile/'.auth()->user()->profile);
+            $user_login_token= Auth()->user()->createToken('love-love')->accessToken;
+            $profile_path = asset('documents/profile/'.auth()->user()->profile);
+
+            User::where('id',auth()->id())->update([
+                'long' => $request->long??auth()->user()->long,
+                'lat' => $request->lat??auth()->user()->lat,
+            ]);
+
             return response()->json([
                 'profile_path' =>$profile_path,
 	            'success' => true,
@@ -162,6 +136,45 @@ class UserController extends Controller
 		}
 
 	}
+
+
+    public function updateProfile(Request $request)
+    {
+        $imagePaths = [];
+        $data = $request->all();
+        $user = User::where('id',auth()->user()->id)->first();
+        if($request->hasFile('images'))
+        {
+            foreach ($request->file('images') as $key => $image) {
+
+                $img = Str::random(20).$image->getClientOriginalName();
+                $image->move(public_path("documents/images"), $img);
+                $imagePaths[$key] = $img;
+
+                $addImg = Image::create([
+                    'user_id'=> auth()->id(),
+                    'image'=>$img
+                ]);
+
+            }
+        }
+
+
+
+        return response()->json(['user_data'=>$data,'success' => true]);
+
+    }
+
+    public function discover(){
+        $data = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
+
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+
+    public function discoverView($id){
+        $data = User::where('status',1)->where('role_id','user')->where('id',$id)->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
+        return response()->json(['data'=>$data,'success' => true]);
+    }
 
 
     public function invalid()
@@ -318,54 +331,14 @@ class UserController extends Controller
 
 
 
-
-    public function UpdateProfile(Request $request)
+    public function logout(Request $request)
     {
+        return $request->user()->currentAccessToken()->delete();
 
-        $data = $request->all();
-        if($request->hasFile('profile'))
-        {
-            $img = Str::random(20).$request->file('profile')->getClientOriginalName();
-            $data['profile'] = $img;
-            $request->profile->move(public_path("documents/profile"), $img);
-        }
-        $user = User::where('id',auth()->user()->id)->update($data);
-        $profile_path = asset('documents/profile');
-        $data = User::where('id',auth()->user()->id)->first();
-
-        return response()->json(['user_data'=>$data,'success' => true]);
-
+        return response()->json(['message' => 'Logged out successfully']);
     }
 
-    public function notification()
-    {
-        $id = Notification::whereHas('notification_read',function ($query) {
-            $query->where('user_id', '=', auth()->user()->id);
-        })->where(['status'=>1])->whereNotNull('admin_id')->pluck('id');
 
 
-        $data = Notification::whereNotIn('id',$id)->where('user_id', null)->get();
-        $status = false;
-        if(count($data)>0)
-        {
-            $data = $data;
-            $status = true;
-        }
-        return response()->json(['data'=>$data,'success' => $status]);
-    }
-
-    public function notificationRead(Request $request)
-    {
-        $add = NotificationRead::Create(['notification_id'=>$request->notification_id,'user_id'=>auth()->user()->id,'status'=>1]);
-        if($add)
-        {
-            $message = 'Read';
-            $status = true;
-        }else{
-            $message = '';
-            $status = false;
-        }
-        return response()->json(['message'=>$message,'success' => $status]);
-    }
 
 }
