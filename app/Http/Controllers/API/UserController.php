@@ -170,6 +170,7 @@ class UserController extends Controller
 
         $lat = auth()->user()->lat;
         $lon = auth()->user()->lon;
+        $search = $request->search;
         $data  = User::query();
         $data  = $data->select('*');
         $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
@@ -184,6 +185,12 @@ class UserController extends Controller
         }
         if (isset($request->age)) {
             $data->where('age', $request->age);
+        }
+        if (isset($request->search)) {
+            $data->where('first_name', 'like', "%{$search}%")
+            ->orwhere('last_name', 'like', "%{$search}%")
+            ->orwhere('mid_name', 'like', "%{$search}%");
+
         }
         $data = $data->where('status',1)
         ->where('role_id','user')
