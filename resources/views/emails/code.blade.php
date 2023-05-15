@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -146,7 +147,7 @@
                                                         href="javascript::void(0)"
                                                         style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Your
                                                         OTP is:
-                                                        <?= $otp ?>
+                                                        <?= $details['code'] ?>
                                                     </a></td>
                                             </tr>
                                         </table>

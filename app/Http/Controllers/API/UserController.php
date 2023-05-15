@@ -13,6 +13,7 @@ use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Auth;
 use Hash;
 use Mail;
+use App\Mail\SendCodeMail;
 
 use DB;
 
@@ -220,6 +221,12 @@ class UserController extends Controller
                 $fourRandomDigit = mt_rand(1000, 9999);
                 User::where('email',$request->email)->update(['forget_password_code'=>$fourRandomDigit]);
                 $data = array('otp'=>$fourRandomDigit);
+                $details = [
+                'title' => 'Mail from ItSolutionStuff.com',
+                'code' => $fourRandomDigit
+                ];
+                  $check = Mail::to($request->email)->send(new SendCodeMail($details));
+
                 // $send = Mail::send("mail", $data, function($message) use($email) {
                 // $message->to($email)->subject('You have requested to reset your password');
                 // $message->from('bharat@gmail.com','');
