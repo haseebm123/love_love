@@ -26,61 +26,58 @@ class UserController extends Controller
 
     public function register(Request $request)
    	{
-       $checkEmail = User::where('email',$request->email)->first();
-            $credentials = $request->validate([
-                'email' => ['required', 'email'],
-                'password' => ['required'],
+        $checkEmail = User::where('email',$request->email)->first();
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
 
-            ]);
-
-
-           if(!$request->password)
-            {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Password is required'
-                ]);
-
-            }
-
-            if($checkEmail){
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Email already exits'
-                ]);
-            }
-            $data = $request->except(['confirm_password'],$request->all());
-            if($request->hasFile('profile'))
-            {
-                $img = Str::random(20).$request->file('profile')->getClientOriginalName();
-                $data['profile'] = $img;
-                $request->profile->move(public_path("documents/profile"), $img);
-            }
-            $data['role_id'] = 'user';
-            $data['password'] = Hash::make($request->password);
-            $data['status']   = 0;
-            $user = User::create($data);
-            $user->assignRole('user');
-          if($user)
-          {
-            if (auth()->attempt($credentials))
-                {
-                    //generate the token for the user
-                    $user_login_token= auth()->user()->createToken('love-love')->accessToken;
-                    $profile_path = asset('documents/profile/'.auth()->user()->profile);
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Account Created'
+        ]);
 
 
-                    ]);
-                }
-          }else{
+        if(!$request->password)
+        {
             return response()->json([
                 'success' => false,
-                'message' => 'User has not added please try again'
+                'message' => 'Password is required'
             ]);
-          }
+        }
+
+        if($checkEmail){
+            return response()->json([
+                'success' => false,
+                'message' => 'Email already exits'
+            ]);
+        }
+        $data = $request->except(['confirm_password'],$request->all());
+        if($request->hasFile('profile'))
+        {
+            $img = Str::random(20).$request->file('profile')->getClientOriginalName();
+            $data['profile'] = $img;
+            $request->profile->move(public_path("documents/profile"), $img);
+        }
+        $data['role_id'] = 'user';
+        $data['password'] = Hash::make($request->password);
+        $data['status']   = 0;
+        $user = User::create($data);
+        $addImg = Image::create([
+                'user_id'=> $user->id,
+                'image'=>'default.png'
+            ]);
+
+        if($user)
+        {
+            $user->assignRole('user');
+            return response()->json([
+            'success' => true,
+            'message' => 'Account Created'
+            ]);
+
+        }else{
+            return response()->json([
+            'success' => false,
+            'message' => 'User has not added please try again'
+            ]);
+        }
 
 
 
@@ -131,7 +128,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'UnAuthorized Access'
+                'message' => 'Email or Password is invalid'
             ]);
 		}
 
@@ -140,9 +137,10 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+
         $imagePaths = [];
-        $data = $request->all();
-        $user = User::where('id',auth()->user()->id)->first();
+        $user = $request->except(['images'],$request->all());
+        $data = User::find(auth()->user()->id);
         if($request->hasFile('images'))
         {
             foreach ($request->file('images') as $key => $image) {
@@ -158,10 +156,11 @@ class UserController extends Controller
 
             }
         }
+        $data->update($user);
 
-
-
-        return response()->json(['user_data'=>$data,'success' => true]);
+        return response()->json([
+            'message'=> "Profile Update Successfilly",
+            'success' => true]);
 
     }
 
@@ -173,11 +172,12 @@ class UserController extends Controller
         $search = $request->search;
         $data  = User::query();
         $data  = $data->select('*');
+
         $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
 
         if ( isset($request->distance)) {
-            // $data =  $data->having('distance', '>=', $request->distance);
-            $data =  $data->havingBetween('distance', [0, $request->distance]);
+            $data =  $data->having('distance', '=', $request->distance);
+            // $data =  $data->havingBetween('distance', [0, $request->distance]);
         }
         if ($request->has('gender') && isset($request->gender)) {
 
@@ -210,16 +210,7 @@ class UserController extends Controller
         return response()->json(['data'=>$data,'success' => true]);
     }
 
-
-    public function invalid()
-    {
-        return response()->json([
-            'success' => false,
-            'message' => 'UnAuthorized Access'
-        ]);
-    }
-
-	public function ForgetPasswordEmail(Request $request)
+    public function ForgetPasswordEmail(Request $request)
     {
         if($request->has("email")){
            $user = User::where('email',$request->email)->get()->first();
@@ -229,10 +220,10 @@ class UserController extends Controller
                 $fourRandomDigit = mt_rand(1000, 9999);
                 User::where('email',$request->email)->update(['forget_password_code'=>$fourRandomDigit]);
                 $data = array('otp'=>$fourRandomDigit);
-                $send = Mail::send("mail", $data, function($message) use($email) {
-                $message->to($email)->subject('You have requested to reset your password');
-                $message->from('bharat@gmail.com','');
-                });
+                // $send = Mail::send("mail", $data, function($message) use($email) {
+                // $message->to($email)->subject('You have requested to reset your password');
+                // $message->from('bharat@gmail.com','');
+                // });
                  return response([
                     'success' => true,
                     'message' => 'Otp has been send to your email',
@@ -256,6 +247,15 @@ class UserController extends Controller
 
         }
     }
+
+    public function invalid()
+    {
+        return response()->json([
+            'success' => false,
+            'message' => 'UnAuthorized Access'
+        ]);
+    }
+
 
 
 	public function ForgetPasswordEmail1(Request $request)
@@ -352,9 +352,10 @@ class UserController extends Controller
                 'message' => "Old Password Doesn't match!"
             ]);
 
-        #Update the new Password
-        User::find(auth()->user()->id)->update([
-            'password' => Hash::make($request->newPassword)
+            #Update the new Password
+
+            User::find(auth()->user()->id)->update([
+                'password' => Hash::make($request->newPassword)
         ]);
 
         return response([
@@ -374,5 +375,19 @@ class UserController extends Controller
 
 
 
+    public function clearCache()
+    {
+        try {
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            Artisan::call('route:clear');
+            Artisan::call('config:cache');
+            // Additional cache clearing commands can be added here if needed
+
+            return "Cache cleared successfully.";
+        } catch (\Exception $e) {
+            return "Cache clearing failed: " . $e->getMessage();
+        }
+    }
 
 }

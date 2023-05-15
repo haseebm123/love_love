@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\Admin\AdminController;
+use App\Http\Controllers\API\PaymentController;
 
 
 
@@ -40,6 +41,8 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('discover-view/{id}','discoverView')->name('discover.view');
         });
     });
+
+    Route::get('payment',[PaymentController::class,'createPaymentIntent'])->name('admin.profile.req');
 
 // Admin API
 Route::get('admin/profile/request',[AdminController::class,'profileReq'])->name('admin.profile.req');
