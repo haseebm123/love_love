@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Notification;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Laravel\Passport\Passport;
@@ -55,15 +57,13 @@ class UserController extends Controller
             $img = Str::random(20).$request->file('profile')->getClientOriginalName();
             $data['profile'] = $img;
             $request->profile->move(public_path("documents/profile"), $img);
+        }else{
+            $data['profile'] = 'default.png';
         }
         $data['role_id'] = 'user';
         $data['password'] = Hash::make($request->password);
         $data['status']   = 0;
         $user = User::create($data);
-        $addImg = Image::create([
-                'user_id'=> $user->id,
-                'image'=>'default.png'
-            ]);
 
         if($user)
         {
@@ -158,6 +158,13 @@ class UserController extends Controller
             }
         }
         $data->update($user);
+
+        $nofication = Notification::Create([
+            'user_id' =>auth()->user()->id,
+            'description'=>'New Profile Request',
+            'type'=>'request',
+            'status'=>0
+        ]);
 
         return response()->json([
             'message'=> "Profile Update Successfilly",
@@ -394,6 +401,21 @@ class UserController extends Controller
             return "Cache cleared successfully.";
         } catch (\Exception $e) {
             return "Cache clearing failed: " . $e->getMessage();
+        }
+    }
+
+    public function composer_update()
+    {
+
+        // Run the Composer update command using the Process component
+        $process = new Process(['composer', 'update']);
+        $process->run();
+
+        // Check if the process was successful
+        if ($process->isSuccessful()) {
+            return response()->json(['message' => 'Composer update completed successfully']);
+        } else {
+            return response()->json(['message' => 'Composer update failed'], 500);
         }
     }
 

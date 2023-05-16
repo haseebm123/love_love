@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Notification;
 
 class AdminController extends Controller
 {
@@ -30,6 +31,13 @@ class AdminController extends Controller
         return response()->json([
                 'success' => true,
                 'message' => "Profile Accepted"
+            ]);
+    }
+    public function notification(Request $request){
+        $noti = Notification::whereNotNull('user_id')->get();
+        return response()->json([
+                'success' => true,
+                'data' => $noti
             ]);
     }
 }
