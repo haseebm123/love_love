@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function acceptProfile(Request $request){
 
         $ids= $request->ids;
-        User::whereIn('id',$ids)->update(['status'=>0]);
+        User::whereIn('id',$ids)->update(['status'=>1]);
 
         return response()->json([
                 'success' => true,
