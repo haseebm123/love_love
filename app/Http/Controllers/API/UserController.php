@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Notification;
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Hash;
 use Mail;
 use App\Mail\SendCodeMail;
+use Session;
 
 use DB;
 
@@ -27,6 +28,9 @@ use Image;*/
 class UserController extends Controller
 {
 
+    public function send_otp(Request $request){
+        
+    }
     public function register(Request $request)
    	{
         $checkEmail = User::where('email',$request->email)->first();
@@ -60,10 +64,23 @@ class UserController extends Controller
         }else{
             $data['profile'] = 'default.png';
         }
+
         $data['role_id'] = 'user';
         $data['password'] = Hash::make($request->password);
         $data['status']   = 0;
-        $user = User::create($data);
+        if ($request->session()->has('link')) {
+            $user = User::create($data);
+            $sender_id = User::where('reference_link',$request->session()->get('link'))->first()->id;
+             $invite = Invite::create([
+            'recever_id' => $user->id,
+            'sender_id' => $sender_id,
+
+            ]);
+            $request->session()->forget('link');
+        }else{
+
+          $user = User::create($data);
+        }
 
         if($user)
         {
@@ -156,6 +173,9 @@ class UserController extends Controller
                 ]);
 
             }
+        }
+        if ($request->account_for_id && $request->account_for_id != 1) {
+            $user['reference_link '] = $this->CreateRefLink(auth()->user()->id);
         }
         $data->update($user);
 
@@ -419,4 +439,26 @@ class UserController extends Controller
         }
     }
 
+    function createRefLink($userId){
+        $uniqueIdentifier = $userId; // Replace with the unique attribute of the user
+
+        $referenceLink = 'ref'.Str::random(10) . '-' . $uniqueIdentifier;
+
+        return $referenceLink;
+    }
+
+    public function invite_link(Request $request)
+    {
+       return User::find(auth()->user()->id)->select('reference_link')->first();
+    }
+
+    public function get_link(Request $request)
+    {
+        $link = Session::put('link', $request->link);
+         return response()->json([
+            'success' => true,
+            'message' => 'Go to register page'
+            ]);
+
+    }
 }

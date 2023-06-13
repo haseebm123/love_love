@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\Admin\AdminController;
 use App\Http\Controllers\API\PaymentController;
 
@@ -31,17 +32,25 @@ Route::get('composer-update',[UserController::class,'composer_update'])->name('c
 
 Route::get('discover',[UserController::class,'discover'])->name('discover');
 Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
+Route::get('get_link',[UserController::class,'get_link'])->name('get_link');
 
 
+Route::controller(HomeController::class)->group(function () {
+     Route::get('medical_condion','medicalCondition')->name('medicalCondition');
+     Route::get('intrest','intrest')->name('intrest');
+     Route::get('account_for','accountFor')->name('accountFor');
+});
 Route::middleware(['auth:api'])->group(function () {
     Route::controller(UserController::class)->group(function () {
 
             Route::get('filter','filter')->name('filter');
             Route::post('profile','updateProfile')->name('update-profile');
             Route::post('change-password','changePassword')->name('change-password');
+            Route::get('verify_phone','verify_phone')->name('verify_phone');
+            Route::get('invite_link','invite_link')->name('invite_link');
+
         });
     });
-
     Route::get('notifications',[AdminController::class,'notification'])->name('notification');
     Route::post('notifications/read',[AdminController::class,'notificationRead'])->name('notification.read');
     Route::get('admin/profile/request',[AdminController::class,'profileReq'])->name('admin.profile.req');
