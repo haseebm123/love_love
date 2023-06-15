@@ -46,8 +46,15 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('filter','filter')->name('filter');
             Route::post('profile','updateProfile')->name('update-profile');
             Route::post('change-password','changePassword')->name('change-password');
-            Route::get('verify_phone','verify_phone')->name('verify_phone');
+            Route::get('discover',[UserController::class,'discover'])->name('discover');
+            Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
+            Route::post('send_otp','send_otp')->name('send_otp');
+            Route::post('verify_otp','verify_otp')->name('verify_otp');
             Route::get('invite_link','invite_link')->name('invite_link');
+            Route::get('check-profile','checkProfileStatus')->name('check.profile');
+            Route::get('send-heart-request/{user_id}','sendHeartRequest')->name('send.heart.request');
+            Route::get('send-heart/','sendHearts')->name('send.heart');
+            Route::get('heart-received/','receivedHearts')->name('send.heart');
 
         });
     });

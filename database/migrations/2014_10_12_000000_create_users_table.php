@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('preferred_name')->nullable();
             $table->integer('age')->nullable();
+            $table->string('phone')->nullable();
             $table->string('education')->nullable();
             $table->string('gender')->nullable();
             $table->string('account_for_id')->nullable();
@@ -34,10 +35,13 @@ return new class extends Migration
             $table->string('reference_link')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->longText('about')->nullable();
+            $table->tinyInteger('verified_by_number')->nullable()->default(0);
+            $table->integer('otp')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->tinyInteger('is_block')->nullable()->default(0);
             $table->integer('forget_password_code')->nullable();
             $table->string('role_id')->nullable()->default('user');
+            $table->string('automation')->nullable()->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

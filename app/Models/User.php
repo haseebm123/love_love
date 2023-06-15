@@ -45,19 +45,34 @@ class User extends Authenticatable implements MustVerifyEmail
     public function images(){
         return $this->hasMany(Image::class,'user_id','id');
     }
-    public function inventory()
+
+    
+
+    /**
+     * Get all of the comments for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_intrest()
     {
-        return $this->hasMany(inventory::class);
+        return $this->hasMany(UserIntrest::class, 'user_id', 'id')->select('intrest_id','user_id');
     }
 
 
-    public function employee()
+    public function user_medical_condition()
     {
-        return $this->belongsTo(EmployeeInventory::class,'id','user_id');
+        return $this->hasMany(UserMedicalCondition::class, 'user_id', 'id')->select('medical_condition_id','user_id');
     }
 
-    public function course()
+    public function sentHeart()
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Heart::class, 'sender_id');
     }
+
+    public function receivedHeart()
+    {
+        return $this->hasMany(Heart::class, 'receiver_id');
+    }
+
+
 }

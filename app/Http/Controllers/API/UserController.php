@@ -6,8 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Validator;
+
 use App\Models\User;
 use App\Models\Image;
+use App\Models\UserIntrest;
+use App\Models\UserMedicalCondition;
+use App\Models\Heart;
+
 use App\Models\Notification;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -28,9 +33,61 @@ use Image;*/
 class UserController extends Controller
 {
 
-    public function send_otp(Request $request){
-        
+    /* Authentications */
+    public function verify_otp(Request $request) {
+        $user_id = auth()->user()->id;
+        $validator = Validator::make($request->all(), [
+            'code' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
+         $user = User::find($user_id);
+
+        if ($user->otp != $request->code) {
+            return response()->json(['message'=>'Invalid OTP','success' => false]);
+        }
+        $user->update(['verified_by_number'=>1]);
+        return response()->json([
+        'success' => true,
+        'message' => 'OTP Verifed',
+
+        ]);
+
+
     }
+    public function send_otp(Request $request){
+        $validator = Validator::make($request->all(), [
+
+            'phone' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
+        $check_phone = User::where('phone',$request->phone)->first();
+        if (isset($check_phone)) {
+            return response()->json(['message'=>"Phone Number Already Exist",'success' => false]);
+        }
+         $user = User::find(auth()->user()->id);
+
+        // $min = 100000;
+        // $max = 999999;
+        //  $otp = rand($min,$max );
+        $otp = 1234;
+        $user->update([
+            'phone' =>$request->phone,
+            'otp' =>$otp ,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Otp send to your number '.$request->phone,
+            'otp' => $otp
+        ]);
+    }
+
+
     public function register(Request $request)
    	{
         $checkEmail = User::where('email',$request->email)->first();
@@ -135,10 +192,10 @@ class UserController extends Controller
             ]);
             $user = User::find(auth()->id());
             return response()->json([
+	            'token'	  => $user_login_token,
                 'profile_path' =>$profile_path,
 	            'success' => true,
-	            'data' 	  => $user,
-	            'token'	  => $user_login_token
+	            'data' 	  => $user
 	        ]);
 		}
         else
@@ -156,8 +213,58 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'age' => ['required'],
+            'preferred_name' => ['required'],
+            'education' => ['required'],
+            'gender' => ['required'],
+            'city' => ['required'],
+            'country' => ['required'],
+            'about'=> ['required'],
+
+
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
         $imagePaths = [];
-        $user = $request->except(['images'],$request->all());
+        $user = $request->except(['images','intrest_id','medical_condition_id'],$request->all());
+        $intrest =json_decode($request->intrest_id);
+        $medical_condition =json_decode($request->medical_condition_id);
+
+        // Add Intrests
+        if (isset($intrest[0])) {
+            UserIntrest::where('user_id',auth()->user()->id)->whereNotIn('intrest_id',$intrest)->delete();
+            foreach ($intrest as $key => $value) {
+                $check_user_intrest = UserIntrest::where('user_id',auth()->user()->id)->where('intrest_id',$value)->first();
+
+                if (!$check_user_intrest) {
+                    UserIntrest::Create([
+                    'user_id' =>auth()->user()->id,
+                    'intrest_id'=>$value
+                    ]);
+                }
+            }
+        }
+
+        // Add Medical Condition
+        if (isset($medical_condition[0])) {
+            UserMedicalCondition::where('user_id',auth()->user()->id)->whereNotIn('medical_condition_id',$medical_condition)->delete();
+            foreach ($medical_condition as $key => $value) {
+                $check_user_medical_condition = UserMedicalCondition::where('user_id',auth()->user()->id)->where('medical_condition_id',$value)->first();
+                if (!$check_user_medical_condition) {
+                    UserMedicalCondition::Create([
+                    'user_id' =>auth()->user()->id,
+                    'medical_condition_id'=>$value
+                    ]);
+                }
+            }
+        }
+
         $data = User::find(auth()->user()->id);
         if($request->hasFile('images'))
         {
@@ -174,6 +281,12 @@ class UserController extends Controller
 
             }
         }
+        if($request->hasFile('profile')) {
+            $img = Str::random(20).$request->file('profile')->getClientOriginalName();
+            $user['profile'] = $img;
+            $request->profile->move(public_path("documents/profile"), $img);
+        }
+
         if ($request->account_for_id && $request->account_for_id != 1) {
             $user['reference_link '] = $this->CreateRefLink(auth()->user()->id);
         }
@@ -192,51 +305,47 @@ class UserController extends Controller
 
     }
 
+    public function ForgetPasswordEmail1(Request $request)
+	{
+		$emailAddress   = $request->email;
+		$checkEmailExist = User::where('email', $emailAddress)->first();
+        if($checkEmailExist)
+        {
+            //generate six digits code
+            // return str_random(1,20);
+             $six_digit_random_number = mt_rand(1000, 9999);
 
-    public function filter(Request $request){
+            $setCode = User::where('email', $emailAddress)->update([
+                'forget_password_code'  => $six_digit_random_number
+            ]);
 
-        $lat = auth()->user()->lat;
-        $lon = auth()->user()->lon;
-        $search = $request->search;
-        $data  = User::query();
-        $data  = $data->select('*');
-
-        $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
-
-        if ( isset($request->distance)) {
-            $data =  $data->having('distance', '=', $request->distance);
-            // $data =  $data->havingBetween('distance', [0, $request->distance]);
+            if($setCode)
+            {
+               return response([
+                    'success' => true,
+                    'message' => 'Successfully Code generated',
+                    'data'      => [
+                        'id'    => $checkEmailExist->id,
+                        'email' => $checkEmailExist->email
+                    ]
+                ]);
+            }
+            else
+            {
+                return response([
+                    'success' => false,
+                    'message' => 'Failed to generate code'
+                ]);
+            }
         }
-        if ($request->has('gender') && isset($request->gender)) {
-
-            $data->where('gender', 'like', '%' . $request->gender . '%');
+        else
+        {
+            return response([
+                'success' => false,
+                'message' => 'Email not exists'
+            ]);
         }
-        if (isset($request->age)) {
-            $data->where('age', $request->age);
-        }
-        if (isset($request->search)) {
-            $data->where('first_name', 'like', "%{$search}%")
-            ->orwhere('last_name', 'like', "%{$search}%")
-            ->orwhere('mid_name', 'like', "%{$search}%");
-
-        }
-        $data = $data->where('status',1)
-        ->where('role_id','user')
-        ->with('images') ;
-        $data = $data->get();
-
-        return response()->json(['data'=>$data,'success' => true]);
-    }
-    public function discover(){
-        $data = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
-
-        return response()->json(['data'=>$data,'success' => true]);
-    }
-
-    public function discoverView($id){
-        $data = User::where('status',1)->where('role_id','user')->where('id',$id)->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
-        return response()->json(['data'=>$data,'success' => true]);
-    }
+	}
 
     public function ForgetPasswordEmail(Request $request)
     {
@@ -282,59 +391,7 @@ class UserController extends Controller
         }
     }
 
-    public function invalid()
-    {
-        return response()->json([
-            'success' => false,
-            'message' => 'UnAuthorized Access'
-        ]);
-    }
-
-
-
-	public function ForgetPasswordEmail1(Request $request)
-	{
-		$emailAddress   = $request->email;
-		$checkEmailExist = User::where('email', $emailAddress)->first();
-        if($checkEmailExist)
-        {
-            //generate six digits code
-            // return str_random(1,20);
-             $six_digit_random_number = mt_rand(1000, 9999);
-
-            $setCode = User::where('email', $emailAddress)->update([
-                'forget_password_code'  => $six_digit_random_number
-            ]);
-
-            if($setCode)
-            {
-               return response([
-                    'success' => true,
-                    'message' => 'Successfully Code generated',
-                    'data'      => [
-                        'id'    => $checkEmailExist->id,
-                        'email' => $checkEmailExist->email
-                    ]
-                ]);
-            }
-            else
-            {
-                return response([
-                    'success' => false,
-                    'message' => 'Failed to generate code'
-                ]);
-            }
-        }
-        else
-        {
-            return response([
-                'success' => false,
-                'message' => 'Email not exists'
-            ]);
-        }
-	}
-
-	public function checkForgetPasswordCodeVerification(Request $request)
+    public function checkForgetPasswordCodeVerification(Request $request)
 	{
 		$code = $request->code;
         // $id   = $request->id;
@@ -407,8 +464,151 @@ class UserController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 
+    /* Profiles */
+    public function checkProfileStatus(){
+        $id = auth()->user()->id;
+        $data = User::where('id',$id)->whereNotNull([
+            'first_name',
+            'last_name',
+            'age',
+            'preferred_name',
+            'education',
+            'gender',
+            'email',
+            'city',
+            'country',
+            "profile_for",
+            'about',
+        ])->where('verified_by_number',1) ->first();
+        if (isset($data)) {
+            return response()->json(['message'=>'Profile Complete','success' => true]);
+        }
+        return response()->json(['message'=>'Profile Uncomplete','success' => false]);
+    }
+    public function filter(Request $request){
+
+        $lat = auth()->user()->lat;
+        $lon = auth()->user()->lon;
+        $search = $request->search;
+        $data  = User::query();
+        $data  = $data->select('*');
+
+        $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
+
+        if ( isset($request->distance)) {
+            $data =  $data->having('distance', '=', $request->distance);
+            // $data =  $data->havingBetween('distance', [0, $request->distance]);
+        }
+        if ($request->has('gender') && isset($request->gender)) {
+
+            $data->where('gender', 'like', '%' . $request->gender . '%');
+        }
+        if (isset($request->age)) {
+            $data->where('age', $request->age);
+        }
+        if (isset($request->search)) {
+            $data->where('first_name', 'like', "%{$search}%")
+            ->orwhere('last_name', 'like', "%{$search}%")
+            ->orwhere('mid_name', 'like', "%{$search}%");
+
+        }
+        $data = $data->where('status',1)
+        ->where('role_id','user')
+        ->with('images') ;
+        $data = $data->get();
+
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+    public function discover(){
+        $users = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
+        $data = $this->isHeart($users);
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+
+    public function discoverView($id){
+        $users = User::with(['user_intrest.intrest','user_medical_condition.medical_condition'])
+        ->where('status',1)
+        ->where('role_id','user')
+        ->where('id',$id)
+        ->with('images')
+        ->select('first_name','last_name','mid_name','age','description','role_id','email','id')
+        ->get();
+
+        $data = $this->isHeart($users);
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+    // Hearts
+    function receivedHearts() {
+        $user_id = auth()->user()->id;
+        $data = Heart::with('user_sender')->where('receiver_id',$user_id)->select('sender_id')->where('status',0)
+        ->get();
+
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+    function sendHearts() {
+        $user_id = auth()->user()->id;
+        $data = Heart::with('user_receiver')->where('sender_id',$user_id)->select('receiver_id')->where('status',0)
+        ->get();
+
+        return response()->json(['data'=>$data,'success' => true]);
+    }
+    public function sendHeartRequest($receiver_id)
+    {
+        $receiver_user = User::where('id',$receiver_id)->first();
+        $sender_user = auth()->user()->id;
+
+        if (!$receiver_user) {
+             return response()->json(['message'=>'User Not Found','success' => false]);
+        }
+        if ($receiver_user->id == $sender_user) {
+             return response()->json(['message'=>'Something went wrong','success' => false]);
+        }
+        $check = Heart::where('receiver_id',$receiver_user->id)->where('sender_id',$sender_user)->first();
+        if ($check) {
+            return response()->json(['message'=>'Already Send a request','success' => false]);
+        }
+        return Heart::Create([
+            'receiver_id'=>$receiver_user->id,
+            'sender_id'=>$sender_user,
+
+        ]);
+        return response()->json(['message'=>'Heart Send Successfully','success' => true]);
+    }
 
 
+    public function invalid()
+    {
+        return response()->json([
+            'success' => false,
+            'message' => 'UnAuthorized Access'
+        ]);
+    }
+
+    function createRefLink($userId){
+        $uniqueIdentifier = $userId; // Replace with the unique attribute of the user
+
+        $referenceLink = 'ref'.Str::random(10) . '-' . $uniqueIdentifier;
+
+        return $referenceLink;
+    }
+
+    public function invite_link(Request $request)
+    {
+       return User::find(auth()->user()->id)->select('reference_link')->first();
+    }
+
+    public function get_link(Request $request)
+    {
+        $link = Session::put('link', $request->link);
+         return response()->json([
+            'success' => true,
+            'message' => 'Go to register page'
+            ]);
+
+    }
+
+
+    /* Clean Server */
     public function clearCache()
     {
         try {
@@ -439,26 +639,34 @@ class UserController extends Controller
         }
     }
 
-    function createRefLink($userId){
-        $uniqueIdentifier = $userId; // Replace with the unique attribute of the user
+    public function isHeart($data){
 
-        $referenceLink = 'ref'.Str::random(10) . '-' . $uniqueIdentifier;
+        /* Is Friend  */
+        $user_id = auth()->user()->id;
+        $hearts = Heart::select('sender_id','receiver_id')->where('status',1)->where(function($query) use ($user_id){
+            $query->where('sender_id',$user_id)
+            ->orWhere('receiver_id',$user_id);
+        })
+        ->get();
+        $ids= array();
+        foreach ($hearts as $key => $value) {
+            if ($user_id != $value->sender_id) {
+                array_push($ids,$value->sender_id);
+            }
+            if ($user_id != $value->receiver_id) {
+                array_push($ids,$value->receiver_id);
+            }
+        }
+        // Array of object IDs to check
+        foreach ($data as $object) {
+            if (in_array($object->id, $ids)) {
+                $object->is_friend = true;
+            }else{
+                $object->is_friend = false;
+            }
+        }
 
-        return $referenceLink;
-    }
-
-    public function invite_link(Request $request)
-    {
-       return User::find(auth()->user()->id)->select('reference_link')->first();
-    }
-
-    public function get_link(Request $request)
-    {
-        $link = Session::put('link', $request->link);
-         return response()->json([
-            'success' => true,
-            'message' => 'Go to register page'
-            ]);
-
+        return $data;
+        /* Is Friend  */
     }
 }
