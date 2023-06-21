@@ -12,6 +12,7 @@ use App\Models\Image;
 use App\Models\UserIntrest;
 use App\Models\UserMedicalCondition;
 use App\Models\Heart;
+use App\Models\HelpAndSupport;
 
 use App\Models\Notification;
 use Illuminate\Support\Str;
@@ -87,7 +88,6 @@ class UserController extends Controller
         ]);
     }
 
-
     public function register(Request $request)
    	{
         $checkEmail = User::where('email',$request->email)->first();
@@ -125,15 +125,15 @@ class UserController extends Controller
         $data['role_id'] = 'user';
         $data['password'] = Hash::make($request->password);
         $data['status']   = 0;
-        if ($request->session()->has('link')) {
+        if (session()->has('link')) {
             $user = User::create($data);
-            $sender_id = User::where('reference_link',$request->session()->get('link'))->first()->id;
+            $sender_id = User::where('reference_link',session()->get('link'))->first()->id;
              $invite = Invite::create([
             'recever_id' => $user->id,
             'sender_id' => $sender_id,
 
             ]);
-            $request->session()->forget('link');
+            session()->forget('link');
         }else{
 
           $user = User::create($data);
@@ -208,7 +208,6 @@ class UserController extends Controller
 		}
 
 	}
-
 
     public function updateProfile(Request $request)
     {
@@ -567,7 +566,7 @@ class UserController extends Controller
         if ($check) {
             return response()->json(['message'=>'Already Send a request','success' => false]);
         }
-        return Heart::Create([
+        Heart::Create([
             'receiver_id'=>$receiver_user->id,
             'sender_id'=>$sender_user,
 
@@ -669,4 +668,28 @@ class UserController extends Controller
         return $data;
         /* Is Friend  */
     }
+
+    /* Send Help and Support Messages */
+    function SendQuery(Request $request) {
+        $validator = Validator::make($request->all(), [
+
+            'message' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
+        $user = Auth::id();
+        $msg = $request->message;
+        HelpAndSupport::Create([
+            'user_id'=>$user,
+            'message'=>$msg,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Message Sent Sucessfully'
+            ]);
+    }
+
 }

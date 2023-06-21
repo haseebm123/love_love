@@ -29,7 +29,6 @@ Route::post('update-forget-password', [UserController::class, 'updateForgetPassw
 Route::get('invalid',[UserController::class,'invalid'])->name('invalid');
 Route::post('profile',[UserController::class,'profileUpdate'])->name('profile.update');
 Route::get('composer-update',[UserController::class,'composer_update'])->name('composer.update');
-
 Route::get('discover',[UserController::class,'discover'])->name('discover');
 Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
 Route::get('get_link',[UserController::class,'get_link'])->name('get_link');
@@ -55,6 +54,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('send-heart-request/{user_id}','sendHeartRequest')->name('send.heart.request');
             Route::get('send-heart/','sendHearts')->name('send.heart');
             Route::get('heart-received/','receivedHearts')->name('send.heart');
+            Route::post('send-query/','SendQuery')->name('send.query');
 
         });
     });

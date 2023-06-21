@@ -11,10 +11,29 @@ class HomeController extends Controller
 {
     function medicalCondition() {
 
-        return $data  = MedicalCondition::select('id','name')->get();
+        $data  = MedicalCondition::select('id','name')->get();
+        $data1 = [];
+        $data2 = [];
+        if ($data[0]) {
+        $total = $data->count();
+        $half =  ceil($total/2);
+
+            for ($i=0; $i < $total; $i++) {
+                if ($data[$i]) {
+                    if ($i < $half) {
+                        $data1[] =$data[$i];
+                    }else{
+                        $data2[] =$data[$i];
+                    }
+
+                }
+            }
+        }
+
         return response()->json([
 	            'success' => true,
-	            'data' 	  => $data,
+	            'data1' 	  => $data1,
+	            'data2' 	  => $data2,
 
 	        ]);
 
