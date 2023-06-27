@@ -34,15 +34,15 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-            <li class=" nav-item"><a href="#"><img class="image-icon"
+            <li class="nav-item"><a href="#"><img class="image-icon"
                         src="{{ asset('icon/user_management.svg') }}" alt=""><span class="menu-title"
-                        data-i18n="User">User</span></a>
+                        data-i18n="User Management">User Management</span></a>
                 <ul class="menu-content">
-                    <li class="@if (Route::currentRouteName() == 'users.index') active @endif"><a
-                            href="{{ route('users.index') }}"><span class="menu-item" data-i18n="List">List</span></a>
+                    <li class="@if (Route::currentRouteName() == 'users.management') active @endif"><a
+                            href="{{ route('users.index') }}"><span class="menu-item" data-i18n="Request For Person">Request For Person</span></a>
                     </li>
                     <li class="@if (Route::currentRouteName() == 'users.create') active @endif"><a
-                            href="{{ route('users.create') }}"><span class="menu-item" data-i18n="View">Create
+                            href="{{ route('users.create') }}"><span class="menu-item" data-i18n="Discover Profile">Discover Profile
                                 User</span></a>
                     </li>
 
@@ -51,9 +51,8 @@
 
             <li class=" nav-item">
                 <a href="{{ route('admin.dashboard') }}">
-                <img class="image-icon"
-                        src="{{ asset('icon/accounts.svg') }}" alt=""><span class="menu-title"
-                        data-i18n="Dashboard">Accounts</span></a>
+                    <img class="image-icon" src="{{ asset('icon/accounts.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Dashboard">Accounts</span></a>
 
             </li>
 
@@ -62,6 +61,21 @@
 
             {{-- Not in user --}}
             @can('role-list')
+                <li class=" nav-item"><a href="#"><img class="image-icon"
+                            src="{{ asset('icon/user_management.svg') }}" alt=""><span class="menu-title"
+                            data-i18n="User">User Management</span></a>
+                    <ul class="menu-content">
+                        <li class="@if (Route::currentRouteName() == 'users.index') active @endif"><a
+                                href="{{ route('users.index') }}"><span class="menu-item" data-i18n="List">List</span></a>
+                        </li>
+                        <li class="@if (Route::currentRouteName() == 'users.create') active @endif"><a
+                                href="{{ route('users.create') }}"><span class="menu-item" data-i18n="View">Create
+                                    User</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
                             data-i18n="User">Roles Management</span></a>
                     <ul class="menu-content">

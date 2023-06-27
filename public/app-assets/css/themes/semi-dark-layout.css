@@ -29,6 +29,9 @@ body.semi-dark-layout {
     body.semi-dark-layout .main-menu-content .navigation-main .nav-item.open a {
       background-color: #fff;
       }
+    li.nav-item.has-sub.open, body.semi-dark-layout .main-menu-content .navigation-main .nav-item.open a::after {
+        background-color: #fff;
+      }
     body.semi-dark-layout .main-menu-content .navigation-main .nav-item a:after, body.semi-dark-layout .main-menu-content .navigation-main .nav-item a {
       background: #9E4572;
       border-radius: 4px;

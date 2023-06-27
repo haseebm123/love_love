@@ -13,6 +13,8 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Auth\VerificationController;
 
 
+/* Love Admin Routes */
+use App\Http\Controllers\Admin\UserManagementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,7 +52,12 @@ use App\Http\Controllers\Auth\VerificationController;
 
 
     Route::group(['middleware' => ['auth']], function() {
+        /*  Love Love Admin Routes */
+        Route::controller(UserManagementController::class)->group(function () {
+            Route::get('users-management', 'index')->name('users.management');
 
+        });
+        /* End Love Love Admin Routes */
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
         Route::get('role-change-status', [RoleController::class, 'roleChangeStatus'])->name('role-change-status');
