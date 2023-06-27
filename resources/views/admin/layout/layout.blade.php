@@ -77,7 +77,7 @@
                </li>
                <li class="nav-item">
                   <div>
-                     <a class="dropdown-item @if(Route::currentRouteName() == 'profile') active @endif " href="{{route('profile')}}" >
+                     <a class="dropdown-item @if(Route::currentRouteName() == 'admin.profile') active @endif " href="{{route('admin.profile')}}" >
                      Profile
                      </a>
                   </div>
@@ -96,7 +96,7 @@
          <!-- Main Sidebar Container -->
          <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{route('dashboard')}}" class="brand-link">
+            <a href="{{route('admin.dashboard')}}" class="brand-link">
                <img class="logo" src="{{asset('images/logo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                <!-- <span class="brand-text font-weight-light">Admin Panel</span> -->
                <!-- <span class="brand-text font-weight-light">Admin Panel</span> -->
@@ -116,7 +116,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                            <li class="nav-item">
-                              <a href="{{route('dashboard')}}" class="nav-link @if(Route::currentRouteName() == 'dashboard') active  @endif">
+                              <a href="{{route('admin.dashboard')}}" class="nav-link @if(Route::currentRouteName() == 'dashboard') active  @endif">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Dashboard</p>
                               </a>
@@ -176,11 +176,11 @@
             <!-- Content Header (Page header) -->
             <br>
             <!-- /.content -->
-            @yield('body-section')
+            @yield('body')
          </div>
          <!-- /.content-wrapper -->
          <footer class="main-footer">
-            <strong>Copyright &copy; 2020-<?php echo date('Y') ?> <a href="{{route('dashboard')}}"></a>.</strong>
+            <strong>Copyright &copy; 2020-<?php echo date('Y') ?> <a href="{{route('admin.dashboard')}}"></a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                <!-- <b>Version</b> 3.1.0 -->

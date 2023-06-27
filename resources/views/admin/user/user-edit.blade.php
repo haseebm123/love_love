@@ -1,15 +1,15 @@
 
-@extends('admin/layout/layout')
+@extends('admin.layouts.master')
 @section('title',' | User Edit')
 @section('header-script')
 
 @endsection
 
-@section('body-section')
+@section('body')
 <br>
 <section class="content">
     <div class="container-fluid">
-    
+
         <div class="row">
           <div class="col-12">
               <div class="card">
@@ -51,11 +51,11 @@
                           </div>
                       </div>
 
-                      
+
                       <div class="col-xs-12 col-sm-12 col-md-12">
-                         
-                        
-                        
+
+
+
 
 
 
@@ -80,8 +80,8 @@
                   </div>
                   {!! Form::close() !!}
                   </div>
-              </div> 
-          </div>   
+              </div>
+          </div>
         </div>
     </div>
 </section>
@@ -136,7 +136,7 @@ $('.select2bs4').select2({
         }
 
         var errorRes = function(xhr, ajaxOptions, thrownError) {
-            
+
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
         }
@@ -164,7 +164,7 @@ function locationInfo() {
     this.getCities = function(id) {
         jQuery(".cities option:gt(0)").remove();
         //get additional fields
-        
+
         var url = rootUrl+'?type=getCities&countryId='+ '&stateId=' + id;
         var method = "post";
         var data = {};
@@ -182,10 +182,10 @@ function locationInfo() {
                         jQuery('.cities').append(option);
                     });
                 }
-                
+
 
                 jQuery(".cities").prop("disabled",false);
-            
+
         });
     };
 
@@ -195,14 +195,14 @@ function locationInfo() {
         //get additional fields
         var stateClasses = jQuery('#stateId').attr('class');
 
-        
+
         var url = rootUrl+'?type=getStates&countryId=' + id;
         var method = "post";
         var data = {};
         jQuery('.states').find("option:eq(0)").html("Please wait..");
         call.send(data, url, method, function(data) {
             jQuery('.states').find("option:eq(0)").html("Select State");
-            
+
                 jQuery.each(data['result'], function(key, val) {
                     var option = jQuery('<option />');
                     option.attr('value', val.name).text(val.name);
@@ -210,7 +210,7 @@ function locationInfo() {
                     jQuery('.states').append(option);
                 });
                 jQuery(".states").prop("disabled",false);
-            
+
         });
     };
 
@@ -221,17 +221,17 @@ function locationInfo() {
         jQuery('.countries').find("option:eq(0)").html("Please wait..");
         call.send(data, url, method, function(data) {
             jQuery('.countries').find("option:eq(0)").html("Select Country");
-            
+
             jQuery.each(data['result'], function(key, val) {
                 var option = jQuery('<option />');
-                
+
                 option.attr('value', val.name).text(val.name);
                 option.attr('countryid', val.id);
-                
+
                 jQuery('.countries').append(option);
             });
                 // jQuery(".countries").prop("disabled",false);
-            
+
         });
     };
 
@@ -260,7 +260,7 @@ jQuery(function() {
     });
 });
 
- 
+
 </script>
 
 @endsection

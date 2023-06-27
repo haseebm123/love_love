@@ -1,15 +1,15 @@
 
-@extends('admin/layout/layout')
+@extends('admin.layouts.master')
 @section('title',' | User Show')
 @section('header-script')
 
 @endsection
 
-@section('body-section')
+@section('body')
 <br>
  <section class="content">
     <div class="container-fluid">
-    
+
     <div class="row">
           <div class="col-12">
               <div class="card">
@@ -48,7 +48,7 @@
                           {{ $user->address }}
                       </div>
                   </div>
-        
+
                   <div class="col-xs-12 col-sm-12 col-md-12">
                       <div class="form-group">
                           <strong>Roles:</strong>
@@ -60,8 +60,8 @@
                       </div>
                   </div>
                   </div>
-              </div> 
-          </div>   
+              </div>
+          </div>
         </div>
     </div>
 </section>
@@ -97,12 +97,12 @@
 </script>
 
 <script type="text/javascript">
- 
+
  var APP_URL = {!! json_encode(url('/')) !!}
 
 
 
- 
+
 </script>
 
 @endsection

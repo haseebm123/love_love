@@ -24,4 +24,7 @@ class Heart extends Model
     {
         return $this->hasOne(User::class,'id', 'receiver_id');
     }
+
+
+
 }

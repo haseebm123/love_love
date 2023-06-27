@@ -13,8 +13,10 @@ use App\Models\UserIntrest;
 use App\Models\UserMedicalCondition;
 use App\Models\Heart;
 use App\Models\HelpAndSupport;
-
 use App\Models\Notification;
+use App\Models\Recommendation;
+
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Laravel\Passport\Passport;
@@ -23,7 +25,8 @@ use Hash;
 use Mail;
 use App\Mail\SendCodeMail;
 use Session;
-
+use Jenssegers\Agent\Agent;
+use Mobile_Detect;
 use DB;
 
 
@@ -66,7 +69,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
         }
-        $check_phone = User::where('phone',$request->phone)->first();
+        $check_phone = User::where('phone',$request->phone)->where('verified_by_number',1)->first();
         if (isset($check_phone)) {
             return response()->json(['message'=>"Phone Number Already Exist",'success' => false]);
         }
@@ -125,14 +128,16 @@ class UserController extends Controller
         $data['role_id'] = 'user';
         $data['password'] = Hash::make($request->password);
         $data['status']   = 0;
+        // $data['reference_link'] = 'ref'.Str::random(10) . '-' .time();
         if (session()->has('link')) {
-            $user = User::create($data);
             $sender_id = User::where('reference_link',session()->get('link'))->first()->id;
-             $invite = Invite::create([
-            'recever_id' => $user->id,
-            'sender_id' => $sender_id,
+            $data['reference_id'] = $sender_id;
+            $user = User::create($data);
+            // $invite = Invite::create([
+            // 'recever_id' => $user->id,
+            // 'sender_id' => $sender_id,
 
-            ]);
+            // ]);
             session()->forget('link');
         }else{
 
@@ -211,9 +216,7 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-
             'first_name' => ['required'],
             'last_name' => ['required'],
             'age' => ['required'],
@@ -224,17 +227,14 @@ class UserController extends Controller
             'country' => ['required'],
             'about'=> ['required'],
 
-
-
         ]);
         if ($validator->fails()) {
             return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
         }
-        $imagePaths = [];
+
         $user = $request->except(['images','intrest_id','medical_condition_id'],$request->all());
         $intrest =json_decode($request->intrest_id);
         $medical_condition =json_decode($request->medical_condition_id);
-
         // Add Intrests
         if (isset($intrest[0])) {
             UserIntrest::where('user_id',auth()->user()->id)->whereNotIn('intrest_id',$intrest)->delete();
@@ -249,7 +249,6 @@ class UserController extends Controller
                 }
             }
         }
-
         // Add Medical Condition
         if (isset($medical_condition[0])) {
             UserMedicalCondition::where('user_id',auth()->user()->id)->whereNotIn('medical_condition_id',$medical_condition)->delete();
@@ -262,28 +261,6 @@ class UserController extends Controller
                     ]);
                 }
             }
-        }
-
-        $data = User::find(auth()->user()->id);
-        if($request->hasFile('images'))
-        {
-            foreach ($request->file('images') as $key => $image) {
-
-                $img = Str::random(20).$image->getClientOriginalName();
-                $image->move(public_path("documents/images"), $img);
-                $imagePaths[$key] = $img;
-
-                $addImg = Image::create([
-                    'user_id'=> auth()->id(),
-                    'image'=>$img
-                ]);
-
-            }
-        }
-        if($request->hasFile('profile')) {
-            $img = Str::random(20).$request->file('profile')->getClientOriginalName();
-            $user['profile'] = $img;
-            $request->profile->move(public_path("documents/profile"), $img);
         }
 
         if ($request->account_for_id && $request->account_for_id != 1) {
@@ -304,6 +281,46 @@ class UserController extends Controller
 
     }
 
+   public function uploadImg(Request $request){
+        $data = User::find(auth()->user()->id);
+        $imagePaths = [];
+        $addImg = [];
+        $user = [];
+        $validator = Validator::make($request->all(), [
+            'images' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
+        if($request->hasFile('images'))
+        {
+            foreach ($request->file('images') as $key => $image) {
+
+                $img = Str::random(20).$image->getClientOriginalName();
+
+                $image->move(public_path("documents/images"), $img);
+                // return $imagePaths[$key] = $img;
+
+
+                if ($key == 0) {
+
+                    $data->update(['profile'=>$img]);
+                }else{
+                    $addImg = Image::create([
+                    'user_id'=> auth()->user()->id,
+                    'image'=>$img
+                    ]);
+                }
+
+            }
+        }
+        return response()->json([
+            'message'=> "Images Upload Successfilly",
+            'success' => true]);
+
+
+
+    }
     public function ForgetPasswordEmail1(Request $request)
 	{
 		$emailAddress   = $request->email;
@@ -454,8 +471,6 @@ class UserController extends Controller
         ]);
 	}
 
-
-
     public function logout(Request $request)
     {
         return $request->user()->currentAccessToken()->delete();
@@ -491,7 +506,7 @@ class UserController extends Controller
         $search = $request->search;
         $data  = User::query();
         $data  = $data->select('*');
-
+        $age =[];
         $data = $data->selectRaw('6371 * acos(cos(radians(' . $lat . ')) * cos(radians(users.lat)) * cos(radians(users.lon) - radians(' . $lon . ')) + sin(radians(' . $lat . ')) * sin(radians(users.lat))) AS distance') ;
 
         if ( isset($request->distance)) {
@@ -502,8 +517,11 @@ class UserController extends Controller
 
             $data->where('gender', 'like', '%' . $request->gender . '%');
         }
+
         if (isset($request->age)) {
-            $data->where('age', $request->age);
+            $age = explode(',', $request->age);
+            // $data->where('age', $request->age);
+            $data->whereBetween('age', [$age[0], $age[1]]);
         }
         if (isset($request->search)) {
             $data->where('first_name', 'like', "%{$search}%")
@@ -519,7 +537,7 @@ class UserController extends Controller
         return response()->json(['data'=>$data,'success' => true]);
     }
     public function discover(){
-        $users = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','description','role_id','email','id')->get();
+        $users = User::where('status',1)->where('role_id','user')->with('images')->select('first_name','last_name','mid_name','age','about','role_id','email','id','profile')->get();
         $data = $this->isHeart($users);
         return response()->json(['data'=>$data,'success' => true]);
     }
@@ -530,24 +548,32 @@ class UserController extends Controller
         ->where('role_id','user')
         ->where('id',$id)
         ->with('images')
-        ->select('first_name','last_name','mid_name','age','description','role_id','email','id')
+        ->select('first_name','last_name','mid_name','age','about','role_id','email','id','profile','city','country')
         ->get();
-
         $data = $this->isHeart($users);
         return response()->json(['data'=>$data,'success' => true]);
     }
     // Hearts
     function receivedHearts() {
         $user_id = auth()->user()->id;
-        $data = Heart::with('user_sender')->where('receiver_id',$user_id)->select('sender_id')->where('status',0)
-        ->get();
+        $data = Heart::with('user_sender')
+        ->where('receiver_id', $user_id)
+        ->selectRaw('sender_id AS user_id')
+        ->where('status', 0)
+        ->get()->map(function ($heart) {
+        $heart->user = $heart->user_sender;
+        return $heart;
+    });
 
         return response()->json(['data'=>$data,'success' => true]);
     }
     function sendHearts() {
         $user_id = auth()->user()->id;
-        $data = Heart::with('user_receiver')->where('sender_id',$user_id)->select('receiver_id')->where('status',0)
-        ->get();
+        $data = Heart::with('user_receiver')->where('sender_id',$user_id)->selectRaw('receiver_id AS user_id')->where('status',0)
+        ->get()->map(function ($heart) {
+            $heart->user = $heart->user_receiver;
+            return $heart;
+        });
 
         return response()->json(['data'=>$data,'success' => true]);
     }
@@ -574,9 +600,82 @@ class UserController extends Controller
         return response()->json(['message'=>'Heart Send Successfully','success' => true]);
     }
 
-
-    public function invalid()
+    public function acceptHeartRequest(Request $request)
     {
+        $receiver_id = auth()->user()->id;
+        $sender_id = $request->user_id;
+        $data = Heart::where('sender_id',$sender_id)->where('receiver_id',$receiver_id)->where('status',0)->first();
+        if(!isset($data)){
+            return response()->json([
+                'success' => true,
+                'message' => 'User  Not Found'
+            ]);
+        }
+        $data->update([
+            'status'=>1
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Request Accept Sucessfully'
+        ]);
+    }
+
+    public function cancelHeartRequest(Request $request)
+    {
+        $receiver_id = auth()->user()->id;
+        $sender_id = $request->user_id;
+        $data = Heart::where('sender_id',$sender_id)->where('receiver_id',$receiver_id)->first();
+        if(!isset($data)){
+            return response()->json([
+                'success' => true,
+                'message' => 'User  Not Found'
+            ]);
+        }
+        $data->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Request Cancel Sucessfully'
+        ]);
+    }
+
+
+    public function invalid(Request $request)
+    {
+
+        $mobileDetect = new Mobile_Detect($request->server->all());
+
+        if ($mobileDetect->isMobile()) {
+            if ($mobileDetect->is('iOS')) {
+                // Handle iOS
+                return 'iOS';
+            } elseif ($mobileDetect->is('AndroidOS')) {
+                // Handle Android
+                return 'AndroidOS';
+            } else {
+                // Handle other mobile OS
+            }
+        } else {
+            return 'mobile not found';
+        }
+
+        //  return $agent = new Agent();
+        //  $device = $agent->device();
+        //  $platform = $agent->platform();
+        //  return $platform;
+        //  if ($agent->is('iPhone') || $agent->is('iPad')) {
+        //     // Redirect to Apple Store
+        //     // return new RedirectResponse('https://apps.apple.com/app/your_app_name/idyour_app_id');
+        //     return 'Apple';
+        // } elseif ($agent->is('android')) {
+        //     return 'Andriod';
+        // }else {
+        //     // Redirect to Google Play
+        //     return 'Not Found';
+        //     return new RedirectResponse('https://play.google.com/store/apps/details?id=your_app_package_name');
+        // }
+        //  return session()->get('link');
         return response()->json([
             'success' => false,
             'message' => 'UnAuthorized Access'
@@ -593,14 +692,51 @@ class UserController extends Controller
 
     public function invite_link(Request $request)
     {
-       return User::find(auth()->user()->id)->select('reference_link')->first();
+        $url = url('api/get_link?link='.auth()->user()->reference_link);
+        return response()->json(['message'=>'Link Create','data'=>$url,'success' => true]);
+
     }
 
     public function get_link(Request $request)
     {
-        $link = Session::put('link', $request->link);
+
+        $link = session()->put('link', $request->link);
+         $mobileDetect = new Mobile_Detect($request->server->all());
+
+        if ($mobileDetect->isMobile()) {
+            if ($mobileDetect->is('iOS')) {
+
+                return new RedirectResponse('https://apps.apple.com/app/your_app_name/idyour_app_id');
+            } elseif ($mobileDetect->is('AndroidOS')) {
+
+                return new RedirectResponse('https://play.google.com/store/apps/details?id=your_app_package_name');
+            } else {
+                return response()->json([
+                'success' => false,
+                'message' => 'Your is version not  Android nor IOS'
+            ]);
+
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Your is version not  Android nor IOS'
+            ]);
+
+        }
+
+
+        // if ($agent->is('iPhone') || $agent->is('iPad')) {
+        //     // Redirect to Apple Store
+        //     return new RedirectResponse('https://apps.apple.com/app/your_app_name/idyour_app_id');
+        // } else {
+        //     // Redirect to Google Play
+        //     return new RedirectResponse('https://play.google.com/store/apps/details?id=your_app_package_name');
+        // }
+
          return response()->json([
             'success' => true,
+
             'message' => 'Go to register page'
             ]);
 
@@ -692,4 +828,49 @@ class UserController extends Controller
             ]);
     }
 
+
+    /* Reference Link */
+    function SendRecommendation(Request $request) {
+        $myRefLink = auth()->user()->reference_link;
+        $recom_to = User::where('reference_id',auth()->user()->id)->select('id','first_name','mid_name','last_name')->first();
+        $check_recomm = Recommendation::where('recom_to',$recom_to->id)->where('recom_from',auth()->user()->id)->where('recom_user_id',$request->user_id)->first();
+        if (isset($check_recomm)) {
+            return response()->json([
+            'success' => true,
+            'message' => 'Recommendation Already Send'
+            ]);
+        }
+        Recommendation::Create([
+            'recom_to'=>  $recom_to->id,
+            'recom_from'=> auth()->user()->id,
+            'recom_user_id'=> $request->user_id,
+        ]);
+         return response()->json([
+            'success' => true,
+            'message' => 'Recommend the profile to '.$recom_to->first_name.' '.$recom_to->mid_name.' '.$recom_to->last_name.' '
+            ]);
+
+    }
+
+    function recommendations(Request $request) {
+        $check_recomm = Recommendation::with(['user'])->select('recom_to','recom_from', 'recom_user_id')->where('recom_to',auth()->user()->id)->get()->map(function ($heart) {
+            $heart->user = $heart;
+            $heart->user_id =$heart->user->id;
+        return $heart;
+        });
+
+        $users=[];
+        $data = $check_recomm->each(function ($item) use (&$users) {
+
+            $users[] = $item->user;
+        });
+        $isHeart = $this->isHeart($users);
+
+         return response()->json([
+            'success' => true,
+            'data'=>  $isHeart,
+            'message' => 'Recommend the profile to '
+            ]);
+
+    }
 }

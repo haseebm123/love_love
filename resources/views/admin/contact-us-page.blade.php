@@ -12,15 +12,15 @@
   </style>
 @endsection
 
-@section('body-section')
+@section('body')
 <br>
  <section class="content">
       <div class="container-fluid">
-        
+
         <div class="row">
           <div class="col-12">
              <div class="card">
-             
+
               <!-- /.card-header -->
               <div class="card-body">
               <form id="quickForm1" action="{{route('addContactUsImage')}}" method="POST" enctype="multipart/form-data">
@@ -96,7 +96,7 @@
         </div>
       </div>
 
-    
+
 @endsection
 
 
@@ -112,14 +112,14 @@ $(function () {
 
  $('#quickForm1').validate({
     rules: {
-     
+
       title: {
        required: true,
       },
       description: {
        required: true,
       },
-      
+
     },
     messages: {
       // terms: "Please accept our terms"
@@ -137,7 +137,7 @@ $(function () {
     }
   });
 });
- 
+
 
 
 var loadFile = function(event) {
@@ -185,11 +185,11 @@ var loadFile5 = function(event) {
 </script>
 
 <script type="text/javascript">
- 
 
 
 
- 
+
+
 </script>
 
 @endsection

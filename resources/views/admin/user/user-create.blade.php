@@ -1,15 +1,15 @@
 
-@extends('admin/layout/layout')
+@extends('admin.layouts.master')
 @section('title',' | User Create')
 @section('header-script')
 
 @endsection
 
-@section('body-section')
+@section('body')
 <br>
  <section class="content">
     <div class="container-fluid">
-    
+
         <div class="row">
           <div class="col-12">
               <div class="card">
@@ -67,21 +67,21 @@
                                 {!! Form::textarea('address', null, array('placeholder' => 'Address','class' => 'form-control','rows'=>5)) !!}
                             </div>
                         </div>
-                      
+
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Role:</strong>
-                                
+
                                 <select name="role_id" id="role_id" class="form-control">
                                 @forelse($roles as $key => $item)
                                    <option value="{{$item}}">{{$item}}</option>
                                 @empty
-                                @endforelse   
+                                @endforelse
                                 </select>
-                                
+
                             </div>
                         </div>
-                        
+
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Profile:</strong>
@@ -95,8 +95,8 @@
                     </div>
                     {!! Form::close() !!}
                   </div>
-              </div> 
-          </div>   
+              </div>
+          </div>
         </div>
     </div>
 </section>
@@ -140,10 +140,10 @@ $('.select2bs4').select2({
   });
 
   $(function () {
-   
+
    $('#quickForm').validate({
      rules: {
-      
+
        first_name: {
         required: true,
        },
@@ -158,7 +158,7 @@ $('.select2bs4').select2({
         password_confirm : {
            equalTo : "#password"
         }
-       
+
      },
      messages: {
        // terms: "Please accept our terms"
@@ -176,9 +176,9 @@ $('.select2bs4').select2({
      }
    });
    });
-   
-   
-   
+
+
+
    var loadFile = function(event) {
    var image = document.getElementById('output');
    image.src = URL.createObjectURL(event.target.files[0])
@@ -186,7 +186,7 @@ $('.select2bs4').select2({
 </script>
 
 <script type="text/javascript">
- 
+
  var APP_URL = {!! json_encode(url('/')) !!}
 
 

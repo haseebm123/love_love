@@ -2,7 +2,7 @@
 @extends('admin/layout/layout')
 
 @section('header-script')
- 
+
  <style type="text/css">
     /* .select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice {
       background-color: #007bff;
@@ -19,7 +19,7 @@
 @section('sider-section')
 @endsection
 
-@section('body-section')
+@section('body')
  <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -31,7 +31,7 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                
+
                         @if(Auth()->user()->profile)
                         <img class="profile-user-img img-fluid img-circle"
                         src='{{asset("documents/profile/$profile")}}'
@@ -44,7 +44,7 @@
                         alt="User profile picture">
 
                         @endif
-                  
+
                 </div>
 
                 <h3 class="profile-username text-center">{{Auth()->user()->first_name}} {{Auth()->user()->last_name}}</h3>
@@ -58,10 +58,10 @@
                   <li class="list-group-item">
                     <b>Phone Number</b> <a class="float-right">{{Auth()->user()->phone_number}}</a>
                   </li>
-                  
+
                 </ul>
 
-              
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -79,12 +79,12 @@
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
-                  
-                
+
+
 
                   <div class="tab-pane active" id="settings">
                     <form class="form-horizontal" method="POST" action="{{route('update-profile-process')}}" enctype= multipart/form-data>
-                    
+
                      @csrf
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
@@ -105,7 +105,7 @@
                           <input type="email"  class="form-control" id="inputEmail" placeholder="Email" value="{{Auth()->user()->email}}" readonly>
                         </div>
                       </div>
-                      
+
                       <div class="form-group row">
                         <label for="inputSkills" class="col-sm-2 col-form-label">Phone Number</label>
                         <div class="col-sm-10">
@@ -122,7 +122,7 @@
                           <input type="file" name="profile" class="form-control" id="inputprofile"onchange="loadFile(event)" >
                         </div>
                       </div>
-                      
+
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
                           <button type="submit" class="btn btn-primary">Update</button>
@@ -133,7 +133,7 @@
 
                   <div class="tab-pane " id="changePassoword">
                     <form class="form-horizontal" id="passwordForm" method="POST" action="{{route('change-password')}}" enctype= "multipart/form-data" id="">
-                    
+
                      @csrf
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
@@ -154,8 +154,8 @@
                           <input type="password" name="confirm_password"  class="form-control" id="confirm_password" placeholder="Confirm Password" value="" >
                         </div>
                       </div>
-                      
-                     
+
+
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
                           <button type="submit" class="btn btn-primary">Update</button>
@@ -202,7 +202,7 @@ $(function () {
 
 $('#passwordForm').validate({
    rules: {
-    
+
     newPassword: {
        required: true,
        minlength: 5,
@@ -211,7 +211,7 @@ $('#passwordForm').validate({
        required: true,
        equalTo: "#newPassword"
      },
-     
+
      profile: {
        // required: true,
        extension: "JPEG|PNG|JPG",

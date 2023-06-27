@@ -83,7 +83,7 @@ class AdminController extends Controller
 
     public function AdminRegisterPrcess(Request $request)
     {
- 
+
         $token = Str::random(40);
         $validator = Validator::make($request->all(), [
            'email'         => 'required|email|unique:users',

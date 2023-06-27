@@ -184,6 +184,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,6 +214,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
     ])->toArray(),

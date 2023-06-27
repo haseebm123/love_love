@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->integer('status')->default(0);
             $table->string('reference_link')->unique()->nullable();
+            $table->integer('reference_id')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->longText('about')->nullable();
             $table->tinyInteger('verified_by_number')->nullable()->default(0);

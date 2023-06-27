@@ -32,6 +32,9 @@ Route::get('composer-update',[UserController::class,'composer_update'])->name('c
 Route::get('discover',[UserController::class,'discover'])->name('discover');
 Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
 Route::get('get_link',[UserController::class,'get_link'])->name('get_link');
+// Route::get('invite_link',[UserController::class,'invite_link'])->name('invite_link');
+
+            // Route::get('invite_link','invite_link')->name('invite_link');
 
 
 Route::controller(HomeController::class)->group(function () {
@@ -55,6 +58,11 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('send-heart/','sendHearts')->name('send.heart');
             Route::get('heart-received/','receivedHearts')->name('send.heart');
             Route::post('send-query/','SendQuery')->name('send.query');
+            Route::post('upload-images/','uploadImg')->name('upload.images');
+            Route::get('recommendations','recommendations')->name('recommendations');
+            Route::post('send-recommendation','SendRecommendation')->name('send.recommendation');
+            Route::post('accept-heart','acceptHeartRequest')->name('accept.heart');
+            Route::post('cancel-heart','cancelHeartRequest')->name('cancel.heart');
 
         });
     });

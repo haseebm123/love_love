@@ -1,0 +1,113 @@
+ .btn-rounded {
+
+     border-radius: 17.347px;
+     border: 0.964px solid #000;
+     padding: 5px;
+     font-size: 12px;
+ }
+
+ .background-card {
+     background-color: #F4F4F4;
+     border-radius:
+         37px, 37px, 0px, 0px;
+ }
+
+ .card-radius {
+     border-radius:
+         37px, 37px, 0px, 0px;
+ }
+
+ .form-control-position {
+     top: 22px !important;
+
+
+ }
+
+ .form-control {
+     height: calc(2.25em + 2.4rem + 1px) !important;
+ }
+
+ .round {
+     border-radius: 2.5rem !important;
+ }
+
+ .rouden {
+     padding: 12px;
+     border-radius: 35px;
+     align-items: center;
+     /* background: linear-gradient("#E895BF", "#B25383"); */
+     background-image: linear-gradient(to bottom, #E895BF, #B25383);
+ }
+
+ .rouden h4,
+ span {
+     color: #fff;
+ }
+
+ .rouden.active {
+     background-color: #D9D9D9;
+     background-image: none !important;
+ }
+
+ .rouden.active h4,
+ .rouden.active span {
+     color: #000 !important
+ }
+
+ .scroller {
+     overflow-y: scroll;
+     width: 100%;
+     height: 300px;
+ }
+
+ .custom-card {
+     background: white;
+     padding: 20px;
+     border-radius: 26.223px;
+ }
+
+ .custom-card h2 {
+     color: #121212;
+     font-size: 33.939px;
+     font-family: Lato;
+     font-weight: 700;
+     line-height: 130%;
+     text-align: center
+ }
+
+ .custom-card h1 {
+     color: #000;
+     font-size: 80.78px;
+     font-family: Lato;
+     font-weight: 900;
+     line-height: 130%;
+     text-align: center
+ }
+
+ .dot {
+     width: 16px;
+     height: 16px;
+     border-radius: 16px;
+     background: #61A900;
+     ;
+ }
+
+ .gap-10 {
+     gap: 50px
+ }
+
+ .line {
+     width: 2.219px;
+     border-radius: 170.703px;
+     opacity: 0.4399999976158142;
+     background: #000;
+ }
+
+ .interests {
+     border-radius: 20px;
+     background: #E895BF;
+     text-align: center;
+     padding: 8px;
+ }
+
+

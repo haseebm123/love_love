@@ -53,18 +53,12 @@ use App\Http\Controllers\Auth\VerificationController;
 
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
-
         Route::get('role-change-status', [RoleController::class, 'roleChangeStatus'])->name('role-change-status');
-
-
-
-
         Route::controller(UserController::class)->group(function () {
             Route::get('view-manager', 'viewManager')->name('view-manager');
             Route::get('view-employee', 'viewEmployee')->name('view-employee');
             Route::get('employee-detail/{id}','EmployeeDetail')->name('employee-detail');
             Route::get('manager-detail/{id}','managerDetail')->name('manager-detail');
-
 
         });
         Route::controller(AdminController::class)->group(function () {
@@ -76,9 +70,9 @@ use App\Http\Controllers\Auth\VerificationController;
             Route::get('get-users', 'get_users')->name('get-users');
             Route::get('change-status', 'change_status')->name('change-status');
             Route::get('view-user', 'view_user')->name('view-user');
-            Route::get('logouts', 'logouts')->name('logouts');
-            Route::get('dashboard', 'dashboard')->name('dashboard');
-            Route::get('profile', 'profile')->name('profile');
+            Route::get('logouts', 'logouts')->name('logout');
+            Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+            Route::get('profile', 'profile')->name('admin.profile');
             Route::get('contact-us-page', 'contactUsPage')->name('contact-us-page');
             Route::post('addContactUsImage', 'addContactUsImage')->name('addContactUsImage');
 
