@@ -63,6 +63,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('send-recommendation','SendRecommendation')->name('send.recommendation');
             Route::post('accept-heart','acceptHeartRequest')->name('accept.heart');
             Route::post('cancel-heart','cancelHeartRequest')->name('cancel.heart');
+            Route::get('get-content','getContent')->name('content');
 
         });
     });

@@ -56,6 +56,7 @@ use App\Http\Controllers\Admin\SupportController;
         /*  Love Love Admin Routes */
         Route::controller(UserManagementController::class)->group(function () {
             Route::get('users-management', 'index')->name('users.management');
+            Route::get('users-block-list', 'blockList')->name('users.block');
             Route::get('users-discover-profile', 'usersDiscover')->name('users.discover.profile');
             Route::get('accounts', 'accounts')->name('accounts');
             Route::get('notification', 'notification')->name('notification');
@@ -67,6 +68,7 @@ use App\Http\Controllers\Admin\SupportController;
 
             Route::post('user-info', 'userReqInfo')->name('user.info');
             Route::post('user-block', 'blockById')->name('user.block');
+            Route::post('user-unblock', 'unBlockById')->name('user.unblock');
 
             Route::post('user-approve', 'approveByID')->name('user.approve');
 

@@ -1,15 +1,15 @@
 @extends('admin.layouts.master')
 @section('title', 'Notification ')
 @section('style')
-<style>
-    .scroller {
+    <style>
+        .scroller {
 
-    height: 800px !important;
-}
-</style>
+            height: 800px !important;
+        }
+    </style>
 @endsection
-
 @section('body')
+
     {{-- Code Here --}}
     <div class="row">
         <div class="col-4">
@@ -19,109 +19,30 @@
             <div class="card mt-5 background-card sidebar-content card">
                 <div class="card-content">
                     <div class="card-body " style="position: relative;">
+
                         <div class="scroller">
+                            @forelse ($data as $item)
                             <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
                                 <div>
                                     <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
+                                        <h5 class="textWhite">{{ $item->description }}</h5>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
+                            @empty
+                                <h1>No Data Found</h1>
+                            @endforelse
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
+
+
+
                     </div>
+
 
 
                 </div>

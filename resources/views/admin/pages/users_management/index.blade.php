@@ -6,8 +6,7 @@
     </style>
 @endsection
 
-
-@section('body')
+ @section('body')
     <input type="hidden" value="" name="id" id="id">
     <div class="row">
         <div class="col-4">

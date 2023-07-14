@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('help_and_supports', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
-            $table->longText('description')->nullable();
+            $table->longText('message')->nullable();
             $table->timestamps();
         });
     }

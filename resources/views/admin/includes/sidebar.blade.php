@@ -51,12 +51,12 @@
                 </ul>
             </li>
 
-            <li class=" nav-item @if (Route::currentRouteName() == 'accounts') active @endif">
+            {{-- <li class=" nav-item @if (Route::currentRouteName() == 'accounts') active @endif">
                 <a href="{{ route('accounts') }}">
                     <img class="image-icon" src="{{ asset('icon/accounts.svg') }}" alt=""><span
                         class="menu-title" data-i18n="Accounts">Accounts</span></a>
 
-            </li>
+            </li> --}}
 
             <li class=" nav-item @if (Route::currentRouteName() == 'notification') active @endif">
                 <a href="{{ route('notification') }}">
@@ -82,6 +82,12 @@
                     </li>
 
                 </ul>
+            </li>
+            <li class=" nav-item @if (Route::currentRouteName() == 'users.block') active @endif">
+                <a href="{{ route('users.block') }}">
+                    <img class="image-icon" src="{{ asset('icon/block_list.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Block List">Block List</span></a>
+
             </li>
 
             {{-- Not in user --}}

@@ -43,12 +43,12 @@ class UserManagementController extends Controller
     }
 
     function userReqInfo(Request $request){
-
         $user = User::with('images','user_intrest.intrest')
         ->select()
         ->where('id',$request->id)
         ->where('role_id','user')
         ->first();
+
         return view('admin.pages.users_management.ajax.user_req_detail_section',['data'=>$user]);
     }
 
@@ -61,10 +61,30 @@ class UserManagementController extends Controller
         ->where('is_block',0)
         ->where('role_id','user')
         ->first();
-
+        if (!$data) {
+            return array('message'=>"User Not Found",'type'=>'error');
+        }
         $data->is_block = 1;
         $data->save();
         return view('admin.pages.users_management.ajax.user_req_detail_section',['data'=>$data])->with(['message'=>'User Block Successfully','type'=>'success']);
+
+
+    }
+
+    function unBlockById(Request $request){
+
+        $data = User::with('images','user_intrest.intrest')
+        ->select()
+        ->where('id',$request->id)
+        ->where('is_block',1)
+        ->where('role_id','user')
+        ->first();
+        if (!$data) {
+            return array('message'=>"User Not Found",'type'=>'error');
+        }
+        $data->is_block = 0;
+        $data->save();
+        return view('admin.pages.users_management.ajax.user_block_detail',['data'=>$data])->with(['message'=>'User Block Successfully','type'=>'success']);
 
 
     }
@@ -118,6 +138,14 @@ class UserManagementController extends Controller
 
     function help_support() {
         return view('admin.pages.content_moderation.help_support');
+    }
+
+
+    function blockList(){
+        $data = User::select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
+        ->where('is_block',1)
+        ->where('role_id','user')->get();
+        return view('admin.pages.users_management.block_users',compact('data'));
     }
 }
 

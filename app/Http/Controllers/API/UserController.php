@@ -15,6 +15,7 @@ use App\Models\Heart;
 use App\Models\HelpAndSupport;
 use App\Models\Notification;
 use App\Models\Recommendation;
+use App\Models\ContentModification;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -877,5 +878,20 @@ class UserController extends Controller
             'message' => 'Recommend the profile to '
             ]);
 
+    }
+
+    public function getContent(Request $request){
+        $data = ContentModification::select($request->content)->first();
+        if ($data) {
+            return response()->json([
+            'success' => false,
+
+            'message' => 'Content Not Found'
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $data
+            ]);
     }
 }

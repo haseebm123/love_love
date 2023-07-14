@@ -27,7 +27,7 @@
                                         <p class="px-2">Fill the below form to create a new account.</p>
                                         <div class="card-content">
                                             <div class="card-body pt-0">
-                                                <form action="{{ route('user-register-process') }}" method="POST"
+                                                <form action="{{ route('AdminRegisterPrcess') }}" method="POST"
                                                     enctype="multipart/form-data" novalidate>
                                                     @csrf
                                                     <div class="form-label-group">
