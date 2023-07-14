@@ -576,6 +576,16 @@
                                                     <h6>Movie</h6>
                                                 </div>
                                             </div>
+                                            <div class="col-4">
+                                                <div class="interests">
+                                                    <h6>Movie</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="interests">
+                                                    <h6>Movie</h6>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

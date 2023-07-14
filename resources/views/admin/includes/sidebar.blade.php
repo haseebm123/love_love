@@ -34,30 +34,55 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-            <li class="nav-item"><a href="#"><img class="image-icon"
-                        src="{{ asset('icon/user_management.svg') }}" alt=""><span class="menu-title"
-                        data-i18n="User Management">User Management</span></a>
+            <li class="nav-item @if (Route::currentRouteName() == 'users.management ' || Route::currentRouteName() == 'users.discover.profile') open @endif "><a href="#"><img
+                        class="image-icon" src="{{ asset('icon/user_management.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="User Management">User Management</span></a>
                 <ul class="menu-content">
                     <li class="@if (Route::currentRouteName() == 'users.management') active @endif"><a
-                            href="{{ route('users.index') }}"><span class="menu-item" data-i18n="Request For Person">Request For Person</span></a>
+                            href="{{ route('users.management') }}"><span class="menu-item"
+                                data-i18n="Request For Person">Request For Person</span></a>
                     </li>
-                    <li class="@if (Route::currentRouteName() == 'users.create') active @endif"><a
-                            href="{{ route('users.create') }}"><span class="menu-item" data-i18n="Discover Profile">Discover Profile
+                    <li class="@if (Route::currentRouteName() == 'users.discover.profile') active @endif"><a
+                            href="{{ route('users.discover.profile') }}"><span class="menu-item"
+                                data-i18n="Discover Profile">Discover Profile
                                 User</span></a>
                     </li>
 
                 </ul>
             </li>
 
-            <li class=" nav-item">
-                <a href="{{ route('admin.dashboard') }}">
+            <li class=" nav-item @if (Route::currentRouteName() == 'accounts') active @endif">
+                <a href="{{ route('accounts') }}">
                     <img class="image-icon" src="{{ asset('icon/accounts.svg') }}" alt=""><span
-                        class="menu-title" data-i18n="Dashboard">Accounts</span></a>
+                        class="menu-title" data-i18n="Accounts">Accounts</span></a>
 
             </li>
 
+            <li class=" nav-item @if (Route::currentRouteName() == 'notification') active @endif">
+                <a href="{{ route('notification') }}">
+                    <img class="image-icon" src="{{ asset('icon/notification.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Notification">Notification</span></a>
 
+            </li>
 
+            <li class="nav-item @if (Route::currentRouteName() == 'term.conditions' || Route::currentRouteName() == 'privacy.policy' || Route::currentRouteName() == 'help.support') open @endif "><a href="#"><img
+                        class="image-icon" src="{{ asset('icon/user_management.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Content Moderation">Content Moderation</span></a>
+                <ul class="menu-content">
+                    <li class="@if (Route::currentRouteName() == 'term.conditions') active @endif"><a href="{{ route('term.conditions') }}"><span
+                                class="menu-item" data-i18n="Terms & Condition">Terms & Condition</span></a>
+                    </li>
+                    <li class="@if (Route::currentRouteName() == 'privacy.policy') active @endif"><a href="{{ route('privacy.policy') }}"><span
+                                class="menu-item" data-i18n="Privacy Policy">Privacy Policy
+                            </span></a>
+                    </li>
+                    <li class="@if (Route::currentRouteName() == 'help.support') active @endif"><a href="{{ route('help.support') }}"><span
+                                class="menu-item" data-i18n="Help & Support">Help & Support
+                            </span></a>
+                    </li>
+
+                </ul>
+            </li>
 
             {{-- Not in user --}}
             @can('role-list')

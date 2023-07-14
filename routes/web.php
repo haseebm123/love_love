@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\VerificationController;
 
 /* Love Admin Routes */
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Admin\SupportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +56,21 @@ use App\Http\Controllers\Admin\UserManagementController;
         /*  Love Love Admin Routes */
         Route::controller(UserManagementController::class)->group(function () {
             Route::get('users-management', 'index')->name('users.management');
+            Route::get('users-discover-profile', 'usersDiscover')->name('users.discover.profile');
+            Route::get('accounts', 'accounts')->name('accounts');
+            Route::get('notification', 'notification')->name('notification');
+            Route::get('terms', 'terms_condition')->name('terms');
+            Route::get('privacy', 'privacy_policy')->name('privacy');
+            Route::get('help', 'help_support')->name('help');
+
+
+
+            Route::post('user-info', 'userReqInfo')->name('user.info');
+            Route::post('user-block', 'blockById')->name('user.block');
+
+            Route::post('user-approve', 'approveByID')->name('user.approve');
+
+
 
         });
         /* End Love Love Admin Routes */
@@ -66,6 +82,7 @@ use App\Http\Controllers\Admin\UserManagementController;
             Route::get('view-employee', 'viewEmployee')->name('view-employee');
             Route::get('employee-detail/{id}','EmployeeDetail')->name('employee-detail');
             Route::get('manager-detail/{id}','managerDetail')->name('manager-detail');
+
 
         });
         Route::controller(AdminController::class)->group(function () {
@@ -82,13 +99,19 @@ use App\Http\Controllers\Admin\UserManagementController;
             Route::get('profile', 'profile')->name('admin.profile');
             Route::get('contact-us-page', 'contactUsPage')->name('contact-us-page');
             Route::post('addContactUsImage', 'addContactUsImage')->name('addContactUsImage');
+            Route::get('automation', 'automation')->name('admin.automation');
 
-       });
+        });
+        Route::controller(SupportController::class)->group(function () {
+            Route::get('help-support', 'index')->name('help.support');
+            Route::get('term-conditions', 'index')->name('term.conditions');
+            Route::get('privacy-policy', 'index')->name('privacy.policy');
 
+            Route::post('help-support-update', 'updateContent')->name('update.help.support');
+            Route::post('term-conditions-update', 'updateContent')->name('update.term.conditions');
+            Route::post('privacy-policy-update', 'updateContent')->name('update.privacy.policy');
 
-
-
-
+        });
 
 });
     // });

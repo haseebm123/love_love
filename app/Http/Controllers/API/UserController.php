@@ -128,6 +128,11 @@ class UserController extends Controller
         $data['role_id'] = 'user';
         $data['password'] = Hash::make($request->password);
         $data['status']   = 0;
+        $admin = User::select('automation')->where('role_id','admin')->first();
+
+        if (isset($admin->automation) && $admin->automation == 1) {
+            $data['status']   = 1;
+        }
         // $data['reference_link'] = 'ref'.Str::random(10) . '-' .time();
         if (session()->has('link')) {
             $sender_id = User::where('reference_link',session()->get('link'))->first()->id;

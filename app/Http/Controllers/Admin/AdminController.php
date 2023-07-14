@@ -29,6 +29,19 @@ class AdminController extends Controller
     }
 
 
+    public function automation(Request $request){
+        $admin =  User::where('id',auth()->user()->id)->where('role_id','admin')->first();
+        $admin->automation = $request->status;
+        $status = 'On';
+        if ($request->status == 1) {
+            $status = "Off";
+        }
+        $message = 'Automation '.$status;
+        $admin->save();
+        return array('message'=>$message,'type'=>'success');
+
+    }
+
 
 
     public function user_login(Request $request)
@@ -300,6 +313,7 @@ class AdminController extends Controller
            return redirect()->back()->with(array('message'=>'Something went wrong please try again','type'=>'error'));
         }
     }
+
 
 
 

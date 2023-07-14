@@ -4,7 +4,7 @@
 
 @include('admin.includes.head')
 <!-- END: Head-->
-
+<link rel="stylesheet" href="{{ asset('assets/css/style1.css') }}">
 <!-- BEGIN: Body-->
 
 {{-- Dark Color --}}
