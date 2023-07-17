@@ -47,6 +47,13 @@
     <!-- END: Footer-->
 
     @include('admin.includes.foot')
+    <script>
+        var html = '';
+        function searchUser(type,search){
+
+
+        }
+    </script>
     @yield('script')
 
 

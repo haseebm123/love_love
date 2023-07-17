@@ -74,6 +74,7 @@ use App\Http\Controllers\Admin\SupportController;
 
             Route::post('user-approve', 'approveByID')->name('user.approve');
 
+            Route::post('search-user', 'searchUser')->name('user.search');
 
 
         });

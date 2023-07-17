@@ -72,6 +72,40 @@
 
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
+        $("#chat-search").keyup(function (e) {
+            var type = 'block';
+            var search = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('user.search') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'type': type,
+                    'search': search
+                },
+                success: function(res) {
+
+                        $('.scroller').html("");
+                        $('.scroller').html(res);
+                        if (res) {
+                            $("#user-details-div").removeClass('d-none')
+                            $(".scroller .req-profile").first().addClass("active")
+                            var newid = $(".scroller .req-profile").first().attr("data-id")
+                            $("#id").val(newid);
+                            showRequestDetail(newid);
+
+                        }else{
+
+                            $("#user-details-div").addClass('d-none')
+                        }
+
+                        // $('.scroller').html("");
+
+                }
+            });
+
+        });
         function showRequestDetail(id) {
 
             if (id) {
@@ -86,7 +120,7 @@
                     },
 
                     success: function(res) {
-                        
+
                         $("#user-details-div").html("");
                         $("#user-details-div").removeClass('d-none');
                         $("#user-details-div").append(res);

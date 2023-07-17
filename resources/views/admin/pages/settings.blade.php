@@ -11,6 +11,7 @@
             border: 1px solid #737373 !important;
             opacity: 0.20000000298023224 !important;
         }
+
     </style>
 @endsection
 
@@ -25,7 +26,7 @@
     </div>
     <div class="col-12">
         <div class="row">
-            <div class="col p-50">
+            <div class="col  ">
 
                 <div class="card background-card">
                     <div class="card-content">
@@ -60,9 +61,9 @@
 
                                     </div>
                                     <div class="col-md-12 ">
-                                        <div class="form-group align-items-center" >
+                                        <div class="form-group align-items-center p-2" >
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="800" height="4"
                                                 viewBox="0 0 600 2" fill="none">
                                                 <path d="M1.37109 0.935547L399.871 0.935547" stroke="#000022"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

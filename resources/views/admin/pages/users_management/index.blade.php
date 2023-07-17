@@ -17,7 +17,7 @@
                 <div class="card-content">
                     <div class="card-body " style="position: relative;">
                         <fieldset class="form-group position-relative has-icon-left  p-50">
-                            <input type="text" class="form-control round  h-10" id="chat-search"
+                            <input type="text" class="form-control round  h-10" value="" id="chat-search"
                                 placeholder="Search People">
                             <div class="form-control-position">
                                 <i class="feather icon-search"></i>
@@ -131,6 +131,43 @@
 
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
+        $("#chat-search").keyup(function(e) {
+            var type = 'request';
+            var search = $(this).val();
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('user.search') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'type': type,
+                    'search': search
+                },
+                success: function(res) {
+
+                        $('.scroller').html("");
+                        $('.scroller').html(res);
+                        if (res) {
+                            $("#user-details-div").removeClass('d-none')
+                            $(".scroller .req-profile").first().addClass("active")
+                            var newid = $(".scroller .req-profile").first().attr("data-id")
+                            $("#id").val(newid);
+                            showRequestDetail(newid);
+
+                        }else{
+
+                            $("#user-details-div").addClass('d-none')
+                        }
+
+                        // $('.scroller').html("");
+
+                }
+            });
+
+
+
+        });
+
         function showRequestDetail(id) {
 
             if (id) {

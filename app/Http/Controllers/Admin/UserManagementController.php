@@ -10,6 +10,46 @@ use App\Models\HelpAndSupport;
 
 class UserManagementController extends Controller
 {
+    function searchUser(Request $request){
+        $search = $request->search;
+        $type = $request->type;
+        $users = User::with('images')
+        ->select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
+        ->where('role_id','user');
+        if ($type == 'request') {
+            $data['request'] = $users->where([
+            ['status',0],
+            ['is_block',0],
+            ])
+            ->where(function($query) use ($search){
+
+                    # code...
+                    $query->where('first_name', 'LIKE', "%$search%");
+
+                // ->orWhere('mid_name', 'LIKE', "$search%")
+                // ->orwhere('last_name', 'LIKE', "$search%");
+            })
+            ->get();
+
+            return view('admin.pages.users_management.ajax.users_request_list',compact('data'));
+
+        }
+
+        if ($type == 'block') {
+            $data = $users->where('is_block',1)->where(function($query) use ($search){
+
+                 if ($search) {
+                    # code...
+                    $query->where('first_name', 'LIKE', "%$search%");
+                }
+                // ->orWhere('mid_name', 'LIKE', "$search%")
+                // ->orwhere('last_name', 'LIKE', "$search%");
+            })
+            ->get();
+
+            return view('admin.pages.users_management.ajax.user_block_list_section',compact('data'));
+        }
+    }
     function index(){
 
         $users = User::with('images')

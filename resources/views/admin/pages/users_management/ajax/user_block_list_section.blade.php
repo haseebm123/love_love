@@ -1,3 +1,5 @@
+
+@forelse ($data as $key=>$item)
 <style>
     .avatar {
         width: 70px !important;
@@ -5,8 +7,6 @@
 
     }
 </style>
-
-@forelse ($data as $key=>$item)
     <div id="req-profile{{ $item->id }}" data-id={{ $item->id }}
         class="d-flex justify-content-between w-100  mt-1 rouden req-profile">
         <div class="pr-1">
