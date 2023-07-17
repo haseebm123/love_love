@@ -22,7 +22,7 @@
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item m-auto">
-                <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
+                <a class="navbar-brand" href="{{ route('users.management') }}">
                     <img src="{{ asset('logo/logo.svg') }}" alt="logo">
 
                 </a>
@@ -51,14 +51,14 @@
                 </ul>
             </li>
 
-            {{-- <li class=" nav-item @if (Route::currentRouteName() == 'accounts') active @endif">
+            <li class=" nav-item @if (Route::currentRouteName() == 'accounts') active @endif">
                 <a href="{{ route('accounts') }}">
-                    <img class="image-icon" src="{{ asset('icon/accounts.svg') }}" alt=""><span
+                    <img class="image-icon" src="{{ asset('icon/account.svg') }}" alt=""><span
                         class="menu-title" data-i18n="Accounts">Accounts</span></a>
 
-            </li> --}}
+            </li>
 
-            <li class=" nav-item @if (Route::currentRouteName() == 'notification') active @endif">
+            <li class="nav-item @if (Route::currentRouteName() == 'notification') active @endif">
                 <a href="{{ route('notification') }}">
                     <img class="image-icon" src="{{ asset('icon/notification.svg') }}" alt=""><span
                         class="menu-title" data-i18n="Notification">Notification</span></a>
@@ -66,7 +66,7 @@
             </li>
 
             <li class="nav-item @if (Route::currentRouteName() == 'term.conditions' || Route::currentRouteName() == 'privacy.policy' || Route::currentRouteName() == 'help.support') open @endif "><a href="#"><img
-                        class="image-icon" src="{{ asset('icon/user_management.svg') }}" alt=""><span
+                        class="image-icon" src="{{ asset('icon/content.svg') }}" alt=""><span
                         class="menu-title" data-i18n="Content Moderation">Content Moderation</span></a>
                 <ul class="menu-content">
                     <li class="@if (Route::currentRouteName() == 'term.conditions') active @endif"><a href="{{ route('term.conditions') }}"><span
@@ -85,8 +85,29 @@
             </li>
             <li class=" nav-item @if (Route::currentRouteName() == 'users.block') active @endif">
                 <a href="{{ route('users.block') }}">
-                    <img class="image-icon" src="{{ asset('icon/block_list.svg') }}" alt=""><span
+                    <img class="image-icon" src="{{ asset('icon/block_user.svg') }}" alt=""><span
                         class="menu-title" data-i18n="Block List">Block List</span></a>
+
+            </li>
+
+            <li class=" nav-item @if (Route::currentRouteName() == 'settings') active @endif">
+                <a href="{{ route('settings') }}">
+                    <img class="image-icon" src="{{ asset('icon/privacy.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Privacy and Security Settings">Privacy and Security Settings</span></a>
+
+            </li>
+
+            <li class=" nav-item @if (Route::currentRouteName() == 'support') active @endif">
+                <a href="{{ route('support') }}">
+                    <img class="image-icon" src="{{ asset('icon/support.svg') }}" alt=""><span
+                        class="menu-title " data-i18n="Help & Support">Help & Support</span></a>
+
+            </li>
+
+            <li class=" nav-item @if (Route::currentRouteName() == 'logouts') active @endif">
+                <a href="{{ route('logouts') }}">
+                    <img class="image-icon" src="{{ asset('icon/logout.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Logout">Logout</span></a>
 
             </li>
 

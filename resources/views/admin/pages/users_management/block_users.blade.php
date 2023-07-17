@@ -81,11 +81,12 @@
                     url: "{{ route('user.info') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
+                        "status":1,
                         "id": id
                     },
 
                     success: function(res) {
-
+                        
                         $("#user-details-div").html("");
                         $("#user-details-div").removeClass('d-none');
                         $("#user-details-div").append(res);
@@ -99,7 +100,7 @@
             $(".scroller .req-profile").first().addClass("active")
             var newid = $(".scroller .req-profile").first().attr("data-id")
             $("#id").val(newid);
-            console.log(newid);
+
             showRequestDetail(newid);
         });
 

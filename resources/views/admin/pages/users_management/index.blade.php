@@ -6,7 +6,7 @@
     </style>
 @endsection
 
- @section('body')
+@section('body')
     <input type="hidden" value="" name="id" id="id">
     <div class="row">
         <div class="col-4">
@@ -132,6 +132,7 @@
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
         function showRequestDetail(id) {
+
             if (id) {
 
                 $.ajax({
@@ -139,13 +140,20 @@
                     url: "{{ route('user.info') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
+                        "status": 0,
                         "id": id
                     },
 
                     success: function(res) {
-                        $("#user-details-div").html("");
-                        $("#user-details-div").removeClass('d-none');
-                        $("#user-details-div").append(res);
+
+                        if (res) {
+
+                            $("#user-details-div").html("");
+                            $("#user-details-div").removeClass('d-none');
+                            $("#user-details-div").append(res);
+                        } else {
+                            $("#user-details-div").html("");
+                        }
 
                     }
                 });
@@ -156,8 +164,13 @@
             var id;
             if (status == 0) {
                 id = $("#id").val();
-                console.log(id);
+
             }
+            var approve_count = $("#approve-count").text();
+            var req_count = $("#all-request").text();
+            var a_count = approve_count;
+            var r_count = req_count;
+
             $.ajax({
                 type: "POST",
                 url: "{{ route('user.approve') }}",
@@ -168,15 +181,27 @@
                 },
 
                 success: function(res) {
-                    console.log(res);
+                    if (res.status == 1) {
+
+                        $(".scroller").empty();
+                    }
                     if (res.status == 0) {
+
                         $(".req-profile.active").remove();
                         $(".scroller .req-profile").first().addClass("active")
                         var newid = $(".scroller .req-profile").first().attr("data-id")
+                        $("#id").val(newid);
                         showRequestDetail(newid);
-                    }else{
-                        $(".scroller").empty();
+                        a_count++
+                        r_count--
+                        $("#approve-count").text(a_count);
+                        $("#all-request").text(r_count);
                     }
+
+
+
+
+
                 }
             });
 
@@ -193,6 +218,7 @@
             if (btn_val == 1) {
                 status = 1
             }
+
             approveRequest(status)
         });
 

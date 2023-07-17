@@ -53,7 +53,7 @@ body.vertical-layout.vertical-menu-modern .main-menu {
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .navbar .navbar-header {
     float: left;
-    width: 260px;
+    width: 286px;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .navbar .navbar-brand .brand-text {
@@ -62,7 +62,7 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .navbar .navbar-brand .b
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu {
     border-radius: 0 40px 40px 0;
-    width: 260px;
+    width: 286px;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation .navigation-header .icon-minus {

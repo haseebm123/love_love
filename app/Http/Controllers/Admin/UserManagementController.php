@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Notification;
+use App\Models\HelpAndSupport;
+
 class UserManagementController extends Controller
 {
     function index(){
@@ -27,9 +29,12 @@ class UserManagementController extends Controller
         $data['requestCount'] = $data['request']->count();
 
         /* Approved Users */
-        $data['approvedCount'] = $users->where([
+        $data['approvedCount'] =
+        User::with('images')
+        ->select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
+        ->where('role_id','user')->where([
             ['status',1],
-            ['is_block',0],
+
         ])->count();
 
         /* Blocked Users */
@@ -43,11 +48,12 @@ class UserManagementController extends Controller
     }
 
     function userReqInfo(Request $request){
-        $user = User::with('images','user_intrest.intrest')
-        ->select()
+        $status = $request->status;
+        $user = User::with(['images','user_intrest.intrest'])
         ->where('id',$request->id)
-        ->where('role_id','user')
-        ->first();
+        ->where(function($query) use ($status){
+            $query->where('is_block',$status);
+        })->where('role_id','user')->first();
 
         return view('admin.pages.users_management.ajax.user_req_detail_section',['data'=>$user]);
     }
@@ -93,13 +99,17 @@ class UserManagementController extends Controller
         $message = "";
         if ($request->id) {
             $user = User::where("id",$request->id)->where('status',0)->first();
+
             if (!$user) {
-                return array('message'=>"User Not Found",'type'=>'error');
+
+                return array('message'=>"User Not Found",'type'=>'error','status'=>1);
             }
+
             $user->status = 1;
-            $user->save;
+            $user->save();
             return array('message'=>"User Approve Successfully",'type'=>'success','status'=>0);
         }
+
         $ids = User::with('images')
         ->select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
         ->where('role_id','user')->where([
@@ -107,7 +117,6 @@ class UserManagementController extends Controller
             ['is_block',0],
         ])
         ->pluck('id');
-        // ->get();
 
         if (isset($ids[0])) {
             # code...
@@ -115,6 +124,7 @@ class UserManagementController extends Controller
             return array('message'=>"Users Approve Successfully",'type'=>'success','status'=>1);
         }
         return array('message'=>"Not Request Found",'type'=>'error');
+
         // ->whereColumn('created_at', '<', 'updated_at')
     }
     function usersDiscover() {
@@ -140,7 +150,16 @@ class UserManagementController extends Controller
         return view('admin.pages.content_moderation.help_support');
     }
 
+    function setting() {
+        return view('admin.pages.settings');
+    }
 
+    function support(){
+        $data = HelpAndSupport::with('user')->get();
+
+        return view('admin.pages.support',compact('data'));
+
+    }
     function blockList(){
         $data = User::select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
         ->where('is_block',1)

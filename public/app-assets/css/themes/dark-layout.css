@@ -375,11 +375,13 @@ body.dark-layout {
   body.dark-layout .nav-pills.nav-active-bordered-pill .nav-item .nav-link.active {
     background-color: transparent; }
   body.dark-layout .card {
-    background-color: #10163a; }
+    background-color: #9E4572;
+    }
     body.dark-layout .card .card-header,
     body.dark-layout .card .card-footer {
       color: #c2c6dc;
-      background-color: #10163a; }
+      background-color: #9E4572;
+      }
     body.dark-layout .card .card-header .heading-elements.visible ul li {
       background-color: #10163a; }
     body.dark-layout .card .heading-elements.visible .list-inline {

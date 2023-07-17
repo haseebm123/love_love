@@ -446,14 +446,14 @@ body.dark-layout .nav-pills.nav-active-bordered-pill .nav-item .nav-link.active 
   background-color : transparent;
 }
 body.dark-layout .card {
-  background-color : #10163A;
+  background-color : #9E4572;
 }
 body.dark-layout .card .card-header, body.dark-layout .card .card-footer {
   color : #C2C6DC;
-  background-color : #10163A;
+  background-color : #9E4572;
 }
 body.dark-layout .card .card-header .heading-elements.visible ul li {
-  background-color : #10163A;
+  background-color : #9E4572;
 }
 body.dark-layout .card .heading-elements.visible .list-inline {
   background-color : #10163A;

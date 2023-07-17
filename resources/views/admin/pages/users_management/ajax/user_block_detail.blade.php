@@ -19,8 +19,8 @@
                                 {{ isset($data->first_name) ? $data->first_name . ' ' : '' }}
                                 {{ isset($data->mid_name) ? $data->mid_name . ' ' : '' }}
                                 {{ isset($data->last_name) ? $data->last_name . ' ' : '' }}</h2>
-                            <h6><img style="background-color: #F5D5E5;"
-                                    src="{{ asset('icon/map-pin.svg') }}">{{ isset($data->city) ? $data->city . ' ,' : '' }}{{ isset($data->country) ? $data->country . ' ' : '' }}
+                            <h6><img
+                                    src="{{ asset('icon/map_pin.svg') }}">{{ isset($data->city) ? $data->city . ' ,' : '' }}{{ isset($data->country) ? $data->country . ' ' : '' }}
                             </h6>
                         </div>
                     </div>

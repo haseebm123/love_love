@@ -63,6 +63,8 @@ use App\Http\Controllers\Admin\SupportController;
             Route::get('terms', 'terms_condition')->name('terms');
             Route::get('privacy', 'privacy_policy')->name('privacy');
             Route::get('help', 'help_support')->name('help');
+            Route::get('setting', 'setting')->name('settings');
+            Route::get('support', 'support')->name('support');
 
 
 
@@ -96,12 +98,15 @@ use App\Http\Controllers\Admin\SupportController;
             Route::get('get-users', 'get_users')->name('get-users');
             Route::get('change-status', 'change_status')->name('change-status');
             Route::get('view-user', 'view_user')->name('view-user');
-            Route::get('logouts', 'logouts')->name('logout');
-            Route::get('dashboard', 'dashboard')->name('admin.dashboard');
+            Route::get('logout', 'logout')->name('logout');
+            Route::get('logouts', 'logouts')->name('logouts');
+            // Route::get('dashboard', 'dashboard')->name('admin.dashboard');
             Route::get('profile', 'profile')->name('admin.profile');
             Route::get('contact-us-page', 'contactUsPage')->name('contact-us-page');
             Route::post('addContactUsImage', 'addContactUsImage')->name('addContactUsImage');
             Route::get('automation', 'automation')->name('admin.automation');
+            Route::get('automation', 'automation')->name('admin.automation');
+            Route::post('admin-edit-profile', 'updateProfile')->name('admin.update');
 
         });
         Route::controller(SupportController::class)->group(function () {

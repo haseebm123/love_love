@@ -48,7 +48,7 @@ class AdminController extends Controller
     {
         // return view('admin/login');
         if(Auth::check()){
-            return redirect('dashboard');
+            return redirect()->route('users.management');
         }else{
            return view('admin/login');
         }
@@ -63,30 +63,10 @@ class AdminController extends Controller
     public function loginAdminProcess(Request $request)
     {
 
-
-
         if (Auth::attempt(array('email' => $request->email, 'password' => $request->password)))
         {
-           if(Auth::check()){
+            return redirect()->route('users.management')->with(array('message'=>'Login success','type'=>'success'));
 
-              if(auth()->user()->email_verified_at){
-                  if(auth()->user()->status == 1)
-                  {
-                      return redirect('dashboard')->with(array('message'=>'Login success','type'=>'success'));
-                  }else{
-                        Auth::logout();
-                        return redirect()->back()->with(array('message'=>'Please wait for admin approval','type'=>'error'));;
-                  }
-                return redirect('dashboard')->with(array('message'=>'Login success','type'=>'success'));
-                }else{
-                    Session::flush();
-                    Auth::logout();
-                    // return auth()->user()->email_verified_at;
-                    return redirect('/')->with(array('message'=>'Your email is not verified','type'=>'error'));;
-
-
-                }
-            }
         }else{
 
             return redirect()->back()->with(array('message'=>'Invalid email or Password','type'=>'error'));
@@ -141,8 +121,8 @@ class AdminController extends Controller
     public function dashboard(Request $request)
     {
         // return \Request::getClientIp(true);
+        return redirect()->route('users.management');
 
-        return view('admin/dashboard');
     }
 
     public function view_user()
@@ -194,8 +174,26 @@ class AdminController extends Controller
         }
     }
 
+    function updateProfile(Request $request){
 
-   public function logouts()
+        $data = $request->except(['_token','password'],$request->all());
+        $check_email = User::where('email',$request->email)->where('role_id','user')->first();
+        if ($check_email) {
+            return redirect()->back()->with(array('message'=>'Email is Already in use','type'=>'error'));
+        }
+        if ($request->password) {
+            $data['password'] = hash::make($request->password);
+        }
+
+        User::find(auth()->id())->update($data);
+        return redirect()->back()->with(array('message'=>'account updated succssfully','type'=>'success'));
+    }
+    public function logouts()
+    {
+        return view('admin.pages.logout_view');
+    }
+
+    public function logout()
     {
         Auth::logout();
         return redirect('/');
