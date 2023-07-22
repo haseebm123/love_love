@@ -1638,7 +1638,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
     Description: Contain header navigation bar, vertical main navigation bar and
     horiznotal main navigation bar related SCSS.
     ----------------------------------------------------------------------------------------------
-    Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
     Author: PIXINVENT
     Author URL: http://www.themeforest.net/user/pixinvent
 ================================================================================================*/
@@ -1690,7 +1690,7 @@ button, html [type='button'], [type='reset'], [type='submit'] {
   color : #626262 !important;
 }
 .header-navbar.floating-nav {
- margin: 1.3rem 0.2rem 0;
+  margin : 1.3rem 2.2rem 0;
   border-radius : 0.5rem;
   position : fixed;
   width : calc(100vw - (100vw - 100%) - calc(2.2rem * 2) - 260px);
@@ -3047,7 +3047,7 @@ body[data-col='1-column'] .header-navbar.floating-nav {
   File Name: progress.scss
   Description: Extended bootstrap progress bar scss.
   ----------------------------------------------------------------------------------------
-  Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: PIXINVENT
   Author URL: http://www.themeforest.net/user/pixinvent
   ----------------------------------------------------------------------------------------
@@ -3084,7 +3084,7 @@ body[data-col='1-column'] .header-navbar.floating-nav {
 	File Name: list-group.scss
 	Description: Contain list item, list group related extended SCSS.
 	----------------------------------------------------------------------------------------------
-	Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
 	Author: PIXINVENT
 	Author URL: http://www.themeforest.net/user/pixinvent
 ================================================================================================*/

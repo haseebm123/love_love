@@ -1,0 +1,76 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+body.semi-dark-layout {
+  /************ Main Menu **************/ }
+  body.semi-dark-layout .main-menu {
+    background-color: #9E4572;
+    }
+    li.nav-item.has-sub. sidebar-group-active1.open {
+        border-radius: 31.893px 0px 0px 31.893px;
+        background: #FFF;
+    }
+    li.nav-item.has-sub. sidebar-group-active1.open span {
+       color: #000;
+       font-size: 14.688px;
+       font-family: "Lato";
+       font-weight: 700;
+    }
+    body.semi-dark-layout .main-menu .shadow-bottom {
+      background: linear-gradient(180deg, #0f1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0)); }
+    body.semi-dark-layout .main-menu:not(.expanded) .navigation . sidebar-group-active1 a {
+      background-color: #9E4572;
+      }
+  body.semi-dark-layout .main-menu-content .navigation-main {
+    background-color: #9E4572;
+    }
+    body.semi-dark-layout .main-menu-content .navigation-main .nav-item i {
+      color: #c2c6dc; }
+    body.semi-dark-layout .main-menu-content .navigation-main .nav-item.open a {
+      background-color: #fff;
+      }
+    li.nav-item.has-sub.open, body.semi-dark-layout .main-menu-content .navigation-main .nav-item.open a::after {
+        background-color: #fff;
+      }
+    body.semi-dark-layout .main-menu-content .navigation-main .nav-item a:after, body.semi-dark-layout .main-menu-content .navigation-main .nav-item a {
+      background: #9E4572;
+      border-radius: 4px;
+      }
+    body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content {
+      background-color: #9E4572;
+      }
+      body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content .active .menu-item {
+        color: #fff; }
+      body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content li:not(.active) a {
+        background-color: #fff;
+        }
+    body.semi-dark-layout .main-menu-content .navigation-main .active .menu-title,
+    body.semi-dark-layout .main-menu-content .navigation-main .active i {
+      color: #fff; }
+    body.semi-dark-layout .main-menu-content .navigation-main . sidebar-group-active1 a {
+      background: #9E4572;
+      border-radius: 4px; }
+    body.semi-dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content {
+      background-color: #fff
+      }
+      body.semi-dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content .active {
+        z-index: 1; }
+        body.semi-dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content .active a {
+          background-color: transparent; }
+  body.semi-dark-layout.menu-collapsed .main-menu:not(.expanded) .navigation-main li.active a {
+    background: #9E4572 !important;
+    }
+   li.nav-item.has-sub.open{
+    background-color: #fff;
+    border-radius: 31.893px 0px 0px 31.893px
+   }
+   li.nav-item.has-sub.open .menu-title{
+    color: #aaa;
+   }
+   li.nav-item.has-sub.open .menu-content{
+    background-color: #fff !important;
+   }
+   li.nav-item .menu-item{
+    color: #000;
+   }
+

@@ -97,6 +97,13 @@
 
             </li>
 
+            <li class=" nav-item @if (Route::currentRouteName() == 'communication_tool') active @endif">
+                <a href="{{ route('communication_tool') }}">
+                    <img class="image-icon" src="{{ asset('icon/privacy.svg') }}" alt=""><span
+                        class="menu-title" data-i18n="Privacy and Security Settings">Communication Tools <br>(Messaging Controll)</span></a>
+
+            </li>
+
             <li class=" nav-item @if (Route::currentRouteName() == 'support') active @endif">
                 <a href="{{ route('support') }}">
                     <img class="image-icon" src="{{ asset('icon/support.svg') }}" alt=""><span

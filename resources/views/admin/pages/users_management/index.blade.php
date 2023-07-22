@@ -8,116 +8,94 @@
 
 @section('body')
     <input type="hidden" value="" name="id" id="id">
-    <div class="row">
-        <div class="col-4">
-            <h1>Request Profile</h1>
-            <h6>User Management / Request Profile</h6>
-
-            <div class="card mt-2 background-card sidebar-content card">
-                <div class="card-content">
-                    <div class="card-body " style="position: relative;">
-                        <fieldset class="form-group position-relative has-icon-left  p-50">
-                            <input type="text" class="form-control round  h-10" value="" id="chat-search"
-                                placeholder="Search People">
-                            <div class="form-control-position">
-                                <i class="feather icon-search"></i>
-                            </div>
-                        </fieldset>
-
-                        <div class="col-12 mb-1">
-                            <div class="col-12 mb-1">
-                                <div class="custom-control custom-switch custom-control-inline float-right">
-                                    <input type="checkbox" class="custom-control-input"
-                                        @if (auth()->user()->automation == 1) checked @endif id="accountSwitch1">
-                                    <label class="custom-control-label mr-1" for="accountSwitch1"></label>
-                                    <span class="switch-label w-100 black mb-2">Automation</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="scroller">
-                            @include('admin.pages.users_management.ajax.users_request_list')
-                        </div>
-
-
-                        <div class="mt-5 m-2">
-                            <div class="vs-checkbox-con">
-                                <input type="checkbox" class="checkbox" value="false">
-                                <span class="vs-checkbox checkbox1 vs-checkbox-lg">
-                                    <span class="vs-checkbox--check">
-                                        <i class="vs-icon feather icon-check"></i>
-                                    </span>
-                                </span>
-                                <span class="checkbox-text">Select All</span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <button id="approve-btn" class="btn-rounded-app btn-text border-0"
-                                data-approve="0">Approve</button>
-
-                        </div>
-                    </div>
-
-                    <div class="background-card">
-
-                    </div>
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-area-wrapper">
+            <div class="sidebar-left">
+                <div style="margin-bottom: 30px; margin-top: 20px;">
+                    <h1>Request Profile</h1>
+                    <span>User Management / Request Profile</span>
                 </div>
+                <div class="sidebar">
+                    <div class="sidebar-content card">
+                        <span class="sidebar-close-icon">
+                            <i class="feather icon-x"></i>
+                        </span>
+                        <div class="chat-fixed-search">
+                            <div class="d-flex align-items-center">
 
-            </div>
+                                <fieldset class="form-group position-relative has-icon-left mx-1 my-0 w-100 meg-cont"
+                                    style="position: relative;">
 
-        </div>
-        <div class="col-8">
-            <div class="card background-card">
-                <div class="card-content">
-                    <div class="card-body pt-30" style="position: relative;">
-                        <div class="row m-2">
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-green"></div>
-                                            <h2 class="card-h1">All Request</h2>
-                                            <span id="all-request" class="data-value">{{ $data['requestCount'] }}</span>
-                                        </div>
+
+                                    <input type="text" class="form-control round" id="chat-search"
+                                        placeholder="Search or start a new chat">
+                                    <div class="" style="position: absolute; left: 10px; top: 10px;">
+                                        <i class="feather icon-search"></i>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-green"></div>
-                                            <h2 class="card-h1">Approved</h2>
-                                            <span id="approve-count" class="data-value">{{ $data['approvedCount'] }}</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-red"></div>
-                                            <h2 class=" card-h1">Block</h2>
-                                            <span id="block-count" class="data-value">{{ $data['blockCount'] }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="user-details-div" class="col-xl-12 col-md-12 col-sm-12 user-details d-none ">
-
+                                </fieldset>
                             </div>
                         </div>
+                        <div class="automate">
+                            <label class="switch">
+                                <input type="checkbox" @if (auth()->user()->automation == 1) checked @endif
+                                    id="accountSwitch1">
+                                <span class="slider round"></span>
+                            </label>
+                            <span> Automation</span>
+                        </div>
+                        <div id="users-list" class="chat-user-list request-list list-group position-relative">
+
+                            <ul class="chat-users-list-wrapper media-list user-side-list">
+                                @include('admin.pages.components.request_profile_user_list')
+
+                            </ul>
+                        </div>
+                        <div class="chk-div">
+                            <input type="checkbox" name="" id=""><label for="">Select
+                                All</label>
+                        </div>
+                        <button id="approve-btn" data-approve="0" class="chk-btn">Approve</button>
                     </div>
+                    <!--/ Chat Sidebar area -->
+
                 </div>
             </div>
+            <div class="content-right">
+                <!-- Chat Sidebar area -->
+                <div class="sidebar2-content card">
+                    <div class="req-row">
+                        <div class="req-col-1">
+                            <i>30</i>
+                            <h1>All Request</h1>
+                            <h2 id="all-request">{{ $data['requestCount'] }}</h2>
+                        </div>
+                        <div class="req-clo-2">
+                            <i>20</i>
+                            <h1>Approved</h1>
+                            <h2 id="approve-count">{{ $data['approvedCount'] }}</h2>
+                        </div>
+                        <div class="req-col-3">
+                            <i>10</i>
+                            <h1>Block</h1>
+                            <h2 id="block-count">{{ $data['blockCount'] }}</h2>
+                        </div>
+                    </div>
 
 
+                    <div class="req-col-12">
+                        <div id="user-details-div" style="background-color: #fff;" class="user-details d-none">
+                            {{-- @include('admin.pages.users_management.ajax.user_details_horizontal') --}}
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--/ Chat Sidebar area -->
+            </div>
         </div>
     </div>
-
 
 
     {{-- To here --}}
@@ -131,43 +109,6 @@
 
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
-        $("#chat-search").keyup(function(e) {
-            var type = 'request';
-            var search = $(this).val();
-
-            $.ajax({
-                type: "post",
-                url: "{{ route('user.search') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'type': type,
-                    'search': search
-                },
-                success: function(res) {
-
-                        $('.scroller').html("");
-                        $('.scroller').html(res);
-                        if (res) {
-                            $("#user-details-div").removeClass('d-none')
-                            $(".scroller .req-profile").first().addClass("active")
-                            var newid = $(".scroller .req-profile").first().attr("data-id")
-                            $("#id").val(newid);
-                            showRequestDetail(newid);
-
-                        }else{
-
-                            $("#user-details-div").addClass('d-none')
-                        }
-
-                        // $('.scroller').html("");
-
-                }
-            });
-
-
-
-        });
-
         function showRequestDetail(id) {
 
             if (id) {
@@ -220,19 +161,25 @@
                 success: function(res) {
                     if (res.status == 1) {
 
-                        $(".scroller").empty();
+                        $(".user-side-list").empty();
                     }
                     if (res.status == 0) {
 
                         $(".req-profile.active").remove();
-                        $(".scroller .req-profile").first().addClass("active")
-                        var newid = $(".scroller .req-profile").first().attr("data-id")
+                        $(".user-side-list .req-profile").first().addClass("active")
+                        var newid = $(".user-side-list .req-profile").first().attr("data-id")
                         $("#id").val(newid);
                         showRequestDetail(newid);
                         a_count++
                         r_count--
                         $("#approve-count").text(a_count);
                         $("#all-request").text(r_count);
+                    }
+                    if (res.status == 2) {
+                        $(".req-profile.active").remove();
+
+                        $("#approve-count").text(r_count);
+                        $("#all-request").text(0);
                     }
 
 
@@ -243,22 +190,52 @@
             });
 
         }
+
+
+        // $("#chat-search").keyup(function(e) {
+        //     var type = 'request';
+        //     var search = $(this).val();
+        //     console.log(type);
+        //     console.log(search);
+        //     // $.ajax({
+        //     //     type: "post",
+        //     //     url: "{{ route('user.search') }}",
+        //     //     data: {
+        //     //         "_token": "{{ csrf_token() }}",
+        //     //         'type': type,
+        //     //         'search': search
+        //     //     },
+        //     //     success: function(res) {
+
+        //     //             $('.user-side-list').html("");
+        //     //             $('.user-side-list').html(res);
+        //     //             if (res) {
+        //     //                 $("#user-details-div").removeClass('d-none')
+        //     //                 $(".user-side-list .req-profile").first().addClass("active")
+        //     //                 var newid = $(".user-side-list .req-profile").first().attr("data-id")
+        //     //                 $("#id").val(newid);
+        //     //                 showRequestDetail(newid);
+
+        //     //             }else{
+
+        //     //                 $("#user-details-div").addClass('d-none')
+        //     //             }
+
+        //     //             // $('.user-side-list').html("");
+
+        //     //     }
+        //     // });
+
+
+
+        // });
+
         $(document).ready(function() {
-            $(".scroller .req-profile").first().addClass("active")
-            var newid = $(".scroller .req-profile").first().attr("data-id")
+            $(".user-side-list .req-profile").first().addClass("active")
+            var newid = $(".user-side-list .req-profile").first().attr("data-id")
             $("#id").val(newid);
             showRequestDetail(newid);
         });
-        $(document).on("click", "#approve-btn", function() {
-            var btn_val = $("#approve-btn").attr('data-approve');
-            var status = 0;
-            if (btn_val == 1) {
-                status = 1
-            }
-
-            approveRequest(status)
-        });
-
         $(document).on("click", ".req-profile", function() {
             $(this).siblings().removeClass("active");
             var id = $(this).attr("data-id");
@@ -273,12 +250,13 @@
             var id = $(this).attr("data-id");
             var block_count = $("#block-count").text();
             var req_count = $("#all-request").text();
+
             var b_count = block_count;
             var r_count = req_count;
             console.log(block_count);
             $(".req-profile.active").remove();
-            $(".scroller .req-profile").first().addClass("active")
-            var newid = $(".scroller .req-profile").first().attr("data-id")
+            $(".user-side-list .req-profile").first().addClass("active")
+            var newid = $(".user-side-list .req-profile").first().attr("data-id")
 
 
             if (id) {
@@ -304,14 +282,13 @@
                 });
             }
         });
-
         $("#accountSwitch1").change(function() {
 
             if (this.checked)
                 var status = 1;
             else
                 var status = 0;
-
+            console.log(status);
             $.ajax({
                 url: "{{ route('admin.automation') }}",
                 type: 'GET',
@@ -333,16 +310,27 @@
         });
 
         $('input:checkbox').change(function() {
+
             if ($(this).is(":checked")) {
-                $(".scroller .req-profile").addClass("active")
+                $(".user-side-list .req-profile").addClass("active")
                 $("#approve-btn").text("Approve All")
                 $("#approve-btn").attr('data-approve', 1);
 
             } else {
-                $(".scroller .req-profile").removeClass("active")
+                $(".user-side-list .req-profile").removeClass("active")
                 $("#approve-btn").text("Approve")
                 $("#approve-btn").attr('data-approve', 0);
             }
+        });
+
+        $(document).on("click", "#approve-btn", function() {
+            var btn_val = $("#approve-btn").attr('data-approve');
+            var status = 0;
+            if (btn_val == 1) {
+                status = 1
+            }
+
+            approveRequest(status)
         });
     </script>
     <script>

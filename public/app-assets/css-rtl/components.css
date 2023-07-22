@@ -8,7 +8,7 @@ html {
 }
 html body {
   height : 100%;
-  background-color : #FFFFFF;
+  background-color : #F8F8F8;
   direction : rtl;
   /*
       * Blank page
@@ -67,7 +67,6 @@ html body .content.app-content .content-area-wrapper .content-wrapper {
 html body .content .content-wrapper {
   padding : calc(2.2rem - 0.4rem) 2.2rem 0;
   margin-top : 6rem;
-  margin-left: 2.5rem;
 }
 html body .content .content-wrapper .content-header-title {
   font-weight : 500;
@@ -226,7 +225,6 @@ html .pace .pace-progress {
 @media (max-width: 575.98px) {
   html body .content .content-wrapper {
     padding : calc(2.2rem - 0.4rem) calc(2.2rem - 1rem) 0;
-    margin-left: 2.5rem;
   }
 }
 
@@ -252,7 +250,7 @@ html .pace .pace-progress {
     File Name: sidebar.scss
     Description: content sidebar specific scss.
     ----------------------------------------------------------------------------------------
-    Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
     Author: PIXINVENT
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
@@ -348,7 +346,7 @@ body.fixed-footer footer.footer-dark {
     File Name: navigations.scss
     Description: Common mixin for menus, contain dark and light version scss.
     ----------------------------------------------------------------------------------------
-    Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
     Author: PIXINVENT
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
@@ -417,7 +415,7 @@ body.fixed-footer footer.footer-dark {
   position : relative;
   top : 1px;
 }
-.main-menu.menu-light .navigation > li.open > a, .main-menu.menu-light .navigation > li.sidebar-group-active > a {
+.main-menu.menu-light .navigation > li.open > a, .main-menu.menu-light .navigation > li. sidebar-group-active1 > a {
   color : #494949;
   background : whitesmoke;
   transition : transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s;
@@ -459,13 +457,13 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-light .navigation > li ul .has-sub:not(.open) > ul {
   display : none;
 }
-.main-menu.menu-light .navigation > li ul .open > a, .main-menu.menu-light .navigation > li ul .sidebar-group-active > a {
+.main-menu.menu-light .navigation > li ul .open > a, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > a {
   color : #626262;
 }
-.main-menu.menu-light .navigation > li ul .open > ul, .main-menu.menu-light .navigation > li ul .sidebar-group-active > ul {
+.main-menu.menu-light .navigation > li ul .open > ul, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > ul {
   display : block;
 }
-.main-menu.menu-light .navigation > li ul .open > ul .open > ul, .main-menu.menu-light .navigation > li ul .sidebar-group-active > ul .open > ul {
+.main-menu.menu-light .navigation > li ul .open > ul .open > ul, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > ul .open > ul {
   display : block;
 }
 .main-menu.menu-light .navigation > li ul .hover > a, .main-menu.menu-light .navigation > li ul:hover > a {
@@ -583,7 +581,7 @@ body.fixed-footer footer.footer-dark {
   position : relative;
   top : 1px;
 }
-.main-menu.menu-dark .navigation > li.open > a, .main-menu.menu-dark .navigation > li.sidebar-group-active > a {
+.main-menu.menu-dark .navigation > li.open > a, .main-menu.menu-dark .navigation > li. sidebar-group-active1 > a {
   color : #C3C3C3;
   background : #0C102A;
   transition : transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s;
@@ -625,13 +623,13 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-dark .navigation > li ul .has-sub:not(.open) > ul {
   display : none;
 }
-.main-menu.menu-dark .navigation > li ul .open > a, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > a {
+.main-menu.menu-dark .navigation > li ul .open > a, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > a {
   color : #DCDCDC;
 }
-.main-menu.menu-dark .navigation > li ul .open > ul, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > ul {
+.main-menu.menu-dark .navigation > li ul .open > ul, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > ul {
   display : block;
 }
-.main-menu.menu-dark .navigation > li ul .open > ul .open > ul, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > ul .open > ul {
+.main-menu.menu-dark .navigation > li ul .open > ul .open > ul, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > ul .open > ul {
   display : block;
 }
 .main-menu.menu-dark .navigation > li ul .hover > a, .main-menu.menu-dark .navigation > li ul:hover > a {
@@ -1807,7 +1805,7 @@ body.fixed-footer .main-menu.menu-fixed {
 	File Name: search.scss
 	Description: Search  functionality.
 	----------------------------------------------------------------------------------------
-	Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
 	Author: PIXINVENT
 	Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
@@ -2904,7 +2902,7 @@ body.navbar-static .navbar-container .search-input.open {
     File Name: demo.scss
     Description: CSS used for demo purpose only. Remove this css from your project.
     ----------------------------------------------------------------------------------------
-    Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
     Author: PIXINVENT
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
@@ -2990,7 +2988,7 @@ body.navbar-static .navbar-container .search-input.open {
 	File Name: customizer.scss
 	Description: CSS used for demo purpose only. Remove this css from your project.
 	----------------------------------------------------------------------------------------
-	Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
 	Author: PIXINVENT
 	Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/

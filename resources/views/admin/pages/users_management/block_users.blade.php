@@ -8,56 +8,76 @@
 
 @section('body')
     <input type="hidden" value="" name="id" id="id">
-    <div class="row">
-        <div class="col-5">
-            <h1>Block List</h1>
-            <h6>Block List</h6>
-
-            <div class="card mt-2 background-card sidebar-content card">
-                <div class="card-content">
-                    <div class="card-body " style="position: relative;">
-                        <fieldset class="form-group position-relative has-icon-left  p-50">
-                            <input type="text" class="form-control round  h-10" id="chat-search"
-                                placeholder="Search People">
-                            <div class="form-control-position">
-                                <i class="feather icon-search"></i>
-                            </div>
-                        </fieldset>
-
-                        <div class="scroller">
-                            @include('admin.pages.users_management.ajax.user_block_list_section')
-                        </div>
-
-
-
-                    </div>
-
-                    <div class="background-card">
-
-                    </div>
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-area-wrapper">
+            <div class="sidebar-left">
+                <div style="margin-bottom: 30px; margin-top: 20px;">
+                    <h1>Block List</h1>
+                    <span>Block List</span>
                 </div>
+                <div class="sidebar">
+                    <!-- User Chat profile area -->
 
-            </div>
+                    <!--/ User Chat profile area -->
+                    <!-- Chat Sidebar area -->
+                    <div class="sidebar-content card">
+                        <span class="sidebar-close-icon">
+                            <i class="feather icon-x"></i>
+                        </span>
+                        <div class="chat-fixed-search">
+                            <div class="d-flex align-items-center">
+                                <fieldset class="form-group position-relative has-icon-left mx-1 my-0 w-100 meg-cont"
+                                    style="position: relative;">
 
-        </div>
-        <div class="col-7">
-            <div class="card background-card">
-                <div class="card-content">
-                    <div class="card-body pt-30" style="position: relative;">
-                        <div class="row m-2">
 
-
-                            <div id="user-details-div" class="col-xl-12 col-md-12 col-sm-12 user-details d-none ">
-
+                                    <input type="text" class="form-control round" id="chat-search"
+                                        placeholder="Search or start a new chat">
+                                    <div class="icon-search-r">
+                                        <i class="feather icon-search"></i>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
+
+                        <div id="users-list" class="chat-user-list discover-list request-list list-group position-relative">
+                            <ul class="chat-users-list-wrapper media-list user-side-list">
+
+                                @include('admin.pages.components.block_user_list')
+                            </ul>
+
+
+                        </div>
+                        <!-- <div class="chk-div">
+                                            <input type="checkbox" name="" id=""><label for="">Select All</label>
+                                        </div> -->
+                        <!-- <button class="chk-btn">Approve</button>  -->
                     </div>
+                    <!--/ Chat Sidebar area -->
+
                 </div>
             </div>
+            <div class="content-right">
+                <!-- Chat Sidebar area -->
+                <div class="sidebar2-content card">
+                    <div class="req-col-12">
+
+                        <div id="user-details-div" style="background-color: #fff;" class="user-details-1 d-none">
+
+                        </div>
+                    </div>
 
 
+                </div>
+
+
+                <!--/ Chat Sidebar area -->
+            </div>
         </div>
     </div>
+    <!-- END: Content-->
 
 
 
@@ -69,43 +89,43 @@
 @section('script')
 
 
-
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
-        $("#chat-search").keyup(function (e) {
-            var type = 'block';
-            var search = $(this).val();
+        // $("#chat-search").keyup(function(e) {
+        //     var type = 'block';
+        //     var search = $(this).val();
 
-            $.ajax({
-                type: "post",
-                url: "{{ route('user.search') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'type': type,
-                    'search': search
-                },
-                success: function(res) {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "{{ route('user.search') }}",
+        //         data: {
+        //             "_token": "{{ csrf_token() }}",
+        //             'type': type,
+        //             'search': search
+        //         },
+        //         success: function(res) {
 
-                        $('.scroller').html("");
-                        $('.scroller').html(res);
-                        if (res) {
-                            $("#user-details-div").removeClass('d-none')
-                            $(".scroller .req-profile").first().addClass("active")
-                            var newid = $(".scroller .req-profile").first().attr("data-id")
-                            $("#id").val(newid);
-                            showRequestDetail(newid);
+        //             $('.user-side-list').html("");
+        //             $('.user-side-list').html(res);
+        //             if (res) {
+        //                 $("#user-details-div").removeClass('d-none')
+        //                 $(".user-side-list .req-profile").first().addClass("active")
+        //                 var newid = $(".user-side-list .req-profile").first().attr("data-id")
+        //                 $("#id").val(newid);
+        //                 showRequestDetail(newid);
 
-                        }else{
+        //             } else {
 
-                            $("#user-details-div").addClass('d-none')
-                        }
+        //                 $("#user-details-div").addClass('d-none')
+        //             }
 
-                        // $('.scroller').html("");
+        //             // $('.user-side-list').html("");
 
-                }
-            });
+        //         }
+        //     });
 
-        });
+        // });
+
         function showRequestDetail(id) {
 
             if (id) {
@@ -115,7 +135,7 @@
                     url: "{{ route('user.info') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        "status":1,
+                        "status": 1,
                         "id": id
                     },
 
@@ -130,9 +150,10 @@
             }
         }
 
+
         $(document).ready(function() {
-            $(".scroller .req-profile").first().addClass("active")
-            var newid = $(".scroller .req-profile").first().attr("data-id")
+            $(".user-side-list .req-profile").first().addClass("active")
+            var newid = $(".user-side-list .req-profile").first().attr("data-id")
             $("#id").val(newid);
 
             showRequestDetail(newid);
@@ -152,8 +173,8 @@
 
             var id = $(this).attr("data-id");
             $(".req-profile.active").remove();
-            $(".scroller .req-profile").first().addClass("active")
-            var newid = $(".scroller .req-profile").first().attr("data-id")
+            $(".user-side-list .req-profile").first().addClass("active")
+            var newid = $(".user-side-list .req-profile").first().attr("data-id")
             if (id) {
 
                 $.ajax({

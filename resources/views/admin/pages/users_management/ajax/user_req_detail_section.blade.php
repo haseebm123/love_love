@@ -1,11 +1,11 @@
 {{-- @dd($data->is_block) --}}
-<style>
-    .unblock-btn{
-        background-color: #FB0000;
-    color: white;
-    }
-</style>
 @if (isset($data))
+    <style>
+        .unblock-btn {
+            background-color: #FB0000;
+            color: white;
+        }
+    </style>
     <div class="card text-center custom-card">
         <div class="card-content">
             <div class="card-body">
@@ -33,9 +33,7 @@
                             <button class="btn-rounded block-btn" data-id={{ $data->id }}>Block Profile</button>
                         @endif
                         @if ($data->is_block == 1)
-                            <button class="btn-rounded unblock-btn"
-
-                                data-id={{ $data->id }}>UnBlock Profile</button>
+                            <button class="btn-rounded unblock-btn" data-id={{ $data->id }}>UnBlock Profile</button>
                         @endif
                     </div>
                 </div>

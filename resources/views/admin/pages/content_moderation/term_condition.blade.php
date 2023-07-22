@@ -1,57 +1,36 @@
 @extends('admin.layouts.master')
 @section('title', 'Term & Condition')
 @section('style')
-    <style>
-        .scroller {
 
-            height: 800px !important;
-        }
-
-        .btn-rounded {
-            border-radius: 17.347px !important;
-            padding: 13px !important;
-            font-size: 14px !important;
-        }
-    </style>
 @endsection
 
 @section('body')
     {{-- Code Here --}}
-    <div class="row m-5">
-        <div class="col-12 card background-card sidebar-content card ">
-            <div class="row">
-                <div>
-
-                    <h1>Term & Condition</h1>
-                    <h6>Content Moderation / Terms & Condition </h6>
-                </div>
-                <div class=" ">
-                    <button type="button" class="btn-rounded btn btn-outline-dark waves-effect waves-light"
-                        data-toggle="modal" data-target="#dark">
-                        Edit
-                    </button>
-
-                </div>
-            </div>
 
 
-            <div class="card-content">
-                <div class="card-body " style="position: relative;">
-                    <div>
-                          {!! $data->term_and_condition !!}
+
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-area-wrapper">
+            <div class="sidebar-left">
+                <div class="sidebar">
+                    <div class="sidebar-content term-c card">
+                        <div style="margin-bottom: 30px; margin-top: 20px; margin-left: 30px;">
+                            <h1>Term & Condition</h1>
+                            <span>Content Moderation / Term & Condition </span>
+
+                            <button  type="button"  data-toggle="modal" data-target="#dark">Edit</button>
+
+                            <div>
+                                 {!! $data->term_and_condition !!}
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
-
             </div>
-
-
         </div>
-
-
-
     </div>
+
 
     <!-- Modal -->
     <div class="modal fade text-left" id="dark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel150"
@@ -79,7 +58,8 @@
                                             <div class="card-body">
                                                 <div class="form-group ">
                                                     <label>Terms & Condition </label>
-                                                    <textarea class="form-control editor" id="term_and_condition" placeholder="Enter Terms & Condition" name="term_and_condition">{!! $data->term_and_condition !!}</textarea>
+                                                    <textarea class="form-control editor" id="term_and_condition" placeholder="Enter Terms & Condition"
+                                                        name="term_and_condition">{!! $data->term_and_condition !!}</textarea>
                                                 </div>
 
                                             </div>
@@ -93,7 +73,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-dark edt" >Save</button>
+                        <button type="submit" class="btn btn-dark edt">Save</button>
                     </div>
                 </form>
             </div>
@@ -104,16 +84,26 @@
 @endsection
 
 
-@section('footer-section')
-@endsection
 
-@section('footer-script')
+
+@section('script')
 
     <!-- <script src="{{ asset('assets/js/countrystatecity.js?v2') }}"></script> -->
 
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
 
-
+    <script>
+        $(document).ready(function() {
+            $('.editor').each(function(e) {
+                CKEDITOR.replace(this.id, {
+                    allowedContent: true,
+                    toolbar: 'Full',
+                    enterMode: CKEDITOR.ENTER_BR,
+                    shiftEnterMode: CKEDITOR.ENTER_P,
+                });
+            });
+        });
+    </script>
 
     {{-- Extra --}}
     <script>

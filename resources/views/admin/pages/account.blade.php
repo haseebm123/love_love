@@ -11,171 +11,68 @@
 
 @section('body')
     {{-- Code Here --}}
-    <div class="row">
-        <div class="col-4">
-            <h1>Accounts</h1>
-            <h6>Accounts</h6>
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-area-wrapper">
+            <div class="sidebar-left">
+                <div style="margin-bottom: 30px; margin-top: 20px;">
+                    <h1>Accounts</h1>
+                    <span>Accounts</span>
+                </div>
+                <div class="sidebar">
+                    <div class="sidebar-content card">
+                        <span class="sidebar-close-icon">
+                            <i class="feather icon-x"></i>
+                        </span>
+                        <div class="chat-fixed-search">
+                            <div class="d-flex align-items-center">
 
-            <div class="card mt-5 background-card sidebar-content card">
-                <div class="card-content">
-                    <div class="card-body " style="position: relative;">
-                        <div class="scroller">
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="users-list" class="chat-user-list request-list list-group position-relative">
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="chat-users-list-wrapper media-list user-side-list">
+                                {{-- @include('admin.pages.components.request_profile_user_list') --}}
+                                @include('admin.pages.components.account')
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
+                            </ul>
+                        </div>
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
+                        <button id="approve-btn" data-approve="0" class="chk-btn">Approve</button>
+                    </div>
+                    <!--/ Chat Sidebar area -->
 
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between w-100  mt-1   rouden  ">
-                                <div>
-                                    <div>
-                                        <h5 class="textWhite">$3 has been credtied in the Account</h5>
-                                    </div>
-                                </div>
-                            </div>
-
+                </div>
+            </div>
+            <div class="content-right">
+                <!-- Chat Sidebar area -->
+                <div class="sidebar2-content card">
+                    <div class="req-row">
+                        <div class="req-col-1">
+                            <i>30</i>
+                            <h1>All Request</h1>
+                            <h2 id="balance">$300</h2>
+                        </div>
+                        <div class="req-clo-2">
+                            <i>30</i>
+                            <h1>Withdraw</h1>
+                            <h2 id="withdraw">$100</h2>
+                        </div>
+                        <div class="req-col-3">
+                            <i>10</i>
+                            <h1>Pending</h1>
+                            <h2 id="pending">$50</h2>
                         </div>
                     </div>
 
 
                 </div>
-
+                <!--/ Chat Sidebar area -->
             </div>
         </div>
-        <div class="col-8">
-            <div class="card background-card">
-                 <div class="card-content">
-                    <div class="card-body pt-30" style="position: relative;">
-                        <div class="row m-2">
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-green"></div>
-                                            <h2 class="card-h1">Balance</h2>
-                                            <span class="data-value">$300</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-green"></div>
-                                            <h2 class="card-h1">Withdraw</h2>
-                                            <span class="data-value">$100</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-4 col-sm-1  ">
-                                <div class="card text-center custom-card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="dot-red"></div>
-                                            <h2 class=" card-h1">Pending</h2>
-                                            <span class="data-value">$50</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 
 

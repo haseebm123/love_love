@@ -2,7 +2,7 @@
   File Name: Components.js
   Description: For Generic Components.
   ----------------------------------------------------------------------------------------
-  Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/

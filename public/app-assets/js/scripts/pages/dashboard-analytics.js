@@ -2,7 +2,7 @@
     File Name: dashboard-analytics.js
     Description: dashboard analytics page content with Apexchart Examples
     ----------------------------------------------------------------------------------------
-    Item Name: Love Love, HTML & Laravel Admin Dashboard Template
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
     Author: PIXINVENT
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
@@ -442,120 +442,120 @@ $(window).on("load", function () {
 
   // Sales Chart ends //
 
-//   /***** TOUR ******/
-//   var tour = new Shepherd.Tour({
-//     classes: 'shadow-md bg-purple-dark',
-//     scrollTo: true
-//   })
+  /***** TOUR ******/
+  var tour = new Shepherd.Tour({
+    classes: 'shadow-md bg-purple-dark',
+    scrollTo: true
+  })
 
-//   // tour steps
-//   tour.addStep('step-1', {
-//     text: 'Toggle Collapse Sidebar.',
-//     attachTo: '.modern-nav-toggle .collapse-toggle-icon bottom',
-//     buttons: [
+  // tour steps
+  // tour.addStep('step-1', {
+  //   text: 'Toggle Collapse Sidebar.',
+  //   attachTo: '.modern-nav-toggle .collapse-toggle-icon bottom',
+  //   buttons: [
 
-//       {
-//         text: "Skip",
-//         action: tour.complete
-//       },
-//       {
-//         text: 'Next',
-//         action: tour.next
-//       },
-//     ]
-//   });
+  //     {
+  //       text: "Skip",
+  //       action: tour.complete
+  //     },
+  //     {
+  //       text: 'Next',
+  //       action: tour.next
+  //     },
+  //   ]
+  // });
 
-//   tour.addStep('step-2', {
-//     text: 'Create your own bookmarks. You can also re-arrange them using drag & drop.',
-//     attachTo: '.bookmark-icons .icon-mail bottom',
-//     buttons: [
+  // tour.addStep('step-2', {
+  //   text: 'Create your own bookmarks. You can also re-arrange them using drag & drop.',
+  //   attachTo: '.bookmark-icons .icon-mail bottom',
+  //   buttons: [
 
-//       {
-//         text: "Skip",
-//         action: tour.complete
-//       },
+  //     {
+  //       text: "Skip",
+  //       action: tour.complete
+  //     },
 
-//       {
-//         text: "previous",
-//         action: tour.back
-//       },
-//       {
-//         text: 'Next',
-//         action: tour.next
-//       },
-//     ]
-//   });
+  //     {
+  //       text: "previous",
+  //       action: tour.back
+  //     },
+  //     {
+  //       text: 'Next',
+  //       action: tour.next
+  //     },
+  //   ]
+  // });
 
-//   tour.addStep('step-3', {
-//     text: 'You can change language from here.',
-//     attachTo: '.dropdown-language .flag-icon bottom',
-//     buttons: [
+  // tour.addStep('step-3', {
+  //   text: 'You can change language from here.',
+  //   attachTo: '.dropdown-language .flag-icon bottom',
+  //   buttons: [
 
-//       {
-//         text: "Skip",
-//         action: tour.complete
-//       },
+  //     {
+  //       text: "Skip",
+  //       action: tour.complete
+  //     },
 
-//       {
-//         text: "previous",
-//         action: tour.back
-//       },
-//       {
-//         text: 'Next',
-//         action: tour.next
-//       },
-//     ]
-//   });
+  //     {
+  //       text: "previous",
+  //       action: tour.back
+  //     },
+  //     {
+  //       text: 'Next',
+  //       action: tour.next
+  //     },
+  //   ]
+  // });
 
-//   tour.addStep('step-4', {
-//     text: 'Try fuzzy search to visit pages in flash.',
-//     attachTo: '.nav-link-search .icon-search bottom',
-//     buttons: [
+  // tour.addStep('step-4', {
+  //   text: 'Try fuzzy search to visit pages in flash.',
+  //   attachTo: '.nav-link-search .icon-search bottom',
+  //   buttons: [
 
-//       {
-//         text: "Skip",
-//         action: tour.complete
-//       },
+  //     {
+  //       text: "Skip",
+  //       action: tour.complete
+  //     },
 
-//       {
-//         text: "previous",
-//         action: tour.back
-//       },
-//       {
-//         text: 'Next',
-//         action: tour.next
-//       },
-//     ]
-//   });
+  //     {
+  //       text: "previous",
+  //       action: tour.back
+  //     },
+  //     {
+  //       text: 'Next',
+  //       action: tour.next
+  //     },
+  //   ]
+  // });
 
-//   tour.addStep('step-5', {
-//     text: 'Buy this awesomeness at affordable price!',
-//     attachTo: '.buy-now bottom',
-//     buttons: [
+  // tour.addStep('step-5', {
+  //   text: 'Buy this awesomeness at affordable price!',
+  //   attachTo: '.buy-now bottom',
+  //   buttons: [
 
-//       {
-//         text: "previous",
-//         action: tour.back
-//       },
+  //     {
+  //       text: "previous",
+  //       action: tour.back
+  //     },
 
-//       {
-//         text: "Finish",
-//         action: tour.complete
-//       },
-//     ]
-//   });
+  //     {
+  //       text: "Finish",
+  //       action: tour.complete
+  //     },
+  //   ]
+  // });
 
-//   if ($(window).width() > 1200 && !$("body").hasClass("menu-collapsed")) {
-//     tour.start()
-//   }
-//   else {
-//     tour.cancel()
-//   }
-//   if($("body").hasClass("horizontal-menu")){
-//     tour.cancel()
-//   }
-//   $(window).on("resize", function () {
-//     tour.cancel()
-//   })
+  // if ($(window).width() > 1200 && !$("body").hasClass("menu-collapsed")) {
+  //   tour.start()
+  // }
+  // else {
+  //   tour.cancel()
+  // }
+  // if($("body").hasClass("horizontal-menu")){
+  //   tour.cancel()
+  // }
+  // $(window).on("resize", function () {
+  //   tour.cancel()
+  // })
 
 });

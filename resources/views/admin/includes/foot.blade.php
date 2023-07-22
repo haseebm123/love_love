@@ -40,7 +40,9 @@
 <script src="{{ asset('app-assets/js/waitMe.js') }}"></script>
 {{-- <script src="{{asset('app-assets/js/toastr.min.js')}}"></script> --}}
 <script src="{{ asset('app-assets/js/scripts/pages/app-user.js') }}"></script>
-
+<!-- BEGIN: Page JS-->
+    <script src="{{ asset('app-assets/js/scripts/pages/app-chat.js') }}"></script>
+    <!-- END: Page JS-->
 <script src="{{ asset('app-assets/ckeditor/ckeditor.js') }}"></script>
 <script>
     var type = "{{ Session::get('type') }}";

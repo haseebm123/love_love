@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminController;
 
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\FirebaseController;
 
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -31,6 +32,8 @@ use App\Http\Controllers\Admin\SupportController;
         //     return view('welcome');
         // });
 
+
+
         Route::get('forgot-password',[FrontController::class,'forgotPasswords'])->name('forgot-password');
         Route::post('forgotPassword',[FrontController::class,'forgotPassword'])->name('forgotPassword');
         Route::post('updatePassword',[FrontController::class,'updatePassword'])->name('updatePassword');
@@ -53,6 +56,15 @@ use App\Http\Controllers\Admin\SupportController;
 
 
     Route::group(['middleware' => ['auth']], function() {
+
+        /* Firebase Controller */
+        Route::controller(FirebaseController::class)->group(function () {
+            Route::get('chats', 'chats')->name('get.chats');
+            Route::get('get-conversation1', 'getConversation1')->name('get.conversation1');
+            Route::get('send/firebase', 'sendMsg')->name('send.msg1');
+
+
+        });
         /*  Love Love Admin Routes */
         Route::controller(UserManagementController::class)->group(function () {
             Route::get('users-management', 'index')->name('users.management');
@@ -65,9 +77,11 @@ use App\Http\Controllers\Admin\SupportController;
             Route::get('help', 'help_support')->name('help');
             Route::get('setting', 'setting')->name('settings');
             Route::get('support', 'support')->name('support');
+            Route::get('communication_tool', 'communicationTool')->name('communication_tool');
 
 
 
+            Route::post('user-info-1', 'userReqInfo1')->name('user.info1');
             Route::post('user-info', 'userReqInfo')->name('user.info');
             Route::post('user-block', 'blockById')->name('user.block');
             Route::post('user-unblock', 'unBlockById')->name('user.unblock');
@@ -75,6 +89,9 @@ use App\Http\Controllers\Admin\SupportController;
             Route::post('user-approve', 'approveByID')->name('user.approve');
 
             Route::post('search-user', 'searchUser')->name('user.search');
+
+            Route::post('get-conversation', 'getConversation')->name('get.conversation');
+            Route::post('send-message', 'sendMsg')->name('send.message');
 
 
         });
