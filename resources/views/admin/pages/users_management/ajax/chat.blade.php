@@ -1,4 +1,3 @@
-
 @forelse ($data as $item)
     @if ($item['id'] == auth()->id())
         <div class="mychat">

@@ -16,6 +16,8 @@ use App\Models\HelpAndSupport;
 use App\Models\Notification;
 use App\Models\Recommendation;
 use App\Models\ContentModification;
+use App\Models\DisappearMessage;
+use App\Models\SpanWords;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -38,7 +40,7 @@ use Image;*/
 class UserController extends Controller
 {
 
-    /* Authentications */
+/* Authentications */
     public function verify_otp(Request $request) {
         $user_id = auth()->user()->id;
         $validator = Validator::make($request->all(), [
@@ -287,7 +289,7 @@ class UserController extends Controller
 
     }
 
-   public function uploadImg(Request $request){
+    public function uploadImg(Request $request){
         $data = User::find(auth()->user()->id);
         $imagePaths = [];
         $addImg = [];
@@ -483,7 +485,41 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Logged out successfully']);
     }
+/* Authentications */
 
+    public function spamWords() {
+
+        try {
+            //code...
+            $data = SpanWords::all();
+            return response()->json(['data'=>$data,'success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json(['message'=>$th,'success' => false]);
+        }
+    }
+    public function addDisappear(Request $request){
+        $validator = Validator::make($request->all(), [
+            'sender_id' => ['required'],
+            'receiver_id' => ['required'],
+            'message' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
+        }
+        try {
+            # code...
+            DisappearMessage::create([
+                "sender_id"=> $request->sender_id,
+                "receiver_id"=> $request->receiver_id,
+                "message"=> $request->message,
+            ]);
+
+            return response()->json(['message'=>'Send To Admin','success' => true]);
+        } catch (\Throwable $e) {
+            # code...
+             return response()->json(['message'=>'Something Went Wrong','success' => true]);
+        }
+    }
     /* Profiles */
     public function checkProfileStatus(){
         $id = auth()->user()->id;
@@ -613,7 +649,7 @@ class UserController extends Controller
         $data = Heart::where('sender_id',$sender_id)->where('receiver_id',$receiver_id)->where('status',0)->first();
         if(!isset($data)){
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'message' => 'User  Not Found'
             ]);
         }
@@ -634,7 +670,7 @@ class UserController extends Controller
         $data = Heart::where('sender_id',$sender_id)->where('receiver_id',$receiver_id)->first();
         if(!isset($data)){
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'message' => 'User  Not Found'
             ]);
         }
@@ -842,7 +878,7 @@ class UserController extends Controller
         $check_recomm = Recommendation::where('recom_to',$recom_to->id)->where('recom_from',auth()->user()->id)->where('recom_user_id',$request->user_id)->first();
         if (isset($check_recomm)) {
             return response()->json([
-            'success' => true,
+            'success' => false,
             'message' => 'Recommendation Already Send'
             ]);
         }
@@ -862,7 +898,7 @@ class UserController extends Controller
         $check_recomm = Recommendation::with(['user'])->select('recom_to','recom_from', 'recom_user_id')->where('recom_to',auth()->user()->id)->get()->map(function ($heart) {
             $heart->user = $heart;
             $heart->user_id =$heart->user->id;
-        return $heart;
+
         });
 
         $users=[];

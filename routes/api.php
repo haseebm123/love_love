@@ -32,24 +32,27 @@ Route::get('composer-update',[UserController::class,'composer_update'])->name('c
 Route::get('discover',[UserController::class,'discover'])->name('discover');
 Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
 Route::get('get_link',[UserController::class,'get_link'])->name('get_link');
+Route::get('spam/words',[UserController::class,'spamWords'])->name('spam.words');
 // Route::get('invite_link',[UserController::class,'invite_link'])->name('invite_link');
 
             // Route::get('invite_link','invite_link')->name('invite_link');
 
-
 Route::controller(HomeController::class)->group(function () {
-     Route::get('medical_condion','medicalCondition')->name('medicalCondition');
-     Route::get('intrest','intrest')->name('intrest');
-     Route::get('account_for','accountFor')->name('accountFor');
+    Route::get('medical_condion','medicalCondition')->name('medicalCondition');
+    Route::get('intrest','intrest')->name('intrest');
+    Route::get('account_for','accountFor')->name('accountFor');
 });
+
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('add_spam',[AdminController::class,'addSpam'])->name('add.spam');
+    Route::get('admin-details', [AdminController::class,'AdminInfo'])->name('admin.info');
     Route::controller(UserController::class)->group(function () {
 
             Route::get('filter','filter')->name('filter');
             Route::post('profile','updateProfile')->name('update-profile');
             Route::post('change-password','changePassword')->name('change-password');
-            Route::get('discover',[UserController::class,'discover'])->name('discover');
-            Route::get('discover-view/{id}',[UserController::class,'discoverView'])->name('discover.view');
+            Route::get('discover','discover')->name('discover');
+            Route::get('discover-view/{id}','discoverView')->name('discover.view');
             Route::post('send_otp','send_otp')->name('send_otp');
             Route::post('verify_otp','verify_otp')->name('verify_otp');
             Route::get('invite_link','invite_link')->name('invite_link');
@@ -64,6 +67,8 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('accept-heart','acceptHeartRequest')->name('accept.heart');
             Route::post('cancel-heart','cancelHeartRequest')->name('cancel.heart');
             Route::get('get-content','getContent')->name('content');
+            Route::post('add/disappear','addDisappear')->name('add.disappear');
+
 
         });
     });
@@ -72,7 +77,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('admin/profile/request',[AdminController::class,'profileReq'])->name('admin.profile.req');
     Route::post('admin/profile/accept-profile',[AdminController::class,'acceptProfile'])->name('admin.accept.profile');
 
-    Route::get('payment',[PaymentController::class,'createPaymentIntent'])->name('admin.profile.req');
+    Route::get('payment',[PaymentController::class,'createPayment'])->name('admin.profile.req');
 
 // Admin API
 

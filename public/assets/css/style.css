@@ -338,7 +338,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	display: flex;
 }
 .user-info-2 div{
-	width:50%;
+	width:62%;
 }
 .user-info-2 div h4{
 	font-weight: 600;
@@ -469,7 +469,7 @@ span.avatar.avatar-1.fa-notify.m-0.avatar-md {
     height: 25px;
 }
 span.float-right.sp-1.mb-25 {
-    margin-left: 4px;
+    margin-left: 42px;
     margin-top: -18px;
 }
 
@@ -477,6 +477,7 @@ span.float-right.sp-1.mb-25 {
     height: calc(100vh - 13rem);
     height: calc(var(--vh, 1vh) * 100 - 13rem);
     width: 100%;
+    text-align: left;
 }
 .chat-application .term-c p {
     margin-top: 40px;
@@ -498,6 +499,234 @@ span.float-right.sp-1.mb-25 {
 }
 .chat-application .term-c h1{
 	font-weight: 900;
+}
+
+.chat-application .logout-card {
+    height: calc(100vh - 13rem);
+    height: calc(var(--vh, 1vh) * 100 - 39rem);
+    width: 357px;
+    border-radius: 2.25rem;
+    margin: 15% 0px 0 130%;
+    box-shadow: none;
+    background: #D9D9D9;
+    text-align: center;
+}
+
+.chat-application .logout-card fieldset {
+    margin-top: 20%;
+}
+
+.chat-application .logout-card div {
+    background: transparent;
+    width: 45%;
+    height: 16%;
+    border-radius: 13px;
+    margin: 0 27%;
+}
+
+.chat-application .logout-card div a {
+    padding: 11.1% 12.6%;
+    font-weight: 700;
+    background: #fff;
+    color: #000;
+    border: none;
+}
+
+.chat-application .logout-card div .btn-yes {
+    padding-right: 16.3%;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+.chat-application .logout-card div .btn-yes:hover {
+    background: #000000;
+    color: #FFF;
+}
+
+.chat-application .logout-card div .btn-no {
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-left: 1px solid #000000;
+    margin-left: -3%;
+}
+
+.chat-application .logout-card div .btn-no:hover {
+    background: #000000;
+    color: #FFF;
+}
+
+.chat-application .logout-card fieldset h1 {
+    margin-bottom: 9%;
+    color: #000;
+}
+/*Privacy and security screen*/
+.chat-application .privacy-card {
+    height: calc(100vh - 13rem);
+    height: calc(var(--vh, 1vh) * 100 - 29rem);
+    width: 357px;
+    border-radius: 2.25rem;
+    margin: 15% 0px 0 130%;
+    box-shadow: none;
+    background: #F4F4F4;
+    padding: 12% 14%;
+}
+
+.chat-application .privacy-card fieldset {
+    margin-top: 20%;
+}
+
+.chat-application .privacy-card div {
+    background: transparent;
+    width: 99%;
+    height: 100%;
+    padding: 3% 0;
+}
+
+.chat-application .privacy-card div button {
+    padding: 2.1% 10.6%;
+    font-weight: 700;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    margin-top: 4%;
+}
+
+.chat-application .privacy-card div button:hover {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.chat-application .privacy-card fieldset h1 {
+    margin-bottom: 9%;
+    color: #000;
+}
+
+.input-icons i {
+    position: absolute;
+    margin: 2% 59%;
+    background: #ECECEC;
+    padding: 7px;
+    border-radius: 50%;
+}
+
+.input-icons p {
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}
+
+.input-field {
+    width: 100%;
+    height: 38%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+}
+
+.ifield-1 {
+    border-bottom: 1px solid #000;
+    margin-top: -20px;
+}
+
+.chat-application .privacy-card1 {
+    height: calc(var(--vh, 1vh) * 100 - 29rem);
+}
+@media (max-width: 991.98px){
+.chat-application .sidebar-content {
+    transform: translateX(0%);
+    transition: all .3s ease-in-out;
+    left: 0;
+    position: fixed;
+    z-index: 5;
+    width: 28%;
+    left: -2px;
+}
+.chat-application .sidebar-content .chat-user-list ul li {
+    width: 13.85938rem;
+    height: 4rem;
+    margin-bottom: 8px;
+}
+.user-details {
+    padding: 34px;
+    border-radius: 20px;
+    width: 117%;
+}
+.cht-inp .cht-inp-ul li input {
+    border: none;
+    margin-top: 12px;
+    border-radius: 2rem;
+    opacity: 0.5;
+    background: #E7E7E7;
+    width: 11.60056rem;
+    height: 3.22875rem;
+    flex-shrink: 0;
+    padding: 20px 15px;
+    margin-left: 0;
+}
+.chat-application .sidebar2-content .cht-box .cht-ps .mychat {
+    margin-left: 65px;
+    margin-bottom: 30px;
+    width: 62%;
+    /* background: #DAF5FF; */
+    padding: 15px;
+    border-radius: 2.13756rem 2.13756rem 0rem 2.13756rem;
+    background: #F5D5E5;
+}
+}
+
+@media only screen and (min-width: 1024px) {
+.user-details {
+    padding: 34px;
+    border-radius: 20px;
+    width: 97%;
+
+}
+.block-btn {
+
+    margin-left: 53%;
+}
+.cht-inp .cht-inp-ul li input {
+    border: none;
+    margin-top: 12px;
+    border-radius: 2rem;
+    opacity: 0.5;
+    background: #E7E7E7;
+    width: 11.60056rem;
+    height: 3.22875rem;
+    flex-shrink: 0;
+    padding: 20px 15px;
+    margin-left: 0;
+}
+.chat-application .sidebar2-content .cht-box {
+    height: calc(100vh - 13rem);
+    height: calc(var(--vh, 1vh) * 90 - 13rem);
+    width: 588px;
+}
+
+.cht-inp .cht-inp-ul li input {
+    border: none;
+    margin-top: 12px;
+    border-radius: 2rem;
+    opacity: 0.5;
+    background: #E7E7E7;
+    width: 16.60056rem;
+    height: 3.22875rem;
+    flex-shrink: 0;
+    padding: 20px 15px;
+    margin-left: 0;
+}
+
 }
 
 
@@ -747,4 +976,37 @@ span.float-right.sp-1.mb-25 {
 		font-weight: 700;
 		font-size: 30px;
 	}
+
+
+    .chat-application .logout-card {
+        height: calc(100vh - 13rem);
+        height: calc(var(--vh, 1vh) * 100 - 45rem);
+        width: 488px;
+        border-radius: 2.25rem;
+        margin: 45% 0px 0 173%;
+        box-shadow: none;
+        background: #D9D9D9;
+        text-align: center;
+    }
+
+    .chat-application .logout-card div button {
+        padding: 11.1% 19.5%;
+        font-weight: 700;
+        background: #fff;
+        border: none;
+    }
+
+    .chat-application .privacy-card {
+        height: calc(100vh - 13rem);
+        height: calc(var(--vh, 1vh) * 100 - 55rem);
+        width: 488px;
+        border-radius: 2.25rem;
+        margin: 45% 0px 0 173%;
+        box-shadow: none;
+        background: #F4F4F4;
+    }
+
+    .chat-application .privacy-card1 {
+        height: calc(var(--vh, 1vh) * 100 - 33rem);
+    }
   }

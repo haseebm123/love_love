@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Notification;
 use App\Models\HelpAndSupport;
 use App\Models\ContentModification;
+use App\Models\DisappearMessage;
+use App\Models\SpanWords;
 use Google\Cloud\Firestore\FirestoreClient;
 use Carbon\Carbon;
 class UserManagementController extends Controller
@@ -208,28 +210,28 @@ class UserManagementController extends Controller
         // ->whereColumn('created_at', '<', 'updated_at')
     }
     function usersDiscover() {
-        $user = User::select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
+        $data = User::select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
         ->where('role_id','user')->get();
-        $cov_user = $this->chats();
-        $id =array();
-        $data= [];
-        foreach ($cov_user as $key => $value) {
-            if (isset($value['user'])) {
-                $id[$value['user']->id]= $value['ids'];
-            }
-        }
-        if(isset($user[0])){
-            foreach ($user as $key => $value) {
+        // $cov_user = $this->chats();
+        // $id =array();
+        // $data= [];
+        // foreach ($cov_user as $key => $value) {
+        //     if (isset($value['user'])) {
+        //         $id[$value['user']->id]= $value['ids'];
+        //     }
+        // }
+        // if(isset($user[0])){
+        //     foreach ($user as $key => $value) {
 
-                if (isset($id[$value->id])) {
-                    $value->conv_id = $id[$value->id];
-                    $data =$value;
+        //         if (isset($id[$value->id])) {
+        //             $value->conv_id = $id[$value->id];
+        //             $data[$key] =$value;
 
-                }
-            }
-        }
-
-
+        //         }else{
+        //             $data[$key] =$value;
+        //         }
+        //     }
+        // }
         return view('admin.pages.users_management.users_discover',compact('data'));
     }
 
@@ -269,8 +271,21 @@ class UserManagementController extends Controller
 
     public function communicationTool()
     {
-        $data = [];
+
+        $data = DisappearMessage::with(['sender','receiver'])->get();
+
         return view('admin.pages.communication_tool',compact('data'));
+    }
+
+    public function disappearMsg(Request $request) {
+        $sender_id = $request->sender_id;
+        $receiver_id = $request->receiver_id;
+        $data = DisappearMessage::
+        where('sender_id',$request->sender_id)
+        ->where('receiver_id',$request->receiver_id)
+        ->get();
+
+        return view('admin.pages.users_management.ajax.disappear_chat',compact('data'));
     }
     function blockList(){
         $data = User::select('first_name','last_name','mid_name','age','description','profile','role_id','email','id','status','is_block')
@@ -340,6 +355,93 @@ class UserManagementController extends Controller
             return view('admin.pages.users_management.ajax.chat',compact('data'));
 
         }
+    }
+
+    public function getConversation2($conv_id){
+        $projectId='lovelove-d6d33';
+        $conversationId = $conv_id;
+        $messages = [];
+
+        if (empty($projectId)) {
+
+            $db = new FirestoreClient();
+            return array('message'=>'Server Error','type'=>'error');
+        } else {
+            $db = new FirestoreClient([
+                'projectId' => $projectId,
+            ]);
+
+            $firebase_msg = $db->collection('chats')->document($conversationId)->collection('messages')->documents()->rows();
+
+            // dd($documents[0]->data());
+            foreach ($firebase_msg as $key => $value) {
+                array_push($messages,$value->data());
+                $messages[$key]['ids'] = $value->id();
+            }
+            $data = collect($messages)->sortBy('count')->values()->all();
+            return $data;
+            // return view('admin.pages.users_management.ajax.chat',compact('data'));
+
+        }
+    }
+
+    public function getConversationById(Request $request){
+        $projectId='lovelove-d6d33';
+        $myId = auth()->id();
+        $user_id = (int)$request->id;
+
+        $userIds = [$user_id,$myId];
+        sort($userIds);
+        $conversationId = '';
+        $messages = [];
+
+
+        if (empty($projectId)) {
+
+            $db = new FirestoreClient();
+            return array('message'=>'Server Error','type'=>'error');
+        } else {
+            $db = new FirestoreClient([
+                'projectId' => $projectId,
+            ]);
+
+            $user = $db->collection('chats');
+            $query = $user->where('userId', '==', $userIds);
+            $documents = $query->documents()->rows();
+            if ($documents) {
+                # code...
+                foreach ($documents as $key => $value) {
+
+                    $conversationId = $value->id();
+
+                }
+                $data = $this->getConversation2($conversationId);
+                return view('admin.pages.users_management.ajax.chat',compact('data'));
+                // return array('id'=>$conversationId,'status'=>0);
+            }
+            return array('status'=>1);
+        }
+
+        // if (empty($projectId)) {
+
+        //     $db = new FirestoreClient();
+        //     return array('message'=>'Server Error','type'=>'error');
+        // } else {
+        //     $db = new FirestoreClient([
+        //         'projectId' => $projectId,
+        //     ]);
+
+        //     $firebase_msg = $db->collection('chats')->document($conversationId)->collection('messages')->documents()->rows();
+
+        //     // dd($documents[0]->data());
+        //     foreach ($firebase_msg as $key => $value) {
+        //         array_push($messages,$value->data());
+        //         $messages[$key]['ids'] = $value->id();
+        //     }
+        //     $data = collect($messages)->sortBy('count')->values()->all();
+        //     return view('admin.pages.users_management.ajax.chat',compact('data'));
+
+        // }
     }
 
     // send.message

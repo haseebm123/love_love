@@ -19,7 +19,7 @@
             @if ($data->is_block == 0)
                 <div class="block-btn" data-id={{ $data->id }}
                     style="display: flex; align-self: end; margin-top: 10px;border-radius: 1.08419rem;
-                                        border: 0.964px solid #000; gap: 5px; align-items: center; padding:5px 10px; cursor: pointer; margin-left: 38%;">
+                                        border: 0.964px solid #000; gap: 5px; align-items: center; padding:5px 10px; cursor: pointer; margin-left: 53%;">
                     <img src="{{ asset('assets/img/block.svg') }}" />
                     <h6 style="margin-bottom: 0%; font-size: 0.8rem;">Block me</h6>
                 </div>

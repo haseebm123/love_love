@@ -28,12 +28,14 @@
                         <span class="sidebar-close-icon">
                             <i class="feather icon-x"></i>
                         </span>
-                         <div class="chat-fixed-search">
+                        <div class="chat-fixed-search">
                             <div class="d-flex align-items-center">
-                                <fieldset class="form-group position-relative has-icon-left mx-1 my-0 w-100 meg-cont" style="position: relative;">
+                                <fieldset class="form-group position-relative has-icon-left mx-1 my-0 w-100 meg-cont"
+                                    style="position: relative;">
 
 
-                                    <input type="text" class="form-control round" id="chat-search" placeholder="Search or start a new chat">
+                                    <input type="text" class="form-control round" id="chat-search"
+                                        placeholder="Search or start a new chat">
                                     <div class="icon-search-r">
                                         <i class="feather icon-search"></i>
                                     </div>
@@ -41,16 +43,17 @@
                             </div>
                         </div>
 
-                        <div id="users-list" class="chat-user-list discover-list request-list list-group position-relative user-side-list">
+                        <div id="users-list"
+                            class="chat-user-list discover-list request-list list-group position-relative user-side-list">
 
-                             <ul class="chat-users-list-wrapper media-list">
+                            <ul class="chat-users-list-wrapper media-list">
 
-                                 @include('admin.pages.components.user_discover_list')
-                             </ul>
+                                @include('admin.pages.components.user_discover_list')
+                            </ul>
                         </div>
                         <!-- <div class="chk-div">
-                            <input type="checkbox" name="" id=""><label for="">Select All</label>
-                        </div> -->
+                                <input type="checkbox" name="" id=""><label for="">Select All</label>
+                            </div> -->
                         <button class="chk-btn">Approve</button>
                     </div>
                     <!--/ Chat Sidebar area -->
@@ -60,7 +63,7 @@
 
             <div class="content-right">
 
-                <div class="sidebar2-content card row msgs d-none">
+                <div class="sidebar2-content card row msgs  ">
                     {{-- d-none  --}}
                     <div class="d-flex align-items-center row p-3 col-6   ">
                         <div class="cht-box">
@@ -83,7 +86,7 @@
                         </div>
 
                     </div>
-                    <div id="user-details-div" class=" p-3 col-6 user-details-bx  d-none">
+                    <div id="user-details-div" class=" p-3 col-6 user-details-bx ">
                         {{-- @include('admin.pages.users_management.ajax.user_detail_vertical') --}}
 
 
@@ -115,20 +118,24 @@
                     },
 
                     success: function(res) {
+
                         if (res) {
 
                             $("#user-details-div").html("");
-                            $("#user-details-div").removeClass('d-none');
-                            $("#user-details-div").addClass('d-flex');
+                            // $("#user-details-div").removeClass('d-none');
+                            // $("#user-details-div").addClass('d-flex');
                             $("#user-details-div").append(res);
                         } else {
                             $("#user-details-div").html("");
-                            $("#user-details-div").addClass('d-none');
-                            $("#user-details-div").removeClass('d-flex');
+                            // $("#user-details-div").addClass('d-none');
+                            // $("#user-details-div").removeClass('d-flex');
                         }
 
                     }
                 });
+            } else {
+
+                $("#user-details-div").html("");
             }
         }
 
@@ -138,7 +145,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: "{{ route('get.conversation') }}",
+                    url: "{{ route('get.conversationById') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "id": id
@@ -146,22 +153,28 @@
 
                     success: function(res) {
 
-                        if (res) {
+                        if (res.status == 1) {
 
                             $("#user-conversation-div").html("");
+                            // $(".msgs").addClass('d-none')
+
+                        } else {
+                             $("#user-conversation-div").html("");
                             $("#user-conversation-div").removeClass('d-none');
                             $("#user-conversation-div").append(res);
                             $(".msgs").removeClass('d-none')
                             scrollChatToBottom()
-                        } else {
-                            $("#user-conversation-div").html("");
-                            $(".msgs").addClass('d-none')
                         }
 
                     }
                 });
+            } else {
+                $("#user-conversation-div").html('');
+
             }
         }
+
+
 
         function sendMsg(id) {
             var msg = $('#message').val();
@@ -196,13 +209,10 @@
 
         $(document).ready(function() {
             $(".user-side-list .req-profile").first().addClass("active")
-
             var newid = $(".user-side-list .req-profile").first().attr("data-id")
-            var conid = $(".user-side-list .req-profile").first().attr("data-fire")
             $("#id").val(newid);
-            $("#con_id").val(conid);
+            getConversation(newid)
             showRequestDetail(newid)
-            getConversation(conid)
         });
         $(document).on("click", ".req-profile", function() {
             $(this).siblings().removeClass("active");
@@ -211,18 +221,19 @@
             $(this).addClass("active");
             $("#id").val(id);
             $("#con_id").val(conid);
+            $('#message').val('');
             showRequestDetail(id);
-            getConversation(conid)
+
+            getConversation(id)
 
         });
         $(document).on("click", "#send-msg", function() {
             var id = $("#id").val()
             $("#id").val(id);
+
             sendMsg(id);
 
         });
-
-
         function scrollChatToBottom() {
             var chatBox = $('.cht-ps');
             // var messages = chatBox.find('.message-container');
@@ -277,8 +288,7 @@
         });
 
         var loadFile = function(event) {
-            var image = document.getElementById('output');
-            image.src = URL.createObjectURL(event.target.files[0])
+
         };
     </script>
 

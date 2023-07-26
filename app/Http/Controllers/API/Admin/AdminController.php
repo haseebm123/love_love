@@ -9,6 +9,38 @@ use App\Models\Notification;
 
 class AdminController extends Controller
 {
+    public function addSpam(Request $request)
+    {
+        $word ='';
+        if(isset($request->words)){
+            $words = explode(',', $request->words);
+
+        }
+
+        foreach($words as $word){
+            $check_word = SpanWords::where('word',$word)->first();
+            if(!$check_word){
+
+                SpanWords::create([
+                    'word'=>$word
+                ]);
+            }
+        }
+
+        return response()->json([
+                'success' => true,
+                'message' =>"Admin add a New Spam word"
+            ]);
+    }
+    public function AdminInfo( )
+    {
+
+        $data = User::where('role_id','admin')->first();
+        return response()->json([
+                'success' => true,
+                'data' => $data->id
+            ]);
+    }
     public function profileReq(){
 
         $data = User::with('images')

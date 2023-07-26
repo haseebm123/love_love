@@ -56,7 +56,7 @@ use App\Http\Controllers\Admin\SupportController;
 
 
     Route::group(['middleware' => ['auth']], function() {
-
+         
         /* Firebase Controller */
         Route::controller(FirebaseController::class)->group(function () {
             Route::get('chats', 'chats')->name('get.chats');
@@ -78,6 +78,7 @@ use App\Http\Controllers\Admin\SupportController;
             Route::get('setting', 'setting')->name('settings');
             Route::get('support', 'support')->name('support');
             Route::get('communication_tool', 'communicationTool')->name('communication_tool');
+            Route::post('disappear-msg', 'disappearMsg')->name('disappear.msg');
 
 
 
@@ -91,6 +92,7 @@ use App\Http\Controllers\Admin\SupportController;
             Route::post('search-user', 'searchUser')->name('user.search');
 
             Route::post('get-conversation', 'getConversation')->name('get.conversation');
+            Route::post('get-conversationById', 'getConversationById')->name('get.conversationById');
             Route::post('send-message', 'sendMsg')->name('send.message');
 
 

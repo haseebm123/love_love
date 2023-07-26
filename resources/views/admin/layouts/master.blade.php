@@ -31,7 +31,7 @@
                                 class="dropdown-toggle nav-link dropdown-user-link" href="#"
                                 data-toggle="dropdown">
                                 <span><img class="round"
-                                        src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                                        src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
                                         height="40" width="40"></span>
                                 <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John
                                         Doe</span><span class="user-status">Available</span></div>
@@ -58,7 +58,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between w-100" href="#">
                 <div class="d-flex">
-                    <div class="mr-50"><img src="../../../app-assets/images/icons/xls.png" alt="png"
+                    <div class="mr-50"><img src="{{asset('app-assets/images/icons/xlspng')}}" alt="png"
                             height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Two new item submitted</p><small class="text-muted">Marketing
@@ -69,7 +69,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between w-100" href="#">
                 <div class="d-flex">
-                    <div class="mr-50"><img src="../../../app-assets/images/icons/jpg.png" alt="png"
+                    <div class="mr-50"><img src="{{asset('app-assets/images/icons/jpgpng')}}" alt="png"
                             height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">52 JPG file Generated</p><small class="text-muted">FontEnd
@@ -80,7 +80,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between w-100" href="#">
                 <div class="d-flex">
-                    <div class="mr-50"><img src="../../../app-assets/images/icons/pdf.png" alt="png"
+                    <div class="mr-50"><img src="{{asset('app-assets/images/icons/pdfpng')}}" alt="png"
                             height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">25 PDF File Uploaded</p><small class="text-muted">Digital
@@ -91,7 +91,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between w-100" href="#">
                 <div class="d-flex">
-                    <div class="mr-50"><img src="../../../app-assets/images/icons/doc.png" alt="png"
+                    <div class="mr-50"><img src="{{asset('app-assets/images/icons/docpng')}}" alt="png"
                             height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Anna_Strong.doc</p><small class="text-muted">Web
@@ -105,7 +105,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-50"><img src="../../../app-assets/images/portrait/small/avatar-s-8.jpg"
+                    <div class="avatar mr-50"><img src="{{asset('app-assets/images/portrait/small/avatar-s-8.jpg')}}"
                             alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">John Doe</p><small class="text-muted">UI designer</small>
@@ -115,7 +115,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-50"><img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg"
+                    <div class="avatar mr-50"><img src="{{asset('app-assets/images/portrait/small/avatar-s-1.jpg')}}"
                             alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Michal Clark</p><small class="text-muted">FontEnd
@@ -126,7 +126,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-50"><img src="../../../app-assets/images/portrait/small/avatar-s-14.jpg"
+                    <div class="avatar mr-50"><img src="{{asset('app-assets/images/portrait/small/avatar-s-14.jpg')}}"
                             alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Milena Gibson</p><small class="text-muted">Digital Marketing
@@ -137,7 +137,7 @@
         <li class="auto-suggestion d-flex align-items-center cursor-pointer"><a
                 class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-50"><img src="../../../app-assets/images/portrait/small/avatar-s-6.jpg"
+                    <div class="avatar mr-50"><img src="{{asset('app-assets/images/portrait/small/avatar-s-6.jpg')}}"
                             alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Anna Strong</p><small class="text-muted">Web
@@ -164,7 +164,7 @@
                         href="javascript:;">
                         <!-- <div class="brand-logo"></div> -->
                         <!-- <h2 class="brand-text mb-0">Vuexy</h2> -->
-                        <img src="../../../app-assets/images/logo/Logo-01 2.png" alt="" class="logo">
+                        <img src="{{asset('app-assets/images/logo/Logo-01 2png')}}" alt="" class="logo">
                     </a></li>
             </ul>
         </div>
@@ -173,7 +173,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
 
-                <li class="nav-item @if (Route::currentRouteName() == 'users.management' || Route::currentRouteName() == 'users.discover.profile')    open   @endif "><a href="javascript;:"><i class="fa-solid fa-users-gear"></i><span
+                <li class="nav-item @if (Route::currentRouteName() == 'users.management' || Route::currentRouteName() == 'users.discover.profile')    open   @endif "><a href="javascript:;"><i class="fa-solid fa-users-gear"></i><span
                             class="menu-title" data-i18n="User Management">User Management</span></a>
                     <ul class="">
                         <li class="@if (Route::currentRouteName() == 'users.management')   active  @endif"><a href="{{ route('users.management') }}"><span class="menu-item"
@@ -211,11 +211,11 @@
                 <li class=" nav-item @if (Route::currentRouteName() == 'users.block')   active  @endif"><a href="{{ route('users.block') }}"><i class="fa-solid fa-user-lock"></i><span
                             class="menu-title" data-i18n="Block List">Block List</span></a>
                 </li>
-                <li class=" nav-item"><a href="javascript:;"><i class="fa-solid fa-user-shield"></i><span
+                <li class=" nav-item @if (Route::currentRouteName() == 'settings') active  @endif"><a href="{{ route('settings') }}"><i class="fa-solid fa-user-shield"></i><span
                             class="menu-title" data-i18n="Privacy and Security Settings">Privacy and Security
                             Settings</span></a>
                 </li>
-                <li class=" nav-item"><a href="javascript:;"><i class="fa-solid fa-comments"></i><span
+                <li class=" nav-item @if (Route::currentRouteName() == 'communication_tool') active  @endif"><a href="{{ route('communication_tool') }}"><i class="fa-solid fa-comments"></i><span
                             class="menu-title" data-i18n="Calender">Communication Tools <br>(Messaging
                             Control)</span></a>
                 </li>
@@ -228,7 +228,7 @@
 
                 </li>
 
-                <li class=" nav-item"><a href="#"><i class="fa-solid fa-right-from-bracket"></i><span
+                <li class=" nav-item @if (Route::currentRouteName() == 'logouts')   active  @endif"><a href="{{ route('logouts') }}"><i class="fa-solid fa-right-from-bracket"></i><span
                             class="menu-title" data-i18n="Authentication">Logout</span></a></li>
             </ul>
         </div>

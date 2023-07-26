@@ -163,7 +163,7 @@ class FirebaseController extends Controller
         ]);
         $addedDocRef = $db->collection('chats')->document($id);
         $addedDocRef->set([
-            'msg'=>$request->message,
+            'msg'=>$msg->message,
             'time'=>Carbon::now(),
 
         ], ['merge' => true]);
