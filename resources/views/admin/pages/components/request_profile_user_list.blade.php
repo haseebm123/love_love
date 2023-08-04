@@ -1,5 +1,5 @@
 @forelse ($data['request'] as $key=>$item)
-    <li id="req-profile{{ $item->id }}" class="req-profile" data-id={{ $item->id }}>
+    <li id="req-profile{{ $item->id }}" class="req-profile req-profile{{ $item->id }}" data-id={{ $item->id }}>
         <div class="pr-1">
             <i class="fa-regular fa-circle-check"></i>
         </div>

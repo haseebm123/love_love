@@ -186,6 +186,25 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     margin-left: 249px;
 }
 
+.unblock-btn h6:hover {
+    color: #fff;
+}
+.unblock-btn {
+    background-color: #FB0000;
+    color: white;
+    display: flex;
+    align-self: end;
+    margin-top: 10px;
+    border-radius: 1.08419rem;
+    border: 0.964px solid #000;
+    gap: 5px;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 112px;
+    margin-left: 249px;
+}
+
 
 
 .switch {

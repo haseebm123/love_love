@@ -265,6 +265,7 @@ class UserManagementController extends Controller
     function support(){
 
         $data = $this->chats();
+
         return view('admin.pages.support',compact('data'));
 
     }
@@ -272,7 +273,9 @@ class UserManagementController extends Controller
     public function communicationTool()
     {
 
-        $data = DisappearMessage::with(['sender','receiver'])->get();
+        $data = DisappearMessage::with(['sender','receiver'])->wherehas('sender',function($query) {
+            $query->where('is_block',0);
+        })->get();
 
         return view('admin.pages.communication_tool',compact('data'));
     }

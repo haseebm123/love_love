@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Login')
+@section('title', 'Login')
 @section('content')
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -63,14 +63,14 @@
                                                         <div class="text-left">
                                                             <fieldset class="checkbox">
                                                                 <!-- <div class="vs-checkbox-con vs-checkbox-primary">
-                                                                        <input type="checkbox">
-                                                                        <span class="vs-checkbox">
-                                                                            <span class="vs-checkbox--check">
-                                                                                <i class="vs-icon feather icon-check"></i>
+                                                                            <input type="checkbox">
+                                                                            <span class="vs-checkbox">
+                                                                                <span class="vs-checkbox--check">
+                                                                                    <i class="vs-icon feather icon-check"></i>
+                                                                                </span>
                                                                             </span>
-                                                                        </span>
-                                                                        <span class="">Remember me</span>
-                                                                    </div> -->
+                                                                            <span class="">Remember me</span>
+                                                                        </div> -->
                                                             </fieldset>
                                                         </div>
                                                         <div class="text-right"><a href={{ route('forgot-password') }}
@@ -79,7 +79,7 @@
                                                     <a href="{{ route('user-register') }}"
                                                         class="btn btn-outline-primary float-left btn-inline">Register</a>
                                                     <button type="submit"
-                                                        class="btn btn-primary float-right btn-inline">Login</button>
+                                                        class="btn btn-primary float-right btn-inline submit-btn">Login</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -109,4 +109,8 @@
         </div>
     </div>
     <!-- END: Content-->
+@endsection
+@section('script')
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+    
 @endsection

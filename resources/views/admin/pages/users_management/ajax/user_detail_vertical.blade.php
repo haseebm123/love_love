@@ -16,7 +16,7 @@
                     </h6>
                 </div>
             </div>
-            <div class="block-btn">
+            <div class="block-btn" data-id={{ $data->id }}>
                 <h6 style="margin-bottom: 0%; font-size: 0.8rem;"><i class="fa-solid fa-ban"></i> Block
                     Profile</h6>
             </div>

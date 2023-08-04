@@ -1,10 +1,7 @@
 {{-- @dd($data->is_block) --}}
 @if (isset($data))
     <style>
-        .unblock-btn {
-            background-color: #FB0000;
-            color: white;
-        }
+
     </style>
     <div class="card text-center custom-card">
         <div class="card-content">
