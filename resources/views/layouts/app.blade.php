@@ -18,7 +18,7 @@
 
 
      @include('includes.auth_foot')
-    @yield('script')
+
 </body>
 <!-- END: Body-->
 

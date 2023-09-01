@@ -1,7 +1,12 @@
 @extends('admin.layouts.master')
 @section('title', 'Term & Condition')
 @section('style')
-
+<style>
+    .chat-application .term-c button {
+   
+    transform: translate(0px, -21px);
+}
+</style>
 @endsection
 
 @section('body')
@@ -10,16 +15,22 @@
 
 
     <div class="app-content content">
-        <div class="content-overlay"></div>
+    
         <div class="content-area-wrapper">
+            
+              <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+            
             <div class="sidebar-left">
                 <div class="sidebar">
                     <div class="sidebar-content term-c card">
-                        <div style="margin-bottom: 30px; margin-top: 20px; margin-left: 30px;">
+                        <div class="forpadding">
                             <h1>Term & Condition</h1>
                             <span>Content Moderation / Term & Condition </span>
-
-                            <button  type="button"  data-toggle="modal" data-target="#dark">Edit</button>
+                            </br>
+                             </br>
+                            <button  type="button"  data-toggle="modal" data-target="#dark" id="btnedit" style="float:right">Edit</button>
 
                             <div>
                                  {!! $data->term_and_condition !!}
@@ -28,6 +39,10 @@
                     </div>
                 </div>
             </div>
+             </div>
+              </div>
+    </div>
+            
         </div>
     </div>
 

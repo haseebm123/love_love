@@ -9,15 +9,19 @@
 
     <!-- BEGIN: Content-->
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+  
         <div class="content-area-wrapper">
-            <div class="sidebar-left">
+            
+            
+             <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="sidebar-left" >
                 <div style="margin-bottom: 30px; margin-top: 20px;">
                 <h1>Logout</h1>
-                <span>Logout</span>
+                <!--<span>Logout</span>-->
                 </div>
-                <div class="sidebar-content logout-card card">
+                <div class="sidebar-content logout-card card" id="logoutheight">
                     <fieldset class="form-group position-relative meg-cont">
                         <h1>Logout</h1>
                         <h4>Do you want to logout?</h4>
@@ -32,7 +36,9 @@
 
             </div>
 
-
+</div>
+        </div>
+    </div>
                 <!--/ Chat Sidebar area -->
                 </div>
         </div>

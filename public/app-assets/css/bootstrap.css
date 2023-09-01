@@ -474,7 +474,7 @@ pre {
   padding-right: 14px;
   padding-left: 14px;
   margin-right: auto;
-  margin-left: auto; }
+  margin-left: auto; z-index:0;}
 
 .row {
   display: flex;

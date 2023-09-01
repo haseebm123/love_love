@@ -265,7 +265,7 @@ class UserManagementController extends Controller
     function support(){
 
         $data = $this->chats();
-
+         
         return view('admin.pages.support',compact('data'));
 
     }
@@ -456,8 +456,14 @@ class UserManagementController extends Controller
         $user_id = (int)$request->user_id;
         $userIds = [$user_id,$myId];
         sort($userIds);
+        
+        $userToken = '';
+         
         $other = User::find($user_id);
-
+        if($other->type =='user')
+        {
+            $userToken = $other->firebase_token;
+        } 
         if (empty($projectId)) {
             $db = new FirestoreClient();
             return array('message'=>'Server Error','type'=>'error');
@@ -498,7 +504,8 @@ class UserManagementController extends Controller
                     'img'.$other->id=> $other->profile,
                     'msg' => null,
                     'time'=>Carbon::now(),
-                    'userId'=>$userIds
+                    'userId'=>$userIds,
+                    'userToken'=>$userToken
 
                 ]);
                 $addedDocRef = $db->collection('chats')->add($data);

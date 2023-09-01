@@ -1,6 +1,7 @@
 @forelse ($data as $item)
+ 
     @if ($item['id'] == auth()->id())
-        <div class="mychat">
+        <div class="mychat" id="{{$item['id']}}">
             <p>{{$item['msg']}}</p>
         </div>
     @else

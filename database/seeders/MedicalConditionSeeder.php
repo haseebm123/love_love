@@ -16,12 +16,18 @@ class MedicalConditionSeeder extends Seeder
     public function run()
     {
         $medical_condition = [
-            'STD',
-            'XXX',
-            'XXX',
-            'XXX',
-            'XXX',
-            'XXX',
+            'Chlamydia',
+            'Gonorrhea',
+            'Syphilis',
+            'Herpes',
+            'Human papillomavirus (HPV)',
+            'Human immunodeficiency virus (HIV)',
+            'Trichomoniasis',
+            'Hepatitis B',
+            'Hepatitis C',
+            'Pubic lice (crabs)',
+            'Scabies',
+            'Genital warts',
             'Others',
             'None'
         ];

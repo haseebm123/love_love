@@ -24,7 +24,11 @@
 
     {{-- Fonts  --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+
+
     <link
         href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -53,6 +57,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -60,45 +68,11 @@
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style1.css') }}"> --}}
     <!-- END: Custom CSS-->
 
-    {{-- <style>
-        /* Customize the scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-            /* Set the width of the scrollbar */
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            /* Set the background color of the track */
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #9E4572;
-            /* Set the color of the scroll thumb */
-            border-radius: 5px;
-            /* Round the corners of the thumb */
-            display: none;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #E895BF 0%, #B25383 100%);
-            /* Set the color of the thumb on hover */
-            display: block;
-            transition: background 0.3s ease;
-        }
-
-        .vs-checkbox-primary input:checked~.vs-checkbox {
-            border-color: #9E4572 !important;
-        }
-
-        .vs-checkbox-con input:checked .vs-checkbox .vs-checkbox--check {
-            transform: translate(0);
-            background-color: #9E4572 !important;
-        }
-    </style> --}}
+    <style>
+        *{
+    	   font-family: 'Lato', sans-serif;
+         }
+    </style>
     @yield('style')
 
 

@@ -9,7 +9,7 @@ class HelpAndSupport extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    
     /**
      * Get the user associated with the HelpAndSupport
      *

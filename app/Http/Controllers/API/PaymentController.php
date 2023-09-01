@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PaymentDetails;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Validator;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
@@ -21,17 +23,22 @@ class PaymentController extends Controller
 {
 
     public function createPayment(Request $request)
-    {
+    {    
+         
+        $amount = 3;
          Stripe::setApiKey(config('services.stripe.secret'));
              $currentYear = Carbon::now()->format('y');
              $currentMonth = Carbon::now()->format('m');
 
             $validator = Validator::make($request->all(), [
-
-                // 'number' => 'required|numeric|digits_between:13,19',
-                // 'cvc' => 'required|numeric|digits_between:3,4',
-                // 'exp_month' => 'required|numeric|min:1|max:12',
-                // 'exp_year' => 'required|numeric|min:' . $currentYear . '|max:' . ($currentYear + 10),
+                'first_name'=> 'required',
+                'last_name'=> 'required',
+                'email'=> 'required|email',
+                'phone_number'=> 'required|numeric',
+                'number' => 'required|numeric|digits_between:13,19',
+                'cvc' => 'required|numeric|digits_between:3,4',
+                'exp_month' => 'required|numeric|min:1|max:12',
+                'exp_year' => 'required|numeric|min:' . $currentYear . '|max:' . ($currentYear + 10),
             ]);
 
              $validator->after(function ($validator) use ($request, $currentYear, $currentMonth) {
@@ -53,51 +60,48 @@ class PaymentController extends Controller
 
             if ($validator->fails()) {
                 return response()->json(['message'=>$validator->messages()->first(),'success' => false]);
-             }
-            //    $task =  Task::find($request->task_id);
-
-            //   $paymentData = [
-            //     'first_name' =>$request->first_name,
-            //     'last_name' =>$request->last_name,
-            //     'email' =>$request->email,
-            //     'phone_number' =>$request->phone_number,
-            //     'area_code' =>$request->area_code,
-            //     'price' =>$plan->price??null,
-            //     'task_id' =>$request->task_id,
-            //     'provider_id' =>$task->service_provider_id??null,
-            //     'customer_id' =>$task->customer_id??null,
-            // ];
+            } 
+           
+              
 
             try {
                 $token = Token::create([
                     'card' => [
-                        'number' => 4242424242424242,
-                        'cvc' => 123,
-                        'exp_month' => 12,
-                        'exp_year' => 24,
+                        'number' => $request->number,
+                        'cvc' => $request->cvc,
+                        'exp_month' => $request->exp_month,
+                        'exp_year' => $request->exp_year,
                     ],
                 ]);
 
-                  $token['id'];
+                 $token['id'];
 
-                return   $stripe =  Charge::create ([
-                        "amount" => 100 * 100,
+                $stripe =  Charge::create ([
+                        "amount" => $amount * 100,
                         "currency" => "usd",
                         "source" => $token['id'],
                         "description" => "Payment Created by ",
                 ]);
-                $stripe->balance_transaction;
+                 
+                $paymentData = [
+                'user_id' =>auth()->id(), 
+                'amount' =>$amount,
+                'transaction_id'=>$stripe->id,
+                'status'=>$stripe->status,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name,
+                'email'=>$request->email,
+                'phone_number'=>$request->phone_number,
+                ];
+                    PaymentDetails::Create($paymentData);
 
-                //    Payment::Create($paymentData);
-
-                //     $notificationData = [
-                //     'user_id'      =>auth()->user()->id,
-                //     'provider_id'  =>$task->service_provider_id,
-                //     'description'  =>'Payment Send successfully',
-                //     'description_provider' =>'Your task payment has been send to admin please say to admin withdraw my account',
-                //     'type' =>'withdraw'
-                //     ];
-                //   Notification::Create($notificationData);
+                    $notificationData = [
+                    'user_id'      =>auth()->user()->id,
+                    'type'  =>"amount",
+                    'description'  =>'$'.$amount.' has been credtied in the Account',
+                     
+                    ];
+                  Notification::Create($notificationData);
 
                     return response()->json(['message' => 'Payment Created susccessfully','success'=>true]);
                 } catch (\Exception $e) {

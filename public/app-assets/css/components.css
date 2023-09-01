@@ -20,7 +20,8 @@ html {
       min-height: calc(100% - 4rem);
       margin-left: 260px; }
       html body .content.app-content {
-        overflow: hidden; }
+        overflow: hidden;
+        }
         html body .content.app-content.show-overlay .content-overlay {
           z-index: 10;
           opacity: 1; }

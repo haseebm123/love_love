@@ -12,11 +12,14 @@
 @section('body')
     {{-- Code Here --}}
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+      
         <div class="content-area-wrapper">
-            <div class="sidebar-left">
-                <div style="margin-bottom: 30px; margin-top: 20px;">
+            
+            <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-2 col-xl-2">
+                <div class="sidebar-left">
+                <div style="margin-bottom: 30px; margin-top: 20px;" class="text-center">
                     <h1>Accounts</h1>
                     <span>Accounts</span>
                 </div>
@@ -41,38 +44,64 @@
                             </ul>
                         </div>
 
-                        <button id="approve-btn" data-approve="0" class="chk-btn">Approve</button>
+                        <!--<button id="approve-btn" data-approve="0" class="chk-btn">Approve</button>-->
                     </div>
                     <!--/ Chat Sidebar area -->
 
                 </div>
             </div>
+             </div>
+            
+             <div class="col-12 col-md-12 col-lg-10 col-xl-10">
             <div class="content-right">
                 <!-- Chat Sidebar area -->
-                <div class="sidebar2-content card">
-                    <div class="req-row">
+                <div class="sidebar2-content card" id="sidebar-height-auto">
+                    <!--<div class="req-row">-->
+                    <div class="container">
+                        <div class="row">
+                             <!--<div class="req-row">-->
+                        
+                        @php 
+                         $allRequest = \App\Models\PaymentDetails::sum('amount');
+                        @endphp
+                        
+                         <div class="col-12 col-md-4 col-lg-6 col-xl-4 req-row">
+                    
                         <div class="req-col-1">
                             <i>30</i>
                             <h1>All Request</h1>
-                            <h2 id="balance">$300</h2>
+                            <h2 id="balance">${{ $allRequest }}</h2>
                         </div>
+                        </div>
+                        
+                        
+                         <div class="col-12 col-md-4 col-lg-6 col-xl-4 req-row">
                         <div class="req-clo-2">
                             <i>30</i>
                             <h1>Withdraw</h1>
                             <h2 id="withdraw">$100</h2>
                         </div>
+                        </div>
+                         <div class="col-12 col-md-4 col-lg-6 col-xl-4 req-row">
                         <div class="req-col-3">
                             <i>10</i>
                             <h1>Pending</h1>
-                            <h2 id="pending">$50</h2>
+                            <h2 id="pending">${{ $allRequest }}</h2>
                         </div>
                     </div>
+                    </div>
+                     </div>
+                    </div>
 
-
-                </div>
+                <!--</div>-->
                 <!--/ Chat Sidebar area -->
             </div>
+            </div>
+            
         </div>
+    </div>
+    
+    </div>
     </div>
 
 

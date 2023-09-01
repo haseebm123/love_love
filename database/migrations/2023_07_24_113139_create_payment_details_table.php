@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->string('amount')->nullable();
             $table->string('transaction_id')->nullable();
-            $table->string('status')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

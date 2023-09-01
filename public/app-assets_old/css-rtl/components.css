@@ -417,7 +417,7 @@ body.fixed-footer footer.footer-dark {
   position : relative;
   top : 1px;
 }
-.main-menu.menu-light .navigation > li.open > a, .main-menu.menu-light .navigation > li. sidebar-group-active1 > a {
+.main-menu.menu-light .navigation > li.open > a, .main-menu.menu-light .navigation > li.sidebar-group-active > a {
   color : #494949;
   background : whitesmoke;
   transition : transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s;
@@ -459,13 +459,13 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-light .navigation > li ul .has-sub:not(.open) > ul {
   display : none;
 }
-.main-menu.menu-light .navigation > li ul .open > a, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > a {
+.main-menu.menu-light .navigation > li ul .open > a, .main-menu.menu-light .navigation > li ul .sidebar-group-active > a {
   color : #626262;
 }
-.main-menu.menu-light .navigation > li ul .open > ul, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > ul {
+.main-menu.menu-light .navigation > li ul .open > ul, .main-menu.menu-light .navigation > li ul .sidebar-group-active > ul {
   display : block;
 }
-.main-menu.menu-light .navigation > li ul .open > ul .open > ul, .main-menu.menu-light .navigation > li ul . sidebar-group-active1 > ul .open > ul {
+.main-menu.menu-light .navigation > li ul .open > ul .open > ul, .main-menu.menu-light .navigation > li ul .sidebar-group-active > ul .open > ul {
   display : block;
 }
 .main-menu.menu-light .navigation > li ul .hover > a, .main-menu.menu-light .navigation > li ul:hover > a {
@@ -583,7 +583,7 @@ body.fixed-footer footer.footer-dark {
   position : relative;
   top : 1px;
 }
-.main-menu.menu-dark .navigation > li.open > a, .main-menu.menu-dark .navigation > li. sidebar-group-active1 > a {
+.main-menu.menu-dark .navigation > li.open > a, .main-menu.menu-dark .navigation > li.sidebar-group-active > a {
   color : #C3C3C3;
   background : #0C102A;
   transition : transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s;
@@ -625,13 +625,13 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-dark .navigation > li ul .has-sub:not(.open) > ul {
   display : none;
 }
-.main-menu.menu-dark .navigation > li ul .open > a, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > a {
+.main-menu.menu-dark .navigation > li ul .open > a, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > a {
   color : #DCDCDC;
 }
-.main-menu.menu-dark .navigation > li ul .open > ul, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > ul {
+.main-menu.menu-dark .navigation > li ul .open > ul, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > ul {
   display : block;
 }
-.main-menu.menu-dark .navigation > li ul .open > ul .open > ul, .main-menu.menu-dark .navigation > li ul . sidebar-group-active1 > ul .open > ul {
+.main-menu.menu-dark .navigation > li ul .open > ul .open > ul, .main-menu.menu-dark .navigation > li ul .sidebar-group-active > ul .open > ul {
   display : block;
 }
 .main-menu.menu-dark .navigation > li ul .hover > a, .main-menu.menu-dark .navigation > li ul:hover > a {

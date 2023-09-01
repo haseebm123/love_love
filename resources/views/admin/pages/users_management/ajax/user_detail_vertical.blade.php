@@ -1,13 +1,13 @@
 @if ($data)
     @php
-        $img = $data->profile ?? null;
+        $img = $data->profile??null;
     @endphp
     <div style="background-color: #fff;" class="user-details">
         <div class="users">
             <img class="user-img-outline" src='{{ asset("documents/profile/$img") }}' />
             <div class="user-div" style="text-align: center;">
                 <h1>{{ isset($data->first_name) ? $data->first_name . ' ' : '' }}
-                    {{ isset($data->mid_name) ? $data->mid_name . ' ' : '' }}
+                    <!--{{ isset($data->mid_name) ? $data->mid_name . ' ' : '' }}-->
                     {{ isset($data->last_name) ? $data->last_name . ' ' : '' }}</h1>
                 <div style="display: flex;gap:5px; align-items: center; justify-content: center;">
                     <img src="{{ asset('assets/img/map_pin.svg') }}" />
@@ -16,10 +16,19 @@
                     </h6>
                 </div>
             </div>
-            <div class="block-btn" data-id={{ $data->id }}>
-                <h6 style="margin-bottom: 0%; font-size: 0.8rem;"><i class="fa-solid fa-ban"></i> Block
-                    Profile</h6>
-            </div>
+            @if($data->is_block == 0)
+                <div class="block-btn" data-id={{ $data->id }}>
+                    <h6 style="margin-bottom: 0%; font-size: 0.8rem;"><i class="fa-solid fa-ban"></i> Block
+                        Profile</h6>
+                </div>
+            
+            @else
+                <div class="btn unblock-btn" data-id={{ $data->id }}>
+                    <h6 style="margin-bottom: 0%; font-size: 0.8rem;"><i class="fa-solid fa-ban"></i> UnBlock
+                        Profile</h6>
+                </div>
+            
+            @endif
         </div>
         <div style="margin-top: 20px;" class="user-about">
             <h4 class="head4">About</h4>

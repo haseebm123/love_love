@@ -46,6 +46,7 @@
                                     @if (isset($item->intrest->name))
                                         <div class="col-4">
                                             <div class="interests">
+                                                
                                                 <h6>{{ $item->intrest->name }}</h6>
                                             </div>
                                         </div>

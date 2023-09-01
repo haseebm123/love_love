@@ -20,6 +20,7 @@ class FirebaseController extends Controller
 
 /* Conversation */
     public function getConversation(){
+        // return $request->all();
         $projectId='lovelove-d6d33';
         $conversationId = '022bae4a91af43599e81';
         $messages = [];
@@ -40,7 +41,7 @@ class FirebaseController extends Controller
                 $messages[$key]['ids'] = $value->id();
             }
 
-            dd($messages);
+            return $messages;
         }
     }
 /* End Conversation */
@@ -68,7 +69,7 @@ class FirebaseController extends Controller
                 unset($conversation[$key]['userId']);
             }
 
-            dd($conversation);
+            return $conversation;
         }
 
     }
@@ -90,9 +91,8 @@ class FirebaseController extends Controller
         $data=[];
         $msg=[];
         $myId = auth()->id();
-        $userIds = [$request->user_id,$myId];
-        sort($userIds);
-        $other = User::find($request->user_id);
+
+
         if (empty($projectId)) {
 
             $db = new FirestoreClient();
@@ -103,7 +103,7 @@ class FirebaseController extends Controller
             ]);
 
             $user = $db->collection('chats');
-            $query = $user->where('userId', '=', $userIds);
+            $query = $user->where('userId', '=', [auth()->id(),6]);
             $documents = $query->documents()->rows();
 
             if ($documents != []) {
@@ -111,12 +111,12 @@ class FirebaseController extends Controller
                     $ref = $document->id();
 
                     $get_count = count($db->collection('chats')->document($ref)->collection('messages')->documents()->rows());
-
+                    // return $get_count++;
                     $msg = ([
                         'count'=>$get_count++,
-                        'id'=>$myId,
+                        'id'=>auth()->id(),
                         'img'=>auth()->user()->profile,
-                        'msg'=>$request->message,
+                        'msg'=>"Admin Message",
                         'time'=>Carbon::now(),
                     ]);
 
@@ -127,16 +127,19 @@ class FirebaseController extends Controller
                 return "Exist ".$ref;
             }else{
                     // // send
-                $data = ([
-                    auth()->id() => "Love Love Admin",
-                    $other->id=> $other->first_name.' '.$other->mid_name.' '.$other->mid_name,
-                    'img'.auth()->id()=>'profile',
-                    'img'.$other->id=> $other->profile,
-                    'msg' => null,
-                    'time'=>Carbon::now(),
-                    'userId'=>$userIds
+                    $data = ([
+                        auth()->id() => auth()->id().' Name',
+                        '5'=> '5 Name',
+                        'img'.auth()->id()=>'profile',
+                        'img5'=> '5img',
+                        'msg' => null,
+                        'time'=>Carbon::now(),
+                        'userId'=>[
+                            auth()->id(),
+                            6,
+                        ]
 
-                ]);
+                    ]);
                 $addedDocRef = $db->collection('chats')->add($data);
                 $ref = $addedDocRef->id();
                 $get_count = count($db->collection('chats')->document($ref)->collection('messages')->documents()->rows());
@@ -144,7 +147,7 @@ class FirebaseController extends Controller
                     'count'=>$get_count++,
                     'id'=>auth()->id(),
                     'img'=>auth()->user()->profile,
-                    'msg'=>$request->message,
+                    'msg'=>"Admin Message",
                     'time'=>Carbon::now(),
                 ]);
 
@@ -163,7 +166,7 @@ class FirebaseController extends Controller
         ]);
         $addedDocRef = $db->collection('chats')->document($id);
         $addedDocRef->set([
-            'msg'=>$msg->message,
+            'msg' => 'Update',
             'time'=>Carbon::now(),
 
         ], ['merge' => true]);

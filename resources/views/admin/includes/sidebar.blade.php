@@ -103,11 +103,13 @@
                         class="menu-title" data-i18n="Privacy and Security Settings">Communication Tools <br>(Messaging Controll)</span></a>
 
             </li>
+            
+            
 
             <li class=" nav-item @if (Route::currentRouteName() == 'support') active @endif">
                 <a href="{{ route('support') }}">
                     <img class="image-icon" src="{{ asset('icon/support.svg') }}" alt=""><span
-                        class="menu-title " data-i18n="Help & Support">Help & Support</span></a>
+                        class="menu-title " data-i18n="Help And Support">Help & Support</span></a>
 
             </li>
 

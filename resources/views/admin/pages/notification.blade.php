@@ -2,17 +2,22 @@
 @section('title', 'Notification ')
 @section('style')
     <style>
-
+span.sp-1.mb-0.mr-1 {
+    margin-top: 7px;
+}
     </style>
 @endsection
 @section('body')
     <!-- BEGIN: Content-->
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+ 
         <div class="content-area-wrapper">
+            
+             <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-2 col-xl-2">
             <div class="sidebar-left">
-                <div style="margin-bottom: 30px; margin-top: 20px;">
+                <div style="margin-bottom: 30px; margin-top: 20px;" class="text-center">
                     <h1>Notification</h1>
                     <span>Notification</span>
                 </div>
@@ -35,12 +40,11 @@
                                                 <p class="truncate"> </p>
                                             </div>
                                             <div class="contact-meta pr-2">
-
+                                                  <span class=" sp-1 mb-0 mr-1">{{ Carbon\Carbon::parse($item->created_at)->format('d/m') }}</span> 
                                                 <span class="avatar avatar-1 fa-notify m-0 avatar-md"><i
-                                                        class="fa-solid fa-ellipsis-vertical fa-notify"></i>
-
-                                                </span>
-                                                <span class="float-right sp-1 mb-25">{{ Carbon\Carbon::parse($item->created_at)->format('d/m') }}</span>
+                                                        class="fa-solid fa-ellipsis-vertical fa-notify"></i></span>
+                                                     
+                                                
                                             </div>
                                         </div>
                                     </li>
@@ -58,7 +62,9 @@
 
                 </div>
             </div>
-
+                </div>
+                    </div>
+                    </div>
 
             <!--/ Chat Sidebar area -->
         </div>

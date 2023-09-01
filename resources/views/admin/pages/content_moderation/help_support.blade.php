@@ -6,16 +6,20 @@
 
 @section('body')
     <div class="app-content content">
-        <div class="content-overlay"></div>
+   
         <div class="content-area-wrapper">
-            <div class="sidebar-left">
+            
+            <div class="container-fluid">
+                <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="sidebar-left">
                 <div class="sidebar">
                     <div class="sidebar-content term-c card">
-                        <div style="margin-bottom: 30px; margin-top: 20px; margin-left: 30px;">
+                        <div class="forpadding">
                             <h1>Help & Support</h1>
                             <span>Content Moderation / Help & Support </span>
 
-                            <button  type="button"  data-toggle="modal" data-target="#dark">Edit</button>
+                            <button  type="button"  data-toggle="modal" data-target="#dark" id="btnedit">Edit</button>
 
                             <div>
                                  {!! $data->help_support !!}
@@ -24,8 +28,15 @@
                     </div>
                 </div>
             </div>
+                        </div>
+                </div>
+            </div>
+            
         </div>
     </div>
+
+
+
 
     <div class="modal fade text-left" id="dark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel150"
         aria-hidden="true">

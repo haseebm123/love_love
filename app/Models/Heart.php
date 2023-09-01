@@ -17,12 +17,12 @@ class Heart extends Model
      */
     public function user_sender()
     {
-        return $this->hasOne(User::class,'id', 'sender_id');
+        return $this->hasOne(User::class,'id', 'user_id');
     }
 
     public function user_receiver()
     {
-        return $this->hasOne(User::class,'id', 'receiver_id');
+        return $this->hasOne(User::class,'id', 'user_id');
     }
 
 

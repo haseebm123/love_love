@@ -36,15 +36,15 @@
                                 <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John
                                         Doe</span><span class="user-status">Available</span></div>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
-                                    href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a
-                                    class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My
-                                    Inbox</a><a class="dropdown-item" href="app-todo.html"><i
-                                        class="feather icon-check-square"></i> Task</a><a class="dropdown-item"
-                                    href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i
-                                        class="feather icon-power"></i> Logout</a>
-                            </div>
+                            <!--<div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"-->
+                            <!--        href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a-->
+                            <!--        class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My-->
+                            <!--        Inbox</a><a class="dropdown-item" href="app-todo.html"><i-->
+                            <!--            class="feather icon-check-square"></i> Task</a><a class="dropdown-item"-->
+                            <!--        href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>-->
+                            <!--    <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i-->
+                            <!--            class="feather icon-power"></i> Logout</a>-->
+                            <!--</div>-->
                         </li>
                     </ul>
                 </div>
@@ -164,7 +164,7 @@
                         href="javascript:;">
                         <!-- <div class="brand-logo"></div> -->
                         <!-- <h2 class="brand-text mb-0">Vuexy</h2> -->
-                        <img src="{{asset('app-assets/images/logo/Logo-01 2png')}}" alt="" class="logo">
+                        <img src="{{asset('app-assets/images/logo/Logo-012.png')}}" alt="" class="logo">
                     </a></li>
             </ul>
         </div>
@@ -223,9 +223,7 @@
 
                 <li class=" nav-item @if (Route::currentRouteName() == 'support')   active  @endif"><a href="{{ route('support') }}"><i class="fa-solid fa-headset"></i><span class="menu-title"
                             data-i18n="Help and Support">Help and Support</span>
-                        <!--<span class="badge badge badge-primary badge-pill float-right mr-2">New</span>-->
                     </a>
-
                 </li>
 
                 <li class=" nav-item @if (Route::currentRouteName() == 'logouts')   active  @endif"><a href="{{ route('logouts') }}"><i class="fa-solid fa-right-from-bracket"></i><span

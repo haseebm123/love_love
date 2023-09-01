@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     function medicalCondition() {
 
-        $data  = MedicalCondition::select('id','name')->get();
+       $data  = MedicalCondition::select('id','name')->get();
         $data1 = [];
         $data2 = [];
         if ($data[0]) {

@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\SupportController;
 |
 */
 
+
         // Route::any('/', function () {
         //     return view('welcome');
         // });
@@ -56,7 +57,7 @@ use App\Http\Controllers\Admin\SupportController;
 
 
     Route::group(['middleware' => ['auth']], function() {
-         
+
         /* Firebase Controller */
         Route::controller(FirebaseController::class)->group(function () {
             Route::get('chats', 'chats')->name('get.chats');
@@ -147,3 +148,4 @@ use App\Http\Controllers\Admin\SupportController;
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

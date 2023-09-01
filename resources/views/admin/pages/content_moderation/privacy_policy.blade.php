@@ -6,16 +6,21 @@
 
 @section('body')
     <div class="app-content content">
-        <div class="content-overlay"></div>
+       
         <div class="content-area-wrapper">
+            
+            <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+            
             <div class="sidebar-left">
                 <div class="sidebar">
                     <div class="sidebar-content term-c card">
-                        <div style="margin-bottom: 30px; margin-top: 20px; margin-left: 30px;">
+                        <div class="forpadding">
                             <h1>Privacy Policy</h1>
                             <span>Content Moderation / Privacy Policy </span>
 
-                            <button type="button" data-toggle="modal" data-target="#dark">Edit</button>
+                            <button type="button" data-toggle="modal" data-target="#dark" id="btnedit">Edit</button>
 
                             <div>
                                 {!! $data->privacy_policy !!}
@@ -25,8 +30,10 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-
+ </div>
+    </div>
     <div class="modal fade text-left" id="dark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel150"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">

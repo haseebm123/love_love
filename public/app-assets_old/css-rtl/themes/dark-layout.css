@@ -141,7 +141,7 @@ body.dark-layout .main-menu .shadow-bottom {
   background : -webkit-linear-gradient(top, #0F1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0));
   background :         linear-gradient(-180deg, #0F1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0));
 }
-body.dark-layout .main-menu:not(.expanded) .navigation . sidebar-group-active1 > a {
+body.dark-layout .main-menu:not(.expanded) .navigation .sidebar-group-active > a {
   background-color : #262C49;
 }
 body.dark-layout .main-menu-content .navigation-main {
@@ -168,17 +168,17 @@ body.dark-layout .main-menu-content .navigation-main .nav-item .menu-content li:
 body.dark-layout .main-menu-content .navigation-main .active .menu-title, body.dark-layout .main-menu-content .navigation-main .active i {
   color : #FFFFFF;
 }
-body.dark-layout .main-menu-content .navigation-main . sidebar-group-active1 a {
+body.dark-layout .main-menu-content .navigation-main .sidebar-group-active a {
   background : #10163A;
   border-radius : 4px;
 }
-body.dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content {
+body.dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content {
   background-color : #10163A;
 }
-body.dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content .active {
+body.dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content .active {
   z-index : 1;
 }
-body.dark-layout .main-menu-content .navigation-main . sidebar-group-active1 .menu-content .active a {
+body.dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content .active a {
   background-color : transparent;
 }
 body.dark-layout.menu-collapsed .main-menu:not(.expanded) .navigation-main li.active > a {
@@ -446,14 +446,14 @@ body.dark-layout .nav-pills.nav-active-bordered-pill .nav-item .nav-link.active 
   background-color : transparent;
 }
 body.dark-layout .card {
-  background-color : #9E4572;
+  background-color : #10163A;
 }
 body.dark-layout .card .card-header, body.dark-layout .card .card-footer {
   color : #C2C6DC;
-  background-color : #9E4572;
+  background-color : #10163A;
 }
 body.dark-layout .card .card-header .heading-elements.visible ul li {
-  background-color : #9E4572;
+  background-color : #10163A;
 }
 body.dark-layout .card .heading-elements.visible .list-inline {
   background-color : #10163A;
@@ -1424,7 +1424,7 @@ body.dark-layout.horizontal-layout.vertical-overlay-menu .main-menu .nav-item.ac
 body.dark-layout.horizontal-layout.vertical-overlay-menu .main-menu .nav-item.active ul li.active {
   border-radius : 0;
 }
-body.dark-layout.horizontal-layout.vertical-overlay-menu .main-menu .nav-item.active. sidebar-group-active1 .open ul li.active a {
+body.dark-layout.horizontal-layout.vertical-overlay-menu .main-menu .nav-item.active.sidebar-group-active .open ul li.active a {
   background : -webkit-linear-gradient(208deg, #7367F0, rgba(115, 103, 240, 0.7)) !important;
   background :         linear-gradient(-118deg, #7367F0, rgba(115, 103, 240, 0.7)) !important;
   margin-bottom : 7px;

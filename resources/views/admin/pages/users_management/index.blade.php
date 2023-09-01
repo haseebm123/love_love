@@ -2,18 +2,25 @@
 @section('title', 'Request For Profile')
 @section('style')
     <style>
-
-    </style>
+.sidebar-left {
+    /*float: left;*/
+    position: relative;
+    z-index: 9999;
+}
+    </style> 
 @endsection
 
 @section('body')
     <input type="hidden" value="" name="id" id="id">
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+
         <div class="content-area-wrapper">
-            <div class="sidebar-left">
-                <div style="margin-bottom: 30px; margin-top: 20px;">
+            
+             <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-2 col-xl-2">
+                    <div class="sidebar-left">
+                <div style="margin-bottom: 30px; margin-top: 20px;" class="text-center" id="title">
                     <h1>Request Profile</h1>
                     <span>User Management / Request Profile</span>
                 </div>
@@ -37,14 +44,22 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="automate">
-                            <label class="switch">
-                                <input type="checkbox" @if (auth()->user()->automation == 1) checked @endif
+                        
+
+                        <div class="automate form-check">
+                            
+                            <label class="switch form-check form-switch">
+                                <input class="form-check-input" type="checkbox"   role="switch"  @if (auth()->user()->automation == 0) checked @endif
                                     id="accountSwitch1">
-                                <span class="slider round"></span>
+                                <span class="form-check-label slider round"data-toggle="toggle "  for="flexSwitchCheckDefault" ></span>
                             </label>
                             <span> Automation</span>
                         </div>
+                        
+<!--                        <div class="form-check form-switch">-->
+<!--  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--  <label class="form-check-label slider round"  for="flexSwitchCheckDefault">Default switch checkbox input</label>-->
+<!--</div>-->
                         <div id="users-list" class="chat-user-list request-list list-group position-relative">
 
                             <ul class="chat-users-list-wrapper media-list user-side-list">
@@ -62,29 +77,57 @@
 
                 </div>
             </div>
-            <div class="content-right">
+                </div>
+            
+            
+            
+            
+            
+            
+             <div class="col-12 col-md-12 col-lg-10 col-xl-10">
+                 
+                <div class="content-right">
                 <!-- Chat Sidebar area -->
-                <div class="sidebar2-content card">
-                    <div class="req-row">
+                <div class="sidebar2-content card" id="content-right">
+                    
+                    
+                          <div class="container">
+                        <div class="row">
+                             <!--<div class="req-row">-->
+                        
+                       
+                        
+                         <div class="col-12 col-md-4 col-lg-6 col-xl-4 col-xxl-4 req-row">
                         <div class="req-col-1">
                             <i>30</i>
                             <h1>All Request</h1>
                             <h2 id="all-request">{{ $data['requestCount'] }}</h2>
                         </div>
+                         </div>
+                        
+                        <div class="col-12 col-md-4 col-lg-6 col-xl-4 col-xxl-4 req-row">
                         <div class="req-clo-2">
                             <i>20</i>
                             <h1>Approved</h1>
                             <h2 id="approve-count">{{ $data['approvedCount'] }}</h2>
                         </div>
+                         </div>
+                        
+                        <div class="col-12 col-md-4 col-lg-6 col-xl-4 col-xxl-4 req-row">
                         <div class="req-col-3">
                             <i>10</i>
                             <h1>Block</h1>
                             <h2 id="block-count">{{ $data['blockCount'] }}</h2>
                         </div>
+                         </div>
+                        
+                        
+                       <!--</div>-->
+                    </div> 
                     </div>
+                    
 
-
-                    <div class="req-col-12">
+                    <div class="req-col-12 col-md-12 pt-5 ">
                         <div id="user-details-div" style="background-color: #fff;" class="user-details d-none">
                             {{-- @include('admin.pages.users_management.ajax.user_details_horizontal') --}}
                         </div>
@@ -94,9 +137,18 @@
                 </div>
                 <!--/ Chat Sidebar area -->
             </div>
+             </div>
+             
+             
+             
+             
+             
+            
+            
+             </div>
+            </div>
         </div>
     </div>
-
 
     {{-- To here --}}
 @endsection
@@ -285,9 +337,9 @@
         $("#accountSwitch1").change(function() {
 
             if (this.checked)
-                var status = 1;
-            else
                 var status = 0;
+            else
+                var status = 1;
             console.log(status);
             $.ajax({
                 url: "{{ route('admin.automation') }}",

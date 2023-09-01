@@ -1,6 +1,6 @@
 @forelse ($data as $item)
-
-    <li id="req-profile{{ $item->sender->id }}" data-sender-id={{ $item->sender->id }} data-receiver-id={{ $item->receiver->id }} class="req-profile req-profile{{ $item->sender->id }}">
+     
+    <li id="req-profile{{ $item->sender->id??0 }}" data-sender-id={{ $item->sender->id??0 }} data-receiver-id={{ $item->receiver->id??0 }} class="req-profile req-profile{{ $item->sender->id }}">
         <div class="user-chat-info">
             <div class="contact-info">
                 <h5 class="font-weight-bold mb-0">

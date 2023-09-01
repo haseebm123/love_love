@@ -1,6 +1,8 @@
 @extends('admin.layouts.master')
 @section('title', 'Help & Support')
 @section('style')
+
+<link rel="stylesheet" href="{{ asset('assets/css/waitMe.css') }}">
     <style>
 
     </style>
@@ -11,9 +13,14 @@
     <input type="hidden" value="" name="con_id" id="con_id">
 
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+    
         <div class="content-area-wrapper">
+            
+                <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-2 col-xl-2">
+            
+            
             <div class="sidebar-left">
                 <div style="margin-bottom: 30px; margin-top: 20px;">
                     <h1>Discover Profile</h1>
@@ -54,26 +61,39 @@
                         <!-- <div class="chk-div">
                                 <input type="checkbox" name="" id=""><label for="">Select All</label>
                             </div> -->
-                        <button class="chk-btn">Approve</button>
+                        <!--<button class="chk-btn">Approve</button>-->
                     </div>
                     <!--/ Chat Sidebar area -->
 
                 </div>
             </div>
-
-            <div class="content-right">
-
-                <div class="sidebar2-content card row msgs  ">
+            </div>
+            
+            
+            
+            
+            
+            
+                <div class="col-12 col-md-12 col-lg-10 col-xl-10">
+                    <div class="content-right">
+                
+                
+                <div class="sidebar2-content card row msgs  " id="content-right">
                     {{-- d-none  --}}
-                    <div class="d-flex align-items-center row p-3 col-6   ">
+                    
+                     <div class="container">
+                        <div class="row">
+                         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                     
+                            <div class="d-flex align-items-center row p-3" id="container">
+                        
+                        
                         <div class="cht-box">
                             <h1>Messages</h1>
-                            <div id="user-conversation-div" class="cht-ps">
-
-                            </div>
+                            <div id="user-conversation-div" class="cht-ps">  </div>
 
                         </div>
-                        <div class="cht-inp">
+                        <div class="cht-inp" id="sendMessageWaitMe">
                             <ul class="cht-inp-ul">
                                 <!-- <li><a href=""><i class="fa-solid fa-paperclip"></i></a></li> -->
                                 <li><input type="text" name="message" id="message" placeholder="Write a message"></li>
@@ -86,14 +106,32 @@
                         </div>
 
                     </div>
-                    <div id="user-details-div" class=" p-3 col-6 user-details-bx ">
+                     </div>
+                    
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div id="user-details-div" class="  user-details-bx ">
                         {{-- @include('admin.pages.users_management.ajax.user_detail_vertical') --}}
 
 
-                    </div>
+                  </div>
+                    
+                    
+                    
+                     </div>
+            </div>
+                    
+                    
                 </div>
             </div>
-
+            </div>
+            
+            
+            
+            
+                </div>
+        
+        
+            </div>
         </div>
 
 
@@ -104,7 +142,80 @@
 
 
 @section('script')
+    <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
+    
+    function scrollChatToBottom() {
+            var chatBox = $('.cht-ps');
+            // var messages = chatBox.find('.message-container');
+            var scrollHeight = 0;
+            chatBox.each(function() {
+                scrollHeight += $(this).outerHeight();
+            });
+            chatBox.scrollTop(scrollHeight);
+        }
+        
+     var current_effect ='bounce';
+      function full_page()
+      {
+        $('#container').waitMe({
+          effect : 'bounce',
+          text : '',
+          bg : 'rgba(255,255,255,0.7)',
+          color : '#000',
+          maxSize : '',
+          waitTime : -1,
+          textPos : 'vertical',
+          fontSize : '',
+          source : '',
+          onClose : function() {}
+          });
+      }
+      $(document).ready(function() {
+            const reqProfileElement = $('.req-profile[data-id][data-fire]');
+            //   $('#container').waitMe('hide');
+            //   if (reqProfileElement.length) 
+            //   {
+                  
+                  
+                //   reqProfileElement.each(function(e) {
+                //     if(e == 0)
+                //     {
+                        // const dataId = $(this).attr('data-id');
+                       
+                        // console.log('data-id:', dataId);
+                        // const intervalTime = 2000;
+        
+                        // const intervalId = setInterval(() => {
+                        //   $('#container').waitMe('hide');
+                        //   scrollChatToBottom()
+                        //   getConversation(dataId);
+                        // }, intervalTime);
+                    // }
+                    
+                   
+            //     });
+            // }
+        });
+        
+   
+      
+      function sendMessageWaitMe()
+      {
+          $('#sendMessageWaitMe').waitMe({
+          effect : 'bounce',
+          text : '',
+          bg : 'rgba(255,255,255,0.7)',
+          color : '#000',
+          maxSize : '',
+          waitTime : -1,
+          textPos : 'vertical',
+          fontSize : '',
+          source : '',
+          onClose : function() {}
+          });
+      }
+      
         function showRequestDetail(id) {
 
             if (id) {
@@ -138,11 +249,14 @@
                 $("#user-details-div").html("");
             }
         }
+       
+            
+        
 
         function getConversation(id) {
-
+            
             if (id) {
-
+                full_page()
                 $.ajax({
                     type: "post",
                     url: "{{ route('get.conversationById') }}",
@@ -157,6 +271,7 @@
 
                             $("#user-conversation-div").html("");
                             // $(".msgs").addClass('d-none')
+                            $('#container').waitMe('hide');
 
                         } else {
                              $("#user-conversation-div").html("");
@@ -164,6 +279,7 @@
                             $("#user-conversation-div").append(res);
                             $(".msgs").removeClass('d-none')
                             scrollChatToBottom()
+                            $('#container').waitMe('hide');
                         }
 
                     }
@@ -177,8 +293,9 @@
 
 
         function sendMsg(id) {
+           
             var msg = $('#message').val();
-
+            sendMessageWaitMe();
             if (id && msg) {
 
                 $('#message').val('');
@@ -197,9 +314,11 @@
                             $("#user-conversation-div").append(`<div class="mychat">
                             <p>${msg}</p>
                             </div>`)
+                             $('#sendMessageWaitMe').waitMe('hide');
                         }
                         if (res.type == 'error') {
                             toastr.success(res.message);
+                             $('#sendMessageWaitMe').waitMe('hide');
                         }
 
                     }
@@ -234,58 +353,50 @@
             sendMsg(id);
 
         });
-        function scrollChatToBottom() {
-            var chatBox = $('.cht-ps');
-            // var messages = chatBox.find('.message-container');
-            var scrollHeight = 0;
-            chatBox.each(function() {
-                scrollHeight += $(this).outerHeight();
-            });
-            chatBox.scrollTop(scrollHeight);
-        }
+        
     </script>
 
 
     {{-- Extra --}}
     <script src="{{ asset('assets/js/waitMe.js') }}"></script>
     <script>
-        $(function() {
+        // $(function() {
 
-            $('#quickForm').validate({
-                rules: {
+        //     $('#quickForm').validate({
+        //         rules: {
 
-                    first_name: {
-                        required: true,
-                    },
+        //             first_name: {
+        //                 required: true,
+        //             },
 
-                    last_name: {
-                        required: true,
-                    },
-                    profile: {
-                        // required: true,
-                        extension: "JPEG|PNG|JPG",
-                    },
-                    password_confirm: {
-                        equalTo: "#password"
-                    }
+        //             last_name: {
+        //                 required: true,
+        //             },
+        //             profile: {
+                       
+        //                 extension: "JPEG|PNG|JPG",
+        //             },
+        //             password_confirm: {
+        //                 equalTo: "#password"
+        //             }
 
-                },
-                messages: {
-                    // terms: "Please accept our terms"
-                },
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                }
-            });
-        });
+        //         },
+        //         messages: {
+                    
+        //         },
+        //         errorElement: 'span',
+        //         errorPlacement: function(error, element) {
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.form-group').append(error);
+        //         },
+        //         highlight: function(element, errorClass, validClass) {
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function(element, errorClass, validClass) {
+        //             $(element).removeClass('is-invalid');
+        //         }
+        //     });
+        // });
 
         var loadFile = function(event) {
 

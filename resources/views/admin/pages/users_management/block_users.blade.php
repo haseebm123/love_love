@@ -10,11 +10,16 @@
     <input type="hidden" value="" name="id" id="id">
     <!-- BEGIN: Content-->
     <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+   
         <div class="content-area-wrapper">
+            
+              <div class="container-fluid">
+                <div class="row">
+                 <div class="col-12 col-md-12 col-lg-2 col-xl-2">
+            
+            
             <div class="sidebar-left">
-                <div style="margin-bottom: 30px; margin-top: 20px;">
+                <div style="margin-bottom: 30px; margin-top: 20px;" class="text-center">
                     <h1>Block List</h1>
                     <span>Block List</span>
                 </div>
@@ -59,13 +64,24 @@
 
                 </div>
             </div>
+            </div>
+            
+            <div class="col-12 col-md-12 col-lg-10 col-xl-10">
             <div class="content-right">
                 <!-- Chat Sidebar area -->
                 <div class="sidebar2-content card">
-                    <div class="req-col-12">
+                    <div class="container">
+                        <div class="row">
+                         <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                  
 
                         <div id="user-details-div" style="background-color: #fff;" class="user-details-1 d-none">
 
+
+                    </div>
+
+
+                </div>
                         </div>
                     </div>
 
@@ -75,6 +91,9 @@
 
                 <!--/ Chat Sidebar area -->
             </div>
+            </div>
+          </div>
+         </div>  
         </div>
     </div>
     <!-- END: Content-->
